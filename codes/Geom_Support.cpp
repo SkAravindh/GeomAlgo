@@ -165,10 +165,6 @@ void edgesByOrder(std::vector<Triangle* > &TV, int deg, std::vector<EdgeOrder> &
             default:
                 if(deg==count) out.push_back(*iter);
 
-
         }
-
-
     }
-
 }

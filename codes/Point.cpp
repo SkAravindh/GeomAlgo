@@ -33,7 +33,6 @@ Point& Point::operator=(const Point &rhs)  {
     return *this;
 }
 bool Point::operator < ( const Point &rhs) const{
-    //std::cout<< "x compare "<<rhs.x()<<" "<<"y "<<rhs.y()<<" "<<"z "<<rhs.z()<<std::endl;
     return std::make_tuple(this->x(), this->y(), this->z()) < std::make_tuple(rhs.x(), rhs.y(), rhs.z()) ;
 }
 
@@ -47,7 +46,6 @@ bool Point::operator==(const Point &rhs) const {
 
 
 bool Point::operator!=(const Point &rhs) const {
-    //std::cout<< "x compare "<<rhs.x()<<" "<<"y "<<rhs.y()<<" "<<"z "<<rhs.z()<<std::endl;
     return (  (this->x()!=rhs.x()) || (this->y()!=rhs.y()) || (this->z()!=rhs.z()) );
 }
 
