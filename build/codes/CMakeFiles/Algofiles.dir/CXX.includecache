@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/EdgeOrder.cpp
+EdgeOrder.h
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/EdgeOrder.h
+
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/EdgeOrder.h
+Point.h
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Point.h
+
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Point.h
+iostream
+-
+tuple
+-
+

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libAlgofiles.a  CMakeFiles/Algofiles.dir/Triangle.cpp.o CMakeFiles/Algofiles.dir/Point.cpp.o CMakeFiles/Algofiles.dir/EdgeOrder.cpp.o CMakeFiles/Algofiles.dir/Mesh.cpp.o CMakeFiles/Algofiles.dir/InOut.cpp.o CMakeFiles/Algofiles.dir/Collision.cpp.o CMakeFiles/Algofiles.dir/Geom_Support.cpp.o CMakeFiles/Algofiles.dir/Bbox_3.cpp.o CMakeFiles/Algofiles.dir/Writedata.cpp.o
+/usr/bin/ranlib libAlgofiles.a
