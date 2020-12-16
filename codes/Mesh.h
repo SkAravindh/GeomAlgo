@@ -22,7 +22,7 @@ public:
     void CreateTriangle(Point *P0, Point *P1, Point *P2);
     void StoreTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
-    void getTrianglesOrder(Triangle * t,  unsigned int &&order, std::set<Triangle*> &TS);
+    void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::set<Triangle*> &TS);
 
 
 private:

@@ -59,7 +59,7 @@ void Mesh::getTriangles(std::vector<Triangle*> &TV){
         TV.push_back(tri);
     }
 }
-void Mesh::getTrianglesOrder(Triangle * t,  unsigned int &&order, std::set<Triangle*> &TS) {
+void Mesh::getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::set<Triangle*> &TS) {
     //iterators
     std::set<Triangle *>::iterator it, itt;
     typedef std::multimap<EdgeOrder, Triangle *>::iterator MMET;
