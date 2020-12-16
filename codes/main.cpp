@@ -38,7 +38,7 @@ int main() {
     Point* u2 = mesh->CreateVertex(4,6,7);
     Triangle* tri1 = new Triangle(u0,u1,u2,&*mesh);
     std::cout<< tri1->getNormalVector()<<std::endl;
-      
+
 
 
 //    Mesh* pMesh = new Mesh();
