@@ -33,9 +33,17 @@ Vector3 Triangle::getNormalVector() const {
     return normal;
 }
 
-bool Triangle::operator==(const Triangle &rhs) const {
-    std::cout << "triangle bool "<<std::endl;
+bool Triangle::operator == (const Triangle &rhs) const {
     return (this->getCorners(0)==rhs.getCorners(0) && this->getCorners(1)==rhs.getCorners(1) && this->getCorners(2)==rhs.getCorners(2));
+}
+
+bool Triangle::operator != (const Triangle &rhs) const {
+    if(*this == rhs){
+        return false;
+    }
+    else{
+        return true;
+    }
 }
 
 bool Triangle::operator < (const Triangle &rhs) const {

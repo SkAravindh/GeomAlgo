@@ -12,11 +12,11 @@
 
 
 
-
 int main() {
     std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/bunny_S_Up_R.stl";
-    std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
+   // std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
+
 
 
 
@@ -37,7 +37,9 @@ int main() {
     Point* u1 = mesh->CreateVertex(6,3,5);
     Point* u2 = mesh->CreateVertex(4,6,7);
     Triangle* tri1 = new Triangle(u0,u1,u2,&*mesh);
-    std::cout<< tri1->getNormalVector()<<std::endl;
+
+
+
 
 
 

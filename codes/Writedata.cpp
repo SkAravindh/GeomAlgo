@@ -35,3 +35,20 @@ void writePoint(std::vector<EdgeOrder> &oe) {
     }
     vtk_file.close();
 }
+
+void writeSTL(std::string filename, std::vector<Triangle* > &patch){
+    std::ofstream file;
+    file.open(filename,std::ios_base::app);
+    file <<"solid " << std::endl;
+    for(int i=0; i<patch.size(); i++){
+        file <<" facet normal "<<patch.at(i)->getNormalVector().x()<<" "<<patch.at(i)->getNormalVector().y()<<" "<<patch.at(i)->getNormalVector().z()<<std::endl;
+        file <<"  outer loop "<< std::endl;
+        file <<"    vertex "<<patch[i]->getCorners(0)->x()<<" "<<patch[i]->getCorners(0)->y()<<" "<<patch[i]->getCorners(0)->z()<<std::endl;
+        file <<"    vertex "<<patch[i]->getCorners(1)->x()<<" "<<patch[i]->getCorners(1)->y()<<" "<<patch[i]->getCorners(1)->z()<<std::endl;
+        file <<"    vertex "<<patch[i]->getCorners(2)->x()<<" "<<patch[i]->getCorners(2)->y()<<" "<<patch[i]->getCorners(2)->z()<<std::endl;
+        file <<"  endloop "<<std::endl;
+        file <<" endfacet "<<std::endl;
+    }
+    file <<"endsolid "<<std::endl;
+
+}

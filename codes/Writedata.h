@@ -3,8 +3,9 @@
 
 #include <fstream>
 #include "Mesh.h"
-void writePoint(std::vector<EdgeOrder> &oe);
 
+void writePoint(std::vector<EdgeOrder> &oe);
+void writeSTL(std::string filename , std::vector<Triangle* > &a);
 
 
 #endif

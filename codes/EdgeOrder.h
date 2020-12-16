@@ -1,6 +1,7 @@
 #ifndef EDGEORDER_H
 #define EDGEORDER_H
 #include "Point.h"
+
 class EdgeOrder {
 public:
     EdgeOrder();

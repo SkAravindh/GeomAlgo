@@ -58,5 +58,52 @@ void Mesh::getTriangles(std::vector<Triangle*> &TV){
         Triangle * tri(*it);
         TV.push_back(tri);
     }
+}
+void Mesh::getTrianglesOrder(Triangle * t,  unsigned int &&order, std::set<Triangle*> &TS) {
+    //iterators
+    std::set<Triangle *>::iterator it, itt;
+    typedef std::multimap<EdgeOrder, Triangle *>::iterator MMET;
+    //Required Containers.
+    std::set<Triangle *> visted;
+    std::set<Triangle *> collected_triangles;
+    std::set<Triangle *> temporary_triangles;
+    collected_triangles.insert(t);
+
+    for (int i = 0; i < order; i++) {
+        temporary_triangles.clear();
+        for (it = collected_triangles.begin(); it != collected_triangles.end(); it++) {
+
+            itt = visted.find(*it);
+            if (itt != visted.end()) continue;
+            visted.insert(*it);
+
+            Triangle *current_triangle(*it);
+            for (int j = 0; j < 3; j++) {
+                std::vector<Triangle *> Vectemp;
+                EdgeOrder ed = current_triangle->getEO(j);
+                std::pair<MMET, MMET> triangle_set = mmedgeTotriangles.equal_range(ed);
+                if (std::distance(triangle_set.first, triangle_set.second) != 2) continue;
+
+                for (MMET triangle_set_IT = triangle_set.first; triangle_set_IT != triangle_set.second; triangle_set_IT++) {
+                    Triangle *tri = triangle_set_IT->second;
+                    if (*tri == **it) continue;
+                    Vectemp.push_back(triangle_set_IT->second);
+                }
+                if (Vectemp.size() == 1) {
+                    temporary_triangles.insert(Vectemp[0]);
+                }
+            }
+        }
+
+        for (auto InT = collected_triangles.begin(); InT != collected_triangles.end(); InT++) {
+            temporary_triangles.erase(*InT);
+        }
+        for (auto newT = temporary_triangles.begin(); newT != temporary_triangles.end(); newT++) {
+            collected_triangles.insert(*newT);
+
+        }
+    }
+    TS = collected_triangles;
+    //std::cout << "size of collected_triangles "<<collected_triangles.size()<<std::endl;
 
 }
