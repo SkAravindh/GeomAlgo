@@ -16,7 +16,7 @@ int indexOrder_2(int n);
 bool brayCentric(const Triangle *t, Point *p);
 bool checkHalfEdge(const Triangle *t1, const Triangle *t2);
 bool commonVertex(const Triangle *t1, const Triangle *t2);
-void edgesByOrder(std::vector<Triangle* > &TV, int i, std::vector<EdgeOrder> &out);
+void edgesByOrder(std::vector<Triangle* > &TV, int &i, std::vector<EdgeOrder> &out);
 
 
 

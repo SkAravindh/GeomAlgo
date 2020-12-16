@@ -38,6 +38,24 @@ bool Triangle::operator==(const Triangle &rhs) const {
     return (this->getCorners(0)==rhs.getCorners(0) && this->getCorners(1)==rhs.getCorners(1) && this->getCorners(2)==rhs.getCorners(2));
 }
 
+bool Triangle::operator < (const Triangle &rhs) const {
+    //lexicographically operation
+
+    if( *this->getCorners(0) < *rhs.getCorners(0) ) return true;
+    if( *this->getCorners(0) > *rhs.getCorners(0) ) return false;
+    if( *this->getCorners(0) == *rhs.getCorners(0) ) {
+        if( *this->getCorners(1) < *rhs.getCorners(1) ) return true;
+        if( *this->getCorners(1) > *rhs.getCorners(1) ) return false;
+        if( *this->getCorners(1) == *rhs.getCorners(1) ){
+            if( *this->getCorners(2) < *rhs.getCorners(2) ) return true;
+            if( *this->getCorners(2) > *rhs.getCorners(2) ) return false;
+
+        }
+    }
+    return false;
+
+}
+
 std::ostream & operator<<(std::ostream &out, const Triangle &rhs){
     out<<"p0  "<<*rhs.getCorners(0)<<std::endl;
     out<<"p1  "<<*rhs.getCorners(1)<<std::endl;

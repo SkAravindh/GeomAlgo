@@ -128,7 +128,7 @@ bool commonVertex(const Triangle *t1, const Triangle *t2){
 
 }
 
-void edgesByOrder(std::vector<Triangle* > &TV, int deg, std::vector<EdgeOrder> &out){
+void edgesByOrder(std::vector<Triangle* > &TV, int &deg, std::vector<EdgeOrder> &out){
     std::vector<EdgeOrder> outtemp;
     std::vector<Triangle*>::iterator it;
     for(it=TV.begin(); it!=TV.end(); it++){
@@ -147,7 +147,6 @@ void edgesByOrder(std::vector<Triangle* > &TV, int deg, std::vector<EdgeOrder> &
         EdgeOrder EO = *iter;
         int count=1;
         while(++iter!=outtemp.end() && *iter==EO){
-
          ++count;
         }
         --iter;
@@ -164,8 +163,6 @@ void edgesByOrder(std::vector<Triangle* > &TV, int deg, std::vector<EdgeOrder> &
                 break;
             default:
                 if(deg==count) out.push_back(*iter);
-
-
         }
 
 

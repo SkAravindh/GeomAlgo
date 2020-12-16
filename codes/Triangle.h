@@ -17,7 +17,9 @@ public:
     EdgeOrder getEO(int i) const;
     Vector3 getNormalVector() const;
     bool operator == (const Triangle &rhs) const;
+    bool operator < (const Triangle &rhs) const;
     friend std::ostream & operator<<(std::ostream &out, const Triangle &rhs);
+
 
 private:
     Point* corners[3];

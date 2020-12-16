@@ -32,6 +32,7 @@ protected:
     int Number_OF_Vertices=0;
     std::multimap<Point*, Triangle*,ComparePoint> mmpointTotriangles;
     std::multimap<EdgeOrder, Triangle*> mmedgeTotriangles;
+    //std::multimap<EdgeOrder, std::vector<Triangle*>> map_edgeTotriangles; //using multimap map bcoz easy to acess data.
     std::vector<Triangle*> allTriangles;
 
 };

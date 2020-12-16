@@ -14,25 +14,31 @@
 
 
 int main() {
-    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/single_cube_holes_stl.stl";
-
+    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/bunny_S_Up_R.stl";
+    std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
 
+
+
     std::shared_ptr<Mesh> mesh(new Mesh);
-    Point* p0 = mesh->CreateVertex(0,0,0);
+     Point* p0 = mesh->CreateVertex(0,0,0);
      Point* p1 = mesh->CreateVertex(10,0,0);
      Point* p2 = mesh->CreateVertex(0,10,0);
      Point *p= new Point(5,0,0);
-    Triangle* tri = new Triangle(p0,p1,p2,&*mesh);
-    bool result = brayCentric(tri,p);
-    std::vector<Triangle*> tv;
-    pMesh->getTriangles(tv);
-    std::vector<EdgeOrder> ed;
-    edgesByOrder(tv,1,ed);
-    std::cout<<"size of ed "<<ed.size()<<std::endl;
-    writePoint(ed);
-
-
+     Triangle* tri = new Triangle(p0,p1,p2,&*mesh);
+     bool result = brayCentric(tri,p);
+//    std::vector<Triangle*> tv;
+//    pMesh->getTriangles(tv);
+//    std::vector<EdgeOrder> ed;
+//    edgesByOrder(tv,1,ed);
+//    std::cout<<"size of ed "<<ed.size()<<std::endl;
+//    writePoint(ed);
+    Point* u0 = mesh->CreateVertex(2,2,3);
+    Point* u1 = mesh->CreateVertex(6,3,5);
+    Point* u2 = mesh->CreateVertex(4,6,7);
+    Triangle* tri1 = new Triangle(u0,u1,u2,&*mesh);
+    std::cout<< tri1->getNormalVector()<<std::endl;
+      
 
 
 //    Mesh* pMesh = new Mesh();
