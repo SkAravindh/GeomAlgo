@@ -14,9 +14,9 @@ void Triangle::Initilize(Point *P0, Point *P1, Point *P2) {
     corners[1]=P1;
     corners[2]=P2;
 
-    neigb[0]=NULL;
-    neigb[1]=NULL;
-    neigb[2]=NULL;
+    neigb[0]= nullptr;
+    neigb[1]= nullptr;
+    neigb[2]= nullptr;
 }
 
 Point* Triangle::getCorners(int i) const {
