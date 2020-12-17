@@ -10,15 +10,15 @@
 Point.h
 /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Point.h
 
-/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Geom_Support.cpp
-Geom_Support.h
-/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Geom_Support.h
-
 /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Geom_Support.h
 algorithm
 -
 Vector_3.h
 /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Vector_3.h
+Mesh.h
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Mesh.h
+
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Mesh.cpp
 Mesh.h
 /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Mesh.h
 

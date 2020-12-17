@@ -13,10 +13,13 @@
 
 
 int main() {
-    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/single_cube_holes_stl.stl";
-   // std::string filename = " home/aravindhkumar.kalimuthu/Downloads/bunny_S_Up_R.stl";
+    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/bunny_S_Up_R.stl";
+
     //std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
+
+
+
 
 
 
@@ -28,15 +31,7 @@ int main() {
 //     Point *p= new Point(5,0,0);
 //     Triangle* tri = new Triangle(p0,p1,p2,&*mesh);
 //     bool result = brayCentric(tri,p);
-    std::vector<Triangle*> tv;
-    pMesh->getTriangles(tv);
-    std::vector<EdgeOrder> ed;
-    edgesByOrder(tv,1,ed);
-    std::cout<<"size of ed "<<ed.size()<<std::endl;
-    std::vector<Point*> p;
-    getBorderPoints(ed,p);
-    std::cout << p.size() << std::endl;
-    writePoints("pointdata.vtk",p);
+
 //    Point* u0 = mesh->CreateVertex(2,2,3);
 //    Point* u1 = mesh->CreateVertex(6,3,5);
 //    Point* u2 = mesh->CreateVertex(4,6,7);
