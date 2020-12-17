@@ -59,7 +59,8 @@ void Mesh::getTriangles(std::vector<Triangle*> &TV){
         TV.push_back(tri);
     }
 }
-void Mesh::getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::set<Triangle*> &TS) {
+
+void Mesh::getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV) {
     //iterators
     std::set<Triangle *>::iterator it, itt;
     typedef std::multimap<EdgeOrder, Triangle *>::iterator MMET;
@@ -95,15 +96,23 @@ void Mesh::getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::set
             }
         }
 
-        for (auto InT = collected_triangles.begin(); InT != collected_triangles.end(); InT++) {
-            temporary_triangles.erase(*InT);
-        }
+//        for (auto InT = collected_triangles.begin(); InT != collected_triangles.end(); InT++) {
+//            temporary_triangles.erase(*InT);
+//        }
         for (auto newT = temporary_triangles.begin(); newT != temporary_triangles.end(); newT++) {
             collected_triangles.insert(*newT);
-
         }
     }
-    TS = collected_triangles;
-    //std::cout << "size of collected_triangles "<<collected_triangles.size()<<std::endl;
+    TV.assign(collected_triangles.begin(), collected_triangles.end());
+   // std::cout << "size of collected_triangles "<<collected_triangles.size()<<" "<<"vector_size "<<TV.size()<<std::endl;
+
+}
+
+void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::set<Triangle *> &TS) {
+
+}
+
+
+void Mesh::standAlone() {
 
 }

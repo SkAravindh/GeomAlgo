@@ -10,7 +10,7 @@ class Mesh; //fwd
 
 class Triangle{
 public:
-    Triangle();
+    Triangle() = default;
     Triangle(Point* P0, Point* P1, Point* P2, Mesh* mobj);
     void Initilize(Point* P0, Point* P1, Point* P2);
     Point* getCorners(int i) const;

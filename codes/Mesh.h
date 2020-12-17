@@ -22,8 +22,9 @@ public:
     void CreateTriangle(Point *P0, Point *P1, Point *P2);
     void StoreTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
-    void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::set<Triangle*> &TS);
-
+    void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV);
+    void getRingNeigbyOrder(Point* p, unsigned int &&order, std::set<Triangle*> &TS);
+    void standAlone();
 
 private:
     std::string ModelName;

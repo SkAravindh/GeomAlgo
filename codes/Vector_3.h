@@ -23,22 +23,30 @@ Vector_3(T x, T y, T z );
 
 
 
-inline const Vector_3<T> & operator +() const   {
+inline const Vector_3<T> & operator +() const {
      
  return *this;
 }
 
-T  operator [] (int i) const;
+inline  Vector_3<T> & operator -() const {
+    e[0] = 0-e[0];
+    e[1] = 0-e[1];
+    e[2] = 0-e[2];
+    return *this;
+}
+
+const T&  operator [] (int i) const;
 T & operator [] (int i);
 
 inline Vector_3<T>& operator + (const Vector_3<T> &rhs);
+inline Vector_3<T>& operator - (const Vector_3<T> & rhs);
 inline Vector_3<T>& operator = (const Vector_3<T> &rhs);
-inline Vector_3<T>& operator+= (const Vector_3<T> & rhs);
-inline Vector_3<T>& operator-= (const Vector_3<T> & rhs);
-inline Vector_3<T>& operator*= (const Vector_3<T> & rhs);
-inline Vector_3<T>& operator/= (const Vector_3<T> & rhs);
-inline Vector_3<T>& operator*= (double t);
-inline Vector_3<T>& operator/= (double t);
+inline Vector_3<T>& operator += (const Vector_3<T> & rhs);
+inline Vector_3<T>& operator -= (const Vector_3<T> & rhs);
+inline Vector_3<T>& operator *= (const Vector_3<T> & rhs);
+inline Vector_3<T>& operator /= (const Vector_3<T> & rhs);
+inline Vector_3<T>& operator *= (double t);
+inline Vector_3<T>& operator /= (double t);
 
  
 
@@ -94,7 +102,16 @@ Vector_3<T>& Vector_3<T>::operator + (const Vector_3<T> &rhs) {
 
 
 template<typename T>
-Vector_3<T>& Vector_3<T>::operator=(const Vector_3<T> &rhs) {
+Vector_3<T>& Vector_3<T>::operator - (const Vector_3<T> & rhs) {
+    e[0] = e[0]-rhs.e[0];
+    e[1] = e[1]-rhs.e[1];
+    e[2] = e[2]-rhs.e[2];
+    return *this;
+}
+
+
+template<typename T>
+Vector_3<T>& Vector_3<T>::operator = (const Vector_3<T> &rhs) {
     if(this == &rhs){
         return *this;
     }
@@ -135,7 +152,7 @@ inline T dot(const Vector_3<T> &lhs, const Vector_3<T> &rhs){
 
 
 template<typename T>
-inline Vector_3<T> cross_product(const Vector_3<T> &lhs, const Vector_3<T> &rhs){
+inline Vector_3<T> cross_product(const Vector_3<T> &lhs, const Vector_3<T> &rhs) {
  T i=(rhs.z()*lhs.y() - rhs.y()*lhs.z() );
  T j=-(lhs.x()*rhs.z() - rhs.x()* lhs.z());
  T k= (lhs.x()*rhs.y() - rhs.x()* lhs.y());
@@ -145,28 +162,20 @@ inline Vector_3<T> cross_product(const Vector_3<T> &lhs, const Vector_3<T> &rhs)
 }
 
 template<typename T>
-inline Vector_3<T> unit_vector(const Vector_3<T> rhs){
+inline Vector_3<T> unit_vector(const Vector_3<T> rhs) {
     return  rhs/rhs.lenght();
 }
 
 
 template<typename T>
-std::ostream & operator<<(std::ostream &out, const Vector_3<T> & rhs){
+std::ostream & operator << (std::ostream &out, const Vector_3<T> & rhs) {
     out<<"x "<<rhs.x()<<" "<<"y "<<rhs.y()<<" "<<"z "<<rhs.z();
     return out;
 
 } 
 
-  
-
 template<typename T>
-Vector_3<T> operator-(const Vector_3<T> & rhs){
-    return Vector_3<T>(-rhs.x(), -rhs.y(), -rhs.z());
-
-}
-
-template<typename T>
-T Vector_3<T>::operator[](int i) const {
+const T & Vector_3<T>::operator[](int i) const {
 return e[i];
 }
 

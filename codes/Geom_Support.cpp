@@ -115,7 +115,7 @@ bool checkHalfEdge(const Triangle *t1, const Triangle *t2){
     return false;
 }
 
-bool commonVertex(const Triangle *t1, const Triangle *t2){
+bool checkCommonVertex(const Triangle *t1, const Triangle *t2){
 
     for(int i=0; i<3; i++){
         Point *p = t1->getCorners(i);
@@ -128,9 +128,9 @@ bool commonVertex(const Triangle *t1, const Triangle *t2){
 
 }
 
-void edgesByOrder(std::vector<Triangle* > &TV, int &deg, std::vector<EdgeOrder> &out){
+void edgesByOrder(const std::vector<Triangle* > &TV, const int &deg, std::vector<EdgeOrder> &out){
     std::vector<EdgeOrder> outtemp;
-    std::vector<Triangle*>::iterator it;
+    std::vector<Triangle*>::const_iterator it;
     for(it=TV.begin(); it!=TV.end(); it++){
         for(int j=0; j<3; j++) {
             Triangle *tri(*it);
@@ -165,7 +165,19 @@ void edgesByOrder(std::vector<Triangle* > &TV, int &deg, std::vector<EdgeOrder> 
                 if(deg==count) out.push_back(*iter);
         }
 
-
     }
+}
 
+void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP){
+    std::vector<Point*> points;
+    std::vector<EdgeOrder>::const_iterator it;
+    std::vector<Point*>::iterator vit;
+    for(it = BE.begin(); it != BE.end(); it++){
+        points.push_back(it->p0);
+        points.push_back(it->p1);
+    }
+    std::sort(points.begin(),points.end());
+    vit = std::unique(points.begin(),points.end());
+    points.resize(std::distance(points.begin(),vit));
+    VP.assign(points.begin(), points.end());
 }

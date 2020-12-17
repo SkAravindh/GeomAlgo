@@ -31,8 +31,8 @@ private:
 
 struct ComparePoint{
 
-    bool operator()(const Point *rhs, const Point* lhs) const {
-        return *rhs<*lhs;
+    bool operator()(const Point* rhs, const Point* lhs) const {
+        return *rhs < *lhs;
     }
 };
 

@@ -1,9 +1,7 @@
 #include "Triangle.h"
 
 
-Triangle::Triangle() {
 
-}
 Triangle::Triangle(Point* P0, Point* P1, Point* P2, Mesh* mobj): powner(mobj) {
     Initilize(P0,P1,P2);
     powner->StoreTriangleInfo(this);
@@ -34,7 +32,7 @@ Vector3 Triangle::getNormalVector() const {
 }
 
 bool Triangle::operator == (const Triangle &rhs) const {
-    return (this->getCorners(0)==rhs.getCorners(0) && this->getCorners(1)==rhs.getCorners(1) && this->getCorners(2)==rhs.getCorners(2));
+    return (*this->getCorners(0) == *rhs.getCorners(0) && *this->getCorners(1) == *rhs.getCorners(1) && *this->getCorners(2) == *rhs.getCorners(2));
 }
 
 bool Triangle::operator != (const Triangle &rhs) const {
@@ -47,7 +45,7 @@ bool Triangle::operator != (const Triangle &rhs) const {
 }
 
 bool Triangle::operator < (const Triangle &rhs) const {
-    //lexicographically operation
+    //lexicographical operation.
 
     if( *this->getCorners(0) < *rhs.getCorners(0) ) return true;
     if( *this->getCorners(0) > *rhs.getCorners(0) ) return false;
@@ -64,7 +62,7 @@ bool Triangle::operator < (const Triangle &rhs) const {
 
 }
 
-std::ostream & operator<<(std::ostream &out, const Triangle &rhs){
+std::ostream & operator << (std::ostream &out, const Triangle &rhs){
     out<<"p0  "<<*rhs.getCorners(0)<<std::endl;
     out<<"p1  "<<*rhs.getCorners(1)<<std::endl;
     out<<"p2  "<<*rhs.getCorners(2)<<std::endl;
