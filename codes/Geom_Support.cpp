@@ -128,7 +128,7 @@ bool checkCommonVertex(const Triangle *t1, const Triangle *t2){
 
 }
 
-void edgesByOrder(const std::vector<Triangle* > &TV, const int &deg, std::vector<EdgeOrder> &out){
+void getedgesByOrder(const std::vector<Triangle* > &TV, const int &deg, std::vector<EdgeOrder> &out){
     std::vector<EdgeOrder> outtemp;
     std::vector<Triangle*>::const_iterator it;
     for(it=TV.begin(); it!=TV.end(); it++){

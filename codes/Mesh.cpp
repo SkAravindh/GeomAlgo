@@ -108,11 +108,47 @@ void Mesh::getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vec
 
 }
 
-void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::set<Triangle *> &TS) {
+void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::vector<Triangle *> &TV) {
+
+    //Required containers
+    std::vector<Point*> collected_points, temp_collected_points;;
+    std::set<Point*>  visted;
+    std::set<Triangle*> collected_triangles;
+    std::vector<Triangle*> vec_collected_triangle;
+    //Required Iterators
+    std::vector<Point*>::iterator iP;
+    std::set<Point*>::iterator iiP;
+    std::set<Triangle*>::iterator iT;
+    typedef std::multimap<Point*, Triangle*,ComparePoint>::iterator MMPT;
+    collected_points.push_back(p);
+
+    for(int i=0; i<order; i++){
+        vec_collected_triangle.clear();
+        for(iP = collected_points.begin(); iP != collected_points.end(); iP++) {
+            iiP = visted.find(*iP);
+            if (iiP != visted.end()) continue;
+            visted.insert(*iP);
+            std::pair<MMPT, MMPT> triangle_set = mmpointTotriangles.equal_range(*iP);
+            for (MMPT triangle_set_IT = triangle_set.first; triangle_set_IT != triangle_set.second; triangle_set_IT++) {
+                collected_triangles.insert(triangle_set_IT->second);
+                vec_collected_triangle.push_back(triangle_set_IT->second);
+            }
+        }
+
+        std::vector<EdgeOrder> vedges;
+        std::vector<Point*> bop ;
+        getedgesByOrder(vec_collected_triangle,-1,vedges);
+        getBorderPoints(vedges,bop);
+        collected_points.clear();
+        for(auto ele : bop) collected_points.push_back(ele);
+    }
+
+    TV.assign(collected_triangles.begin(),collected_triangles.end());
+    //std::cout << "collected_triangles "<<collected_triangles.size()<<" "<<"TV "<<TV.size() << std::endl;
 
 }
 
 
-void Mesh::standAlone() {
-
+void Mesh::standAlone(std::vector<Triangle*> &tv) {
+    getRingNeigbyOrder(allTriangles[0]->getCorners(0),3,tv);
 }

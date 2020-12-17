@@ -23,8 +23,8 @@ public:
     void StoreTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
     void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV);
-    void getRingNeigbyOrder(Point* p, unsigned int &&order, std::set<Triangle*> &TS);
-    void standAlone();
+    void getRingNeigbyOrder(Point* p, unsigned int &&order, std::vector<Triangle*> &TV);
+    void standAlone(std::vector<Triangle*> &tv);
 
 private:
     std::string ModelName;
