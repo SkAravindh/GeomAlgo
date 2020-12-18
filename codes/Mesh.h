@@ -19,12 +19,14 @@ public:
     Mesh(std::string Filename, size_t Poolsize);
     Point* CreateVertex(  double x,   double y,   double z);
     Point* CreateVertex(Point &P);
-    void CreateTriangle(Point *P0, Point *P1, Point *P2);
+    Triangle* CreateTriangle(Point *P0, Point *P1, Point *P2);
     void StoreTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
     void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV);
     void getRingNeigbyOrder(Point* p, unsigned int &&order, std::vector<Triangle*> &TV);
     void standAlone(std::vector<Triangle*> &tv);
+    void fillExternelTriangleVec(std::vector<Triangle*> &etv);
+    void getExternelTriangleVec(std::vector<Triangle*> &etv);
 
 private:
     std::string ModelName;
@@ -39,6 +41,7 @@ protected:
     std::multimap<EdgeOrder, Triangle*> mmedgeTotriangles;
     //std::multimap<EdgeOrder, std::vector<Triangle*>> map_edgeTotriangles; //using multimap map bcoz easy to acess data but not efficient
     std::vector<Triangle*> allTriangles;
+    std::vector<Triangle*> externalUse;
 
 };
 

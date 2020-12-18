@@ -77,9 +77,9 @@ bool brayCentric(const Triangle *t, Point *p){
     Vector3 w = P-vertex0;
 
     Vector3 n = cross_product(u,v);
-    double area = 1/(dot(n,n));
-    double gamma = ( dot( cross_product(u,w), n ) ) * area;
-    double beta  = ( dot( cross_product(w,v), n ) ) * area;
+    double Inv_area = 1/(dot(n,n));
+    double gamma = ( dot( cross_product(u,w), n ) ) * Inv_area;
+    double beta  = ( dot( cross_product(w,v), n ) ) * Inv_area;
     double alpha = 1-gamma-beta;
 
     //projection point on to the plane.
@@ -96,7 +96,7 @@ bool brayCentric(const Triangle *t, Point *p){
 
 }
 
-bool checkHalfEdge(const Triangle *t1, const Triangle *t2){
+bool checkForHalfEdge(const Triangle *t1, const Triangle *t2){
 
     for(int i=0; i<3; i++){
         Point *p = t1->getCorners(i);

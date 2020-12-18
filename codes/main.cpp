@@ -7,6 +7,7 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
+#include "Algorithms/MidpointSubdivision.h"
 
 
 
@@ -17,6 +18,14 @@ int main() {
 
     //std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
+    std::vector<Triangle*> v;
+    pMesh->getTriangles(v);
+
+
+    MidSubdivision * obj = new MidSubdivision(pMesh);
+    obj->loadParameters(v[0], nullptr,2);
+    obj->run();
+     
 
 
 

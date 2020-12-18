@@ -130,6 +130,18 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AlgorithmInitialize.cpp">
+			<Option target="Algofiles"/>
+		</Unit>
+		<Unit filename="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AlgorithmInitialize.h">
+			<Option target="Algofiles"/>
+		</Unit>
+		<Unit filename="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/MidpointSubdivision.cpp">
+			<Option target="Algofiles"/>
+		</Unit>
+		<Unit filename="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/MidpointSubdivision.h">
+			<Option target="Algofiles"/>
+		</Unit>
 		<Unit filename="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Bbox_3.cpp">
 			<Option target="Algofiles"/>
 		</Unit>

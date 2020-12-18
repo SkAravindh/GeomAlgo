@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Algofiles.dir/Algorithms/AlgorithmInitialize.cpp.o"
+  "CMakeFiles/Algofiles.dir/Algorithms/MidpointSubdivision.cpp.o"
   "CMakeFiles/Algofiles.dir/Bbox_3.cpp.o"
   "CMakeFiles/Algofiles.dir/Collision.cpp.o"
   "CMakeFiles/Algofiles.dir/EdgeOrder.cpp.o"

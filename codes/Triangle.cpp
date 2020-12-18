@@ -31,6 +31,16 @@ Vector3 Triangle::getNormalVector() const {
     return normal;
 }
 
+Point* Triangle::getEdgeMidPoint(int i) const {
+    Point *p0 = getCorners(indexOrder_1(i));
+    Point *p1 = getCorners(indexOrder_2(i));
+    Vector3 v0(p0->x(),p0->y(),p0->z());
+    Vector3 v1(p1->x(),p1->y(),p1->z());
+    Vector3 sum = v0+v1;
+    Point* mid = new Point(sum.x()/2,sum.y()/2,sum.z()/2);
+    return mid;
+}
+
 bool Triangle::operator == (const Triangle &rhs) const {
     return (*this->getCorners(0) == *rhs.getCorners(0) && *this->getCorners(1) == *rhs.getCorners(1) && *this->getCorners(2) == *rhs.getCorners(2));
 }

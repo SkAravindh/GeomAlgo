@@ -16,6 +16,7 @@ public:
     Point* getCorners(int i) const;
     EdgeOrder getEO(int i) const;
     Vector3 getNormalVector() const;
+    Point* getEdgeMidPoint(int i) const;
     bool operator == (const Triangle &rhs) const;
     bool operator != (const Triangle &rhs) const;
     bool operator < (const Triangle &rhs) const;

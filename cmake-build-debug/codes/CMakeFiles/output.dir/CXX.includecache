@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/MidpointSubdivision.h
+iostream
+-
+../Mesh.h
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Mesh.h
+../Geom_Support.h
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Geom_Support.h
+../Writedata.h
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Writedata.h
+
 /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Bbox_3.h
 cfloat
 -
@@ -111,6 +121,8 @@ Geom_Support.h
 /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Geom_Support.h
 Writedata.h
 /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Writedata.h
+Algorithms/MidpointSubdivision.h
+/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/MidpointSubdivision.h
 
 /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/stl_reader.h
 algorithm

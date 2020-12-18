@@ -30,9 +30,10 @@ Point* Mesh::CreateVertex(Point &P) {
     }
 }
 
-void Mesh::CreateTriangle(Point *P0, Point *P1, Point *P2) {
+Triangle* Mesh::CreateTriangle(Point *P0, Point *P1, Point *P2) {
     Triangle *newT = new Triangle(P0, P1, P2,this);
     allTriangles.push_back(newT);
+    return newT;
 
 }
 
@@ -57,6 +58,18 @@ void Mesh::getTriangles(std::vector<Triangle*> &TV){
     for(it=allTriangles.begin(); it!=allTriangles.end(); it++){
         Triangle * tri(*it);
         TV.push_back(tri);
+    }
+}
+
+void Mesh::fillExternelTriangleVec(std::vector<Triangle *> &etv) {
+    for(auto ele : etv){
+        externalUse.push_back(ele);
+    }
+}
+
+void Mesh::getExternelTriangleVec(std::vector<Triangle*> &etv){
+    for(auto ele : externalUse){
+        etv.push_back(ele);
     }
 }
 

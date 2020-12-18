@@ -18,6 +18,10 @@ add_library(
             Bbox_3.cpp
             Writedata.h
             Writedata.cpp
+            Algorithms/MidpointSubdivision.h
+            Algorithms/MidpointSubdivision.cpp
+            Algorithms/AlgorithmInitialize.h
+            Algorithms/AlgorithmInitialize.cpp
             )
 
 add_executable(output main.cpp)

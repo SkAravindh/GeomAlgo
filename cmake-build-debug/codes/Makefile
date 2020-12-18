@@ -160,6 +160,60 @@ Algofiles/fast:
 	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/build
 .PHONY : Algofiles/fast
 
+Algorithms/AlgorithmInitialize.o: Algorithms/AlgorithmInitialize.cpp.o
+
+.PHONY : Algorithms/AlgorithmInitialize.o
+
+# target to build an object file
+Algorithms/AlgorithmInitialize.cpp.o:
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AlgorithmInitialize.cpp.o
+.PHONY : Algorithms/AlgorithmInitialize.cpp.o
+
+Algorithms/AlgorithmInitialize.i: Algorithms/AlgorithmInitialize.cpp.i
+
+.PHONY : Algorithms/AlgorithmInitialize.i
+
+# target to preprocess a source file
+Algorithms/AlgorithmInitialize.cpp.i:
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AlgorithmInitialize.cpp.i
+.PHONY : Algorithms/AlgorithmInitialize.cpp.i
+
+Algorithms/AlgorithmInitialize.s: Algorithms/AlgorithmInitialize.cpp.s
+
+.PHONY : Algorithms/AlgorithmInitialize.s
+
+# target to generate assembly for a file
+Algorithms/AlgorithmInitialize.cpp.s:
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AlgorithmInitialize.cpp.s
+.PHONY : Algorithms/AlgorithmInitialize.cpp.s
+
+Algorithms/MidpointSubdivision.o: Algorithms/MidpointSubdivision.cpp.o
+
+.PHONY : Algorithms/MidpointSubdivision.o
+
+# target to build an object file
+Algorithms/MidpointSubdivision.cpp.o:
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/MidpointSubdivision.cpp.o
+.PHONY : Algorithms/MidpointSubdivision.cpp.o
+
+Algorithms/MidpointSubdivision.i: Algorithms/MidpointSubdivision.cpp.i
+
+.PHONY : Algorithms/MidpointSubdivision.i
+
+# target to preprocess a source file
+Algorithms/MidpointSubdivision.cpp.i:
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/MidpointSubdivision.cpp.i
+.PHONY : Algorithms/MidpointSubdivision.cpp.i
+
+Algorithms/MidpointSubdivision.s: Algorithms/MidpointSubdivision.cpp.s
+
+.PHONY : Algorithms/MidpointSubdivision.s
+
+# target to generate assembly for a file
+Algorithms/MidpointSubdivision.cpp.s:
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/MidpointSubdivision.cpp.s
+.PHONY : Algorithms/MidpointSubdivision.cpp.s
+
 Bbox_3.o: Bbox_3.cpp.o
 
 .PHONY : Bbox_3.o
@@ -440,6 +494,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Algofiles"
 	@echo "... output"
+	@echo "... Algorithms/AlgorithmInitialize.o"
+	@echo "... Algorithms/AlgorithmInitialize.i"
+	@echo "... Algorithms/AlgorithmInitialize.s"
+	@echo "... Algorithms/MidpointSubdivision.o"
+	@echo "... Algorithms/MidpointSubdivision.i"
+	@echo "... Algorithms/MidpointSubdivision.s"
 	@echo "... Bbox_3.o"
 	@echo "... Bbox_3.i"
 	@echo "... Bbox_3.s"

@@ -14,7 +14,7 @@ Vector3 getOrthogonalProjectionVector( const Triangle *t, Point *p);
 int indexOrder_1(int n);
 int indexOrder_2(int n);
 bool brayCentric(const Triangle *t, Point *p);
-bool checkHalfEdge(const Triangle *t1, const Triangle *t2);
+bool checkForHalfEdge(const Triangle *t1, const Triangle *t2);
 bool checkCommonVertex(const Triangle *t1, const Triangle *t2);
 void getedgesByOrder(const std::vector<Triangle* > &TV, const int &i, std::vector<EdgeOrder> &out);
 void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP);
