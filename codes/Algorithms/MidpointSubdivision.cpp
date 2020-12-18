@@ -8,7 +8,7 @@ MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &M
 
     //Return current triangle object as if reach the given level.
     this->level=C_level;
-    std::cout<< "level " << level<<" "<<"C_level "<<C_level<<" "<<"RefineLevel "<<RefineLevel << std::endl;
+   
     if(level >= RefineLevel){
         return;
     }
@@ -28,16 +28,15 @@ MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &M
     Triangle* tri4  = Mesh->CreateTriangle(edge2mid,parentT->getCorners(1),edge0mid);
 
     //Pushing triangles into current object triangle container.
-
     this->thisTvec.push_back(tri1);
     this->thisTvec.push_back(tri2);
     this->thisTvec.push_back(tri3);
     this->thisTvec.push_back(tri4);
+
+    //Level Increment
     ++level;
-    int count=0;
+
     for(TI it=thisTvec.begin(); it!=thisTvec.end(); it++){
-        ++count;
-        std::cout << "inside for loop "<<count << std::endl;
         Vchild.push_back(new MidSubdivision(*it, level,Mesh) );
     }
 
