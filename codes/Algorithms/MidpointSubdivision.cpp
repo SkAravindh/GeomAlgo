@@ -8,7 +8,7 @@ MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &M
 
     //Return current triangle object as if reach the given level.
     this->level=C_level;
-   
+
     if(level >= RefineLevel){
         return;
     }
@@ -28,10 +28,11 @@ MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &M
     Triangle* tri4  = Mesh->CreateTriangle(edge2mid,parentT->getCorners(1),edge0mid);
 
     //Pushing triangles into current object triangle container.
-    this->thisTvec.push_back(tri1);
-    this->thisTvec.push_back(tri2);
-    this->thisTvec.push_back(tri3);
-    this->thisTvec.push_back(tri4);
+    std::vector<Triangle*> thisTvec;
+    thisTvec.push_back(tri1);
+    thisTvec.push_back(tri2);
+    thisTvec.push_back(tri3);
+    thisTvec.push_back(tri4);
 
     //Level Increment
     ++level;
@@ -59,18 +60,38 @@ void MidSubdivision::loadParameters(Triangle* TInput, Point* PInput , int Refine
 void MidSubdivision::run() {
     std::vector<Triangle*> splitvector;
     pMesh->getExternelTriangleVec(splitvector);
-    MidSubdivision *obj = new MidSubdivision(splitvector[2],0,pMesh);
-    std::vector<Triangle*> patch;
-    for( auto ele :  obj->thisTvec){
-        patch.push_back(ele);
+    for(int i=0; i<1; i++) {
+        MidSubdivision *obj = new MidSubdivision(splitvector[i], 0, pMesh); //use [2] for proper result
+        MidSubVector.push_back(obj);
     }
-    for(int i=0; i<4; i++){
-       for(auto ele1 : obj->Vchild[i]->thisTvec){
-           patch.push_back(ele1);
-       }
-    }
-    writeSTL("dividetri.stl", patch);
+
 }
 
 
+void MidSubdivision::getSubdividedTriangles(std::vector<Triangle*> & STV) {
+    for(MSI iter = MidSubVector.begin(); iter!= MidSubVector.end(); iter++){
+        MidSubdivision* C_obj(*iter);
+        C_obj->collectallMSDtriangles(STV);
+    }
+}
 
+
+void MidSubdivision::collectallMSDtriangles( std::vector<Triangle *> &STV) {
+
+    if( this->Vchild.empty() ){
+        STV.push_back(this->getParent());
+    }
+    else{
+        //return;
+    }
+
+    //recursively collect all subdivided triangle object.
+    for(MSI iter = Vchild.begin(); iter!= Vchild.end(); iter++){
+        MidSubdivision* C_vc(*iter);
+        C_vc->collectallMSDtriangles(STV);
+    }
+}
+
+Triangle* MidSubdivision::getParent() {
+    return parentT;
+}

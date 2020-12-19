@@ -20,12 +20,14 @@ int main() {
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
     std::vector<Triangle*> v;
     pMesh->getTriangles(v);
-
+   std::vector<Triangle* > tv;
 
     MidSubdivision * obj = new MidSubdivision(pMesh);
-    obj->loadParameters(v[0], nullptr,2);
+    obj->loadParameters(v[0], nullptr,5);
     obj->run();
-     
+    obj->getSubdividedTriangles(tv);
+    std::cout << "in main " << tv.size() << std::endl;
+
 
 
 
