@@ -12,7 +12,7 @@ public:
     MidSubdivision(Triangle* T, int C_level,std::shared_ptr<Mesh> &Mesh );
     void loadParameters( Triangle* TInput, Point* PInput , int Refinement_Level);
     void run();
-    void getSubdividedTriangles(std::vector<Triangle*> & STV);
+    void getSubdividedTriangles(std::vector<Triangle* > &tv);
     void collectallMSDtriangles( std::vector<Triangle *> &STV);
     Triangle* getParent();
 

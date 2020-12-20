@@ -6,14 +6,16 @@ MidSubdivision::MidSubdivision (std::shared_ptr<Mesh> &Mesh) : pMesh(Mesh){
 
 MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &Mesh) {
 
-    //Return current triangle object as if reach the given level.
     this->level=C_level;
 
+    //Assigning current triangle to parent.
+    parentT = T;
+
+    //Return current triangle object as if reach the given level.
     if(level >= RefineLevel){
         return;
     }
-    //Assigning current triangle to parent.
-    parentT = T;
+
 
     //Taking Midpoint of Current Triangle to initiate the splitting process.
     Point* edge0mid = parentT->getEdgeMidPoint(0);
@@ -61,24 +63,26 @@ void MidSubdivision::run() {
     std::vector<Triangle*> splitvector;
     pMesh->getExternelTriangleVec(splitvector);
     for(int i=0; i<1; i++) {
-        MidSubdivision *obj = new MidSubdivision(splitvector[i], 0, pMesh); //use [2] for proper result
+        MidSubdivision *obj = new MidSubdivision(splitvector[2], 0, pMesh); //use [2] for proper result
         MidSubVector.push_back(obj);
     }
+    //std::cout << *MidSubVector[0]->Vchild[0]->getParent();
 
 }
 
 
-void MidSubdivision::getSubdividedTriangles(std::vector<Triangle*> & STV) {
+void MidSubdivision::getSubdividedTriangles(std::vector<Triangle* > &tv) {
     for(MSI iter = MidSubVector.begin(); iter!= MidSubVector.end(); iter++){
         MidSubdivision* C_obj(*iter);
-        C_obj->collectallMSDtriangles(STV);
+        C_obj->collectallMSDtriangles(tv);
     }
+
 }
 
 
 void MidSubdivision::collectallMSDtriangles( std::vector<Triangle *> &STV) {
 
-    if( this->Vchild.empty() ){
+    if( Vchild.empty() ){
         STV.push_back(this->getParent());
     }
     else{
