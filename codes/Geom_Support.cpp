@@ -181,3 +181,34 @@ void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP){
     points.resize(std::distance(points.begin(),vit));
     VP.assign(points.begin(), points.end());
 }
+
+void eraseCertainTriangle(std::vector<Triangle* > &TV, Triangle *t){
+        TV.erase(std::remove(TV.begin(), TV.end(), t), TV.end());
+}
+
+void eraseCertainEntryPT(std::multimap<Point*, Triangle*,ComparePoint>&mm, Point *key, Triangle* t){
+
+    typedef std::multimap<Point*, Triangle*,ComparePoint>::iterator MMPT;
+    std::pair<MMPT, MMPT> point_triangle = mm.equal_range(key);
+    for(MMPT iter = point_triangle.first; iter != point_triangle.second; iter++ ){
+        Point *p = iter->first;
+        Triangle *tri = iter->second;
+        if( *p == *key && *tri == *t){
+            mm.erase(iter);
+            break;
+        }
+    }
+}
+
+void eraseCertainEntryET(std::multimap<EdgeOrder, Triangle*>&mm, EdgeOrder &key, Triangle* t){
+    typedef std::multimap<EdgeOrder, Triangle *>::iterator MMET;
+    std::pair<MMET, MMET> edge_triangle = mm.equal_range(key);
+    for(MMET iter = edge_triangle.first; iter != edge_triangle.second; iter++ ){
+        EdgeOrder eo = iter->first;
+        Triangle *tri = iter->second;
+        if( eo == key && *tri == *t){
+            mm.erase(iter);
+            break;
+        }
+    }
+}

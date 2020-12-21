@@ -1,6 +1,10 @@
 #include "Triangle.h"
 
-
+Triangle::Triangle(){
+    corners[0] = nullptr;
+    corners[1] = nullptr;
+    corners[2] = nullptr;
+}
 
 Triangle::Triangle(Point* P0, Point* P1, Point* P2, Mesh* mobj): powner(mobj) {
     Initilize(P0,P1,P2);

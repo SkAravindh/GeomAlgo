@@ -30,14 +30,16 @@ Point* Mesh::CreateVertex(Point &P) {
     }
 }
 
-Triangle* Mesh::CreateTriangle(Point *P0, Point *P1, Point *P2) {
+Triangle* Mesh::CreateTriangle(Point *P0, Point *P1, Point *P2,bool flag) {
     Triangle *newT = new Triangle(P0, P1, P2,this);
-    allTriangles.push_back(newT);
+    if(flag) {
+        allTriangles.push_back(newT);
+    }
     return newT;
-
 }
 
 void Mesh::StoreTriangleInfo(Triangle *T) {
+
     Point* p0 = T->getCorners(0);
     Point* p1 = T->getCorners(1);
     Point* p2 = T->getCorners(2);
@@ -50,7 +52,16 @@ void Mesh::StoreTriangleInfo(Triangle *T) {
     mmedgeTotriangles.insert(std::make_pair(T->getEO(1),T));
     mmedgeTotriangles.insert(std::make_pair(T->getEO(2),T));
 
+}
 
+void Mesh::reEstablishConnectivity() {
+    //Call only when you completely update alltriangle container.
+    mmpointTotriangles.clear();
+    mmedgeTotriangles.clear();
+    std::vector<Triangle*>::iterator it;
+    for(it=allTriangles.begin(); it != allTriangles.end(); it++){
+        StoreTriangleInfo(*it);
+    }
 }
 
 void Mesh::getTriangles(std::vector<Triangle*> &TV){
@@ -72,6 +83,32 @@ void Mesh::getExternelTriangleVec(std::vector<Triangle*> &etv){
         etv.push_back(ele);
     }
 }
+
+void Mesh::clearTV() {
+    if(!allTriangles.empty()){
+        allTriangles.clear();
+    }
+    else{
+        return;
+    }
+}
+
+void Mesh::fillAllTriangle(std::vector<Triangle *> &tv) {
+    std::vector<Triangle*>::iterator it;
+    for(it=tv.begin(); it != tv.end(); it++){
+        Triangle * tri(*it);
+        allTriangles.push_back(tri);
+    }
+    //copy(tv.begin(), tv.end(), std::back_inserter(allTriangles));
+}
+
+void Mesh::delCertainTrisInalltriangles(std::vector<Triangle*> &tv){
+    std::vector<Triangle*>::iterator it;
+    for(it=tv.begin(); it != tv.end(); it++){
+        eraseCertainTriangle(allTriangles,*it);
+    }
+}
+
 
 void Mesh::getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV) {
     //iterators
@@ -163,5 +200,7 @@ void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::vector<Triang
 
 
 void Mesh::standAlone(std::vector<Triangle*> &tv) {
-    getRingNeigbyOrder(allTriangles[0]->getCorners(0),3,tv);
+    //std::cout << *allTriangles[0]->getCorners(0) << std::endl;
+    getRingNeigbyOrder(allTriangles[0]->getCorners(0), 1, tv);
+
 }

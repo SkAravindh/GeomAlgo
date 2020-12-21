@@ -18,6 +18,9 @@ bool checkForHalfEdge(const Triangle *t1, const Triangle *t2);
 bool checkCommonVertex(const Triangle *t1, const Triangle *t2);
 void getedgesByOrder(const std::vector<Triangle* > &TV, const int &i, std::vector<EdgeOrder> &out);
 void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP);
+void eraseCertainTriangle(std::vector<Triangle* > &TV, Triangle *t);
+void eraseCertainEntryPT(std::multimap<Point*, Triangle*,ComparePoint>&mm, Point *key, Triangle* t);
+void eraseCertainEntryET(std::multimap<EdgeOrder, Triangle*>&mm, EdgeOrder &key, Triangle* t);
 
 
 

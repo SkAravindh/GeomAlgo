@@ -19,7 +19,7 @@ public:
     Mesh(std::string Filename, size_t Poolsize);
     Point* CreateVertex(  double x,   double y,   double z);
     Point* CreateVertex(Point &P);
-    Triangle* CreateTriangle(Point *P0, Point *P1, Point *P2);
+    Triangle* CreateTriangle(Point *P0, Point *P1, Point *P2, bool flag);
     void StoreTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
     void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV);
@@ -27,11 +27,15 @@ public:
     void standAlone(std::vector<Triangle*> &tv);
     void fillExternelTriangleVec(std::vector<Triangle*> &etv);
     void getExternelTriangleVec(std::vector<Triangle*> &etv);
+    void clearTV();
+    void fillAllTriangle(std::vector<Triangle*> &tv);
+    void reEstablishConnectivity();
+    void delCertainTrisInalltriangles(std::vector<Triangle*> &tv);
+
 
 private:
     std::string ModelName;
     size_t Poolsize;
-
 
 protected:
     std::map<Point, Point*> allvertices;
