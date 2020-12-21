@@ -51,11 +51,11 @@ void MidSubdivision::loadParameters(Triangle* TInput, Point* PInput , int Refine
     std::vector<Triangle*> tv;
     if(TInput != nullptr){
         pMesh->getNeigTrianglesbyOrder(TInput,1,tv);
-        pMesh->fillExternelTriangleVec(tv);
+        pMesh->fillTriangleContainers(tv, external);
     }
     else if(PInput != nullptr){
         pMesh->getRingNeigbyOrder(PInput,1,tv);
-        pMesh->fillExternelTriangleVec(tv);
+        pMesh->fillTriangleContainers(tv, external);
     }
     else{
         std::cout << "Midpoint Subdivision Initialized for complete mesh " << std::endl;
@@ -64,7 +64,7 @@ void MidSubdivision::loadParameters(Triangle* TInput, Point* PInput , int Refine
 
 void MidSubdivision::run() {
     std::vector<Triangle*> splitvector;
-    pMesh->getExternelTriangleVec(splitvector);
+    pMesh->getTriangleContainers(splitvector,external);
     pMesh->delCertainTrisInalltriangles(splitvector);
 
     for(int i=0; i<splitvector.size(); i++) {
@@ -76,7 +76,7 @@ void MidSubdivision::run() {
 void MidSubdivision::runForCompleteMesh() {
     std::vector<Triangle*> TV;
     pMesh->getTriangles(TV);
-    pMesh->clearTV();
+    pMesh->clearTV(alltri);
 
     for(int i=0; i<TV.size(); i++) {
         MidSubdivision *obj = new MidSubdivision(TV[i], 0, pMesh); //use [2] for proper result
@@ -92,7 +92,8 @@ void MidSubdivision::getSubdividedTriangles() {
         MidSubdivision* C_obj(*iter);
         C_obj->collectallMSDtriangles(out);
     }
-    pMesh->fillAllTriangle(out);
+
+    pMesh->fillTriangleContainers(out,alltri);
     pMesh->reEstablishConnectivity();
 
 }

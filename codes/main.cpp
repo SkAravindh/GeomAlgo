@@ -18,8 +18,8 @@ int main() {
 
     //std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
-    std::vector<Triangle*> v;
-    pMesh->getTriangles(v);
+//    std::vector<Triangle*> v;
+//    pMesh->getTriangles(v);
 
 
 
@@ -27,15 +27,15 @@ int main() {
 
     std::vector<Triangle* > tv;
     MidSubdivision * obj = new MidSubdivision(pMesh);
-    obj->loadParameters(nullptr, nullptr ,2); //allTriangles[0]->getCorners(0) point
-    //obj->run();
-    obj->runForCompleteMesh();
-    obj->getSubdividedTriangles();
-
-    std::vector<Triangle*> allTriangles;
-    pMesh->getTriangles(allTriangles);
-    writeSTL("global.stl", allTriangles );
-    std::cout << allTriangles.size() << std::endl;
+//    obj->loadParameters(nullptr, nullptr ,2); //allTriangles[0]->getCorners(0) point
+//    //obj->run();
+//    obj->runForCompleteMesh();
+//    obj->getSubdividedTriangles();
+//
+//    std::vector<Triangle*> allTriangles;
+ //   pMesh->getTriangles(allTriangles);
+   // writeSTL("teeeee.stl", allTriangles );
+  //  std::cout << allTriangles.size() << std::endl;
 //
 
 

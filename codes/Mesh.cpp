@@ -72,34 +72,54 @@ void Mesh::getTriangles(std::vector<Triangle*> &TV){
     }
 }
 
-void Mesh::fillExternelTriangleVec(std::vector<Triangle *> &etv) {
-    for(auto ele : etv){
-        externalUse.push_back(ele);
+
+void Mesh::fillTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN ){
+    switch (VN) {
+        case alltri:
+            for(auto ele : tv){
+                allTriangles.push_back(ele);
+            }
+            break;
+        case external:
+            for(auto ele : tv){
+                externalUse.push_back(ele);
+            }
+            break;
+        default:
+            break;
     }
 }
 
-void Mesh::getExternelTriangleVec(std::vector<Triangle*> &etv){
-    for(auto ele : externalUse){
-        etv.push_back(ele);
+void Mesh::getTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN ){
+    switch (VN) {
+        case alltri:
+            for(auto ele : allTriangles){
+                tv.push_back(ele);
+            }
+            break;
+        case external:
+            for(auto ele : externalUse){
+                tv.push_back(ele);
+            }
+            break;
+        default:
+            break;
     }
 }
 
-void Mesh::clearTV() {
-    if(!allTriangles.empty()){
-        allTriangles.clear();
-    }
-    else{
-        return;
-    }
-}
 
-void Mesh::fillAllTriangle(std::vector<Triangle *> &tv) {
-    std::vector<Triangle*>::iterator it;
-    for(it=tv.begin(); it != tv.end(); it++){
-        Triangle * tri(*it);
-        allTriangles.push_back(tri);
+void Mesh::clearTV(VecContainerName VN) {
+
+    switch (VN) {
+        case alltri:
+            allTriangles.clear();
+            break;
+        case external:
+            externalUse.clear();
+            break;
+        default:
+            break;
     }
-    //copy(tv.begin(), tv.end(), std::back_inserter(allTriangles));
 }
 
 void Mesh::delCertainTrisInalltriangles(std::vector<Triangle*> &tv){
@@ -204,3 +224,4 @@ void Mesh::standAlone(std::vector<Triangle*> &tv) {
     getRingNeigbyOrder(allTriangles[0]->getCorners(0), 1, tv);
 
 }
+

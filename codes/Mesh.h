@@ -11,6 +11,10 @@
 
 class Triangle; //fwd
 
+enum VecContainerName{
+    alltri,
+    external
+};
 
 
 class Mesh{
@@ -25,10 +29,9 @@ public:
     void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV);
     void getRingNeigbyOrder(Point* p, unsigned int &&order, std::vector<Triangle*> &TV);
     void standAlone(std::vector<Triangle*> &tv);
-    void fillExternelTriangleVec(std::vector<Triangle*> &etv);
-    void getExternelTriangleVec(std::vector<Triangle*> &etv);
-    void clearTV();
-    void fillAllTriangle(std::vector<Triangle*> &tv);
+    void fillTriangleContainers(std::vector<Triangle*> &etv,VecContainerName VN );
+    void getTriangleContainers(std::vector<Triangle*> &etv,VecContainerName VN );
+    void clearTV(VecContainerName VN);
     void reEstablishConnectivity();
     void delCertainTrisInalltriangles(std::vector<Triangle*> &tv);
 
