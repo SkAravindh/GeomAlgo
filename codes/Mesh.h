@@ -3,10 +3,12 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <algorithm>
 #include <memory>
 #include "Point.h"
 #include "Triangle.h"
 #include "EdgeOrder.h"
+#include "Writedata.h"
 #include <set>
 
 class Triangle; //fwd
@@ -23,17 +25,24 @@ public:
     Mesh(std::string Filename, size_t Poolsize);
     Point* CreateVertex(  double x,   double y,   double z);
     Point* CreateVertex(Point &P);
-    Triangle* CreateTriangle(Point *P0, Point *P1, Point *P2, bool flag);
+    Triangle* CreateTriangle(Point *P0, Point *P1, Point *P2, Triangle* parent);
     void StoreTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
+    void standAlone(std::vector<Triangle*> &tv);
+    void printInfo();
     void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV);
     void getRingNeigbyOrder(Point* p, unsigned int &&order, std::vector<Triangle*> &TV);
-    void standAlone(std::vector<Triangle*> &tv);
     void fillTriangleContainers(std::vector<Triangle*> &etv,VecContainerName VN );
     void getTriangleContainers(std::vector<Triangle*> &etv,VecContainerName VN );
     void clearTV(VecContainerName VN);
     void reEstablishConnectivity();
     void delCertainTrisInalltriangles(std::vector<Triangle*> &tv);
+    void delCertainEntryPT(Triangle* t);
+    void delCertainEntryET(Triangle* t);
+    void establishNeighcompleteMesh();
+    void establishNeighofTriangle(Triangle *t);
+    void getAdjustenNeigh(const EdgeOrder &oe,std::vector<Triangle*> &tv);
+    void writemesh(std::string filename);
 
 
 private:

@@ -45,6 +45,61 @@ Point* Triangle::getEdgeMidPoint(int i) const {
     return mid;
 }
 
+void Triangle::setNeigh(int i, Triangle *t) {
+    neigb[i]=t;
+}
+
+Triangle* Triangle::getNeigh(int i) {
+    return neigb[i];
+}
+
+void Triangle::addchild(Triangle *t) {
+    vchildren.push_back(t);
+}
+
+bool Triangle::haschild() {
+    return !vchildren.empty();
+}
+
+void Triangle::getChildren(std::vector<Triangle *> &childvector) {
+    if(!haschild()){
+        childvector.push_back(this);
+    } else{
+        for(std::vector<Triangle*>::iterator it = vchildren.begin(); it != vchildren.end(); it++){
+            (*it)->getChildren(childvector);
+        }
+    }
+}
+
+void Triangle::clearVchild()  {
+    vchildren.clear();
+}
+
+void Triangle::setRefinelevel(int a)  {
+    refineLevel = a;
+}
+
+void Triangle::setRefineStatus(bool flag) {
+    refineStatus = flag;
+}
+
+bool Triangle::isRefined() const {
+    return refineStatus;
+}
+
+int Triangle::getRefinelevel() const {
+    return refineLevel;
+}
+
+bool Triangle::haske() const{
+    return Ke;
+}
+
+void Triangle::setke(bool flag) {
+    Ke=flag;
+}
+
+
 bool Triangle::operator == (const Triangle &rhs) const {
     return (*this->getCorners(0) == *rhs.getCorners(0) && *this->getCorners(1) == *rhs.getCorners(1) && *this->getCorners(2) == *rhs.getCorners(2));
 }

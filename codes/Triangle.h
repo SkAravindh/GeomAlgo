@@ -17,6 +17,20 @@ public:
     EdgeOrder getEO(int i) const;
     Vector3 getNormalVector() const;
     Point* getEdgeMidPoint(int i) const;
+    void setNeigh(int i, Triangle* t);
+    Triangle* getNeigh(int i);
+    void addchild(Triangle* t);
+    void clearVchild();
+    bool haschild();
+    void getChildren(std::vector<Triangle*> &vchild);
+
+    void setRefineStatus(bool flag);
+    void setRefinelevel(int a);
+    int getRefinelevel() const;
+    bool isRefined() const;
+    bool haske() const;
+    void setke(bool flag);
+
     bool operator == (const Triangle &rhs) const;
     bool operator != (const Triangle &rhs) const;
     bool operator < (const Triangle &rhs) const;
@@ -25,8 +39,12 @@ public:
 
 private:
     Point* corners[3];
-    Point* neigb[3];
+    Triangle* neigb[3];
+    std::vector<Triangle*> vchildren;
     Mesh *powner;
+    bool refineStatus=false;
+    int refineLevel;
+    bool Ke = false;
 
 };
 

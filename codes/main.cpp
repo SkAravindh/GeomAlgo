@@ -7,7 +7,8 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
-#include "Algorithms/MidpointSubdivision.h"
+#include "Algorithms/AdaptivieTriangle.h"
+
 
 
 
@@ -18,15 +19,26 @@ int main() {
 
     //std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
-//    std::vector<Triangle*> v;
-//    pMesh->getTriangles(v);
+    std::vector<Triangle*> v;
+    pMesh->getTriangles(v);
+//    std::cout << "size  " << v.size() << std::endl;
+//    std::vector<Triangle*> sh;
+//    EdgeOrder ed = v[1673]->getEO(0);
+//    pMesh->getAdjustenNeigh(ed,sh);
+//    for(auto ele :sh){
+//        std::cout << *ele << std::endl;
+//    }
+//    int tri1 = getNonCommonPointsIDs(sh[0],sh[1],1);
+//    int tri2 = getNonCommonPointsIDs(sh[0],sh[1],2);
+//    std::cout << tri1 <<" "<<tri2<<std::endl;
+//    std::cout << *sh[0]->getCorners(tri1) << std::endl;
+//    std::cout << *sh[1]->getCorners(tri2) << std::endl;
 
+    EstablishConnectivity * obj =  new EstablishConnectivity(pMesh);
+    obj->loadParameters(v[0],1);
 
-
-
-
-    std::vector<Triangle* > tv;
-    MidSubdivision * obj = new MidSubdivision(pMesh);
+//    std::vector<Triangle* > tv;
+//    MidSubdivision * obj = new MidSubdivision(pMesh);
 //    obj->loadParameters(nullptr, nullptr ,2); //allTriangles[0]->getCorners(0) point
 //    //obj->run();
 //    obj->runForCompleteMesh();

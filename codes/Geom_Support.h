@@ -21,6 +21,8 @@ void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP);
 void eraseCertainTriangle(std::vector<Triangle* > &TV, Triangle *t);
 void eraseCertainEntryPT(std::multimap<Point*, Triangle*,ComparePoint>&mm, Point *key, Triangle* t);
 void eraseCertainEntryET(std::multimap<EdgeOrder, Triangle*>&mm, EdgeOrder &key, Triangle* t);
+bool getCommonEdge(Triangle *t1, Triangle *t2,EdgeOrder &oe );
+int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no );
 
 
 

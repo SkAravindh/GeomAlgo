@@ -212,3 +212,65 @@ void eraseCertainEntryET(std::multimap<EdgeOrder, Triangle*>&mm, EdgeOrder &key,
         }
     }
 }
+
+bool getCommonEdge(Triangle *t1, Triangle *t2,EdgeOrder &oe){
+
+    std::vector<Triangle*> tv;
+    std::map<EdgeOrder, std::vector<Triangle*>> edtoT;
+    tv.push_back(t1);
+    tv.push_back(t2);
+    for(int i=0; i<2; i++){
+        Triangle* current(tv[i]);
+        for(int j=0; j<3; j++) {
+            EdgeOrder ed = current->getEO(j);
+            edtoT[ed].push_back(current);
+        }
+    }
+
+    for(auto it = edtoT.begin(); it != edtoT.end(); it++ ){
+        if(it->second.size()==2){
+           oe=it->first;
+            return true;
+        }
+    }
+    std::cout << "No common edge between those two triangles so returning false !!! " << std::endl;
+    return false;
+}
+
+int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no){
+    //works only when triangles have halfedge
+    int id1;
+    int id2;
+    for(int i=0; i<3; i++){
+        Point* p0 = t1->getCorners(i);
+        for(int j=0; j<3; j++){
+            Point * p1 = t2->getCorners(j);
+            if(*p0 == *p1){
+                int T1next = indexOrder_1(i);
+                int T1prev = indexOrder_2(i);
+                int T2next = indexOrder_1(j);
+                int T2prev = indexOrder_2(j);
+                if(*t1->getCorners(T1next) == *t2->getCorners(T2prev)) {
+                    id2 = T2next;
+                    id1 = T1prev;
+                }
+                if(*t1->getCorners(T1prev) == *t2->getCorners(T2next)) {
+                    id2 = T2prev;
+                    id1 = T1next;
+                }
+            }
+
+        }
+    }
+    switch (Triangle_no) {
+        case 1:
+            return id1;
+            break;
+        case 2:
+            return id2;
+            break;
+        default:
+            break;
+
+    }
+}

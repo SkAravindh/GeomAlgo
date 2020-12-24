@@ -130,6 +130,18 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AdaptParent.cpp">
+			<Option target="Algofiles"/>
+		</Unit>
+		<Unit filename="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AdaptParent.h">
+			<Option target="Algofiles"/>
+		</Unit>
+		<Unit filename="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AdaptivieTriangle.cpp">
+			<Option target="Algofiles"/>
+		</Unit>
+		<Unit filename="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AdaptivieTriangle.h">
+			<Option target="Algofiles"/>
+		</Unit>
 		<Unit filename="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AlgorithmInitialize.cpp">
 			<Option target="Algofiles"/>
 		</Unit>

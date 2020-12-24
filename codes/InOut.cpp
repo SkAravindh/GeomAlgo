@@ -30,7 +30,7 @@ std::shared_ptr<Mesh> InOutToMesh(std::string Filename, stl_reader::StlMesh<floa
            Point* p2 = pmeshout->CreateVertex(c3[0],c3[1],c3[2]);
 
            if(*p0!=*p1 && *p1!=*p2 && *p2!=*p0){
-              pmeshout->CreateTriangle(p0,p1,p2,true);
+              pmeshout->CreateTriangle(p0,p1,p2, nullptr);
            }
 
         }

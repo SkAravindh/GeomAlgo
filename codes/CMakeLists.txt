@@ -22,6 +22,10 @@ add_library(
             Algorithms/MidpointSubdivision.cpp
             Algorithms/AlgorithmInitialize.h
             Algorithms/AlgorithmInitialize.cpp
+            Algorithms/AdaptivieTriangle.h
+            Algorithms/AdaptivieTriangle.cpp
+            Algorithms/AdaptParent.cpp
+            Algorithms/AdaptParent.h
             )
 
 add_executable(output main.cpp)

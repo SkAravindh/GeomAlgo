@@ -24,10 +24,10 @@ MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &M
 
 
     //Splitting the parent triangle into four and storeing into alltriangle container(check Mesh.h)
-    Triangle* tri1  = Mesh->CreateTriangle(edge0mid,edge1mid,edge2mid,false);
-    Triangle* tri2  = Mesh->CreateTriangle(edge0mid,parentT->getCorners(2),edge1mid, false);
-    Triangle* tri3  = Mesh->CreateTriangle(edge1mid,parentT->getCorners(0),edge2mid, false);
-    Triangle* tri4  = Mesh->CreateTriangle(edge2mid,parentT->getCorners(1),edge0mid, false);
+    Triangle* tri1  = Mesh->CreateTriangle(edge0mid,edge1mid,edge2mid,parentT);
+    Triangle* tri2  = Mesh->CreateTriangle(edge0mid,parentT->getCorners(2),edge1mid, parentT);
+    Triangle* tri3  = Mesh->CreateTriangle(edge1mid,parentT->getCorners(0),edge2mid, parentT);
+    Triangle* tri4  = Mesh->CreateTriangle(edge2mid,parentT->getCorners(1),edge0mid, parentT);
 
     //Storing Triangle for further subdivision.
     std::vector<Triangle*> thisTvec;
