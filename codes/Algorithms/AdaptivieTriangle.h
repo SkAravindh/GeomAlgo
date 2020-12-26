@@ -9,7 +9,7 @@ static int RefineLevel;
 class EstablishConnectivity{
 public:
     explicit EstablishConnectivity(std::shared_ptr<Mesh> &pMesh);
-    EstablishConnectivity(Triangle* T, int C_level,std::shared_ptr<Mesh> &Mesh );
+    EstablishConnectivity(Triangle* T, int C_level,std::shared_ptr<Mesh> &Mesh, bool flag );
     void loadParameters( Triangle* TInput , int Refinement_Level);
     void divideKE(Triangle* t1, Triangle* t2,std::shared_ptr<Mesh> &Mesh );
 
