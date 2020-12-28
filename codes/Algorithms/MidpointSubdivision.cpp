@@ -30,11 +30,12 @@ MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &M
     Triangle* tri4  = Mesh->CreateTriangle(edge2mid,parentT->getCorners(1),edge0mid, parentT);
 
     //Storing Triangle for further subdivision.
-    std::vector<Triangle*> thisTvec;
-    thisTvec.push_back(tri1);
-    thisTvec.push_back(tri2);
-    thisTvec.push_back(tri3);
-    thisTvec.push_back(tri4);
+     std::vector<Triangle*> thisTvec;
+     parentT->getChildren(thisTvec);
+//    thisTvec.push_back(tri1);
+//    thisTvec.push_back(tri2);
+//    thisTvec.push_back(tri3);
+//    thisTvec.push_back(tri4);
 
     //Level Increment
     ++level;
@@ -65,7 +66,9 @@ void MidSubdivision::loadParameters(Triangle* TInput, Point* PInput , int Refine
 void MidSubdivision::run() {
     std::vector<Triangle*> splitvector;
     pMesh->getTriangleContainers(splitvector,external);
-    pMesh->delCertainTrisInalltriangles(splitvector);
+    for(auto ele : splitvector) {
+        pMesh->delCertainTriInalltriangles(ele);
+    }
 
     for(int i=0; i<splitvector.size(); i++) {
         MidSubdivision *obj = new MidSubdivision(splitvector[i], 0, pMesh); //use [2] for proper result

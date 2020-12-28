@@ -168,12 +168,10 @@ void Mesh::clearTV(VecContainerName VN) {
     }
 }
 
-void Mesh::delCertainTrisInalltriangles(std::vector<Triangle*> &tv){
-    std::vector<Triangle*>::iterator it;
-    for(it=tv.begin(); it != tv.end(); it++){
-        eraseCertainTriangle(allTriangles,*it);
-    }
+void Mesh::delCertainTriInalltriangles(Triangle* t){
+    eraseCertainTriangle(allTriangles,t);
 }
+
 
 void Mesh::delCertainEntryET(Triangle *t) {
     std::multimap<EdgeOrder, Triangle*>::iterator it;
@@ -187,9 +185,7 @@ void Mesh::delCertainEntryET(Triangle *t) {
         else{
             eraseCertainEntryET(mmedgeTotriangles, oe , t);
         }
-
     }
-
 }
 
 void Mesh::delCertainEntryPT(Triangle* t){

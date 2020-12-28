@@ -160,33 +160,6 @@ Algofiles/fast:
 	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/build
 .PHONY : Algofiles/fast
 
-Algorithms/AdaptParent.o: Algorithms/AdaptParent.cpp.o
-
-.PHONY : Algorithms/AdaptParent.o
-
-# target to build an object file
-Algorithms/AdaptParent.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.o
-.PHONY : Algorithms/AdaptParent.cpp.o
-
-Algorithms/AdaptParent.i: Algorithms/AdaptParent.cpp.i
-
-.PHONY : Algorithms/AdaptParent.i
-
-# target to preprocess a source file
-Algorithms/AdaptParent.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.i
-.PHONY : Algorithms/AdaptParent.cpp.i
-
-Algorithms/AdaptParent.s: Algorithms/AdaptParent.cpp.s
-
-.PHONY : Algorithms/AdaptParent.s
-
-# target to generate assembly for a file
-Algorithms/AdaptParent.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.s
-.PHONY : Algorithms/AdaptParent.cpp.s
-
 Algorithms/AdaptivieTriangle.o: Algorithms/AdaptivieTriangle.cpp.o
 
 .PHONY : Algorithms/AdaptivieTriangle.o
@@ -548,9 +521,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Algofiles"
 	@echo "... output"
-	@echo "... Algorithms/AdaptParent.o"
-	@echo "... Algorithms/AdaptParent.i"
-	@echo "... Algorithms/AdaptParent.s"
 	@echo "... Algorithms/AdaptivieTriangle.o"
 	@echo "... Algorithms/AdaptivieTriangle.i"
 	@echo "... Algorithms/AdaptivieTriangle.s"

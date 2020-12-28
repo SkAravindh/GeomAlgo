@@ -233,19 +233,6 @@ codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptivieTriangle.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Algofiles.dir/Algorithms/AdaptivieTriangle.cpp.s"
 	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AdaptivieTriangle.cpp -o CMakeFiles/Algofiles.dir/Algorithms/AdaptivieTriangle.cpp.s
 
-codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.o: codes/CMakeFiles/Algofiles.dir/flags.make
-codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.o: ../codes/Algorithms/AdaptParent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.o"
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.o -c /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AdaptParent.cpp
-
-codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.i"
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AdaptParent.cpp > CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.i
-
-codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.s"
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AdaptParent.cpp -o CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.s
-
 # Object files for target Algofiles
 Algofiles_OBJECTS = \
 "CMakeFiles/Algofiles.dir/Triangle.cpp.o" \
@@ -259,8 +246,7 @@ Algofiles_OBJECTS = \
 "CMakeFiles/Algofiles.dir/Writedata.cpp.o" \
 "CMakeFiles/Algofiles.dir/Algorithms/MidpointSubdivision.cpp.o" \
 "CMakeFiles/Algofiles.dir/Algorithms/AlgorithmInitialize.cpp.o" \
-"CMakeFiles/Algofiles.dir/Algorithms/AdaptivieTriangle.cpp.o" \
-"CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.o"
+"CMakeFiles/Algofiles.dir/Algorithms/AdaptivieTriangle.cpp.o"
 
 # External object files for target Algofiles
 Algofiles_EXTERNAL_OBJECTS =
@@ -277,10 +263,9 @@ codes/libAlgofiles.a: codes/CMakeFiles/Algofiles.dir/Writedata.cpp.o
 codes/libAlgofiles.a: codes/CMakeFiles/Algofiles.dir/Algorithms/MidpointSubdivision.cpp.o
 codes/libAlgofiles.a: codes/CMakeFiles/Algofiles.dir/Algorithms/AlgorithmInitialize.cpp.o
 codes/libAlgofiles.a: codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptivieTriangle.cpp.o
-codes/libAlgofiles.a: codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.o
 codes/libAlgofiles.a: codes/CMakeFiles/Algofiles.dir/build.make
 codes/libAlgofiles.a: codes/CMakeFiles/Algofiles.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX static library libAlgofiles.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX static library libAlgofiles.a"
 	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes && $(CMAKE_COMMAND) -P CMakeFiles/Algofiles.dir/cmake_clean_target.cmake
 	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Algofiles.dir/link.txt --verbose=$(VERBOSE)
 

@@ -36,7 +36,7 @@ public:
     void getTriangleContainers(std::vector<Triangle*> &etv,VecContainerName VN );
     void clearTV(VecContainerName VN);
     void reEstablishConnectivity();
-    void delCertainTrisInalltriangles(std::vector<Triangle*> &tv);
+    void delCertainTriInalltriangles(Triangle* t);
     void delCertainEntryPT(Triangle* t);
     void delCertainEntryET(Triangle* t);
     void establishNeighcompleteMesh();

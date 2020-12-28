@@ -37,34 +37,7 @@ EstablishConnectivity::EstablishConnectivity(Triangle* T, int C_level,std::share
         return;
     }
 
-    for (int i = 0; i < 3; i++) {
-        std::vector<Triangle *> tv;
-        Triangle *adj = parentT->getNeigh(i);
-        Mesh->delCertainTriInalltriangles(adj);
-        std::cout << "hi2 " << std::endl;
-        if (!adj->isRefined() ) {
-            std::cout << "hi1 " << std::endl;
-            adj->setRefinelevel(0);
-            if (!adj->haske() && !adj->getpartofke()) {
-                //split for ke
-                divideKE(parentT, adj, Mesh);
 
-                adj->setke(true);
-            }
-            else if (parentT->haske() && adj->getpartofke()){
-                std::cout << "true " << std::endl;
-            }
-
-            else {
-                int rel = adj->getRefinelevel();
-                rel + 1;
-                adj->setRefinelevel(rel);
-                adj->setRefineStatus(true);
-            }
-
-        }
-
-    }
     ++level;
 
     int count =0;
@@ -113,19 +86,18 @@ void EstablishConnectivity::loadParameters(Triangle *TInput, int Refinement_Leve
 }
 
 void EstablishConnectivity::divideKE(Triangle *parent, Triangle *t2,std::shared_ptr<Mesh> &Mesh ) {
-   int oppt2 = getNonCommonPointsIDs(parent,t2,2);
-   Point *mid = t2->getEdgeMidPoint(oppt2);
-   Point *p0  = t2->getCorners(indexOrder_1(oppt2));
-   Point *p1  = t2->getCorners(indexOrder_2(oppt2));
-   Point *O_po  = t2->getCorners(oppt2);
-   Triangle* Ct1 =  Mesh->CreateTriangle(p0,mid,O_po,t2);
-   Triangle* Ct2 =  Mesh->CreateTriangle(mid,p1,O_po,t2);
-   Ct1->setPartofke(true);
-   Ct2->setPartofke(true);
-    Mesh->delCertainEntryET(t2);
-    Mesh->delCertainEntryPT(t2);
-    Mesh->establishNeighofTriangle(Ct1);
-    Mesh->establishNeighofTriangle(Ct2);
+//   int oppt2 = getNonCommonPointsIDs(parent,t2,2);
+//   Point *mid = t2->getEdgeMidPoint(oppt2);
+//   Point *p0  = t2->getCorners(indexOrder_1(oppt2));
+//   Point *p1  = t2->getCorners(indexOrder_2(oppt2));
+//   Point *O_po  = t2->getCorners(oppt2);
+//   Triangle* Ct1 =  Mesh->CreateTriangle(p0,mid,O_po,t2);
+//   Triangle* Ct2 =  Mesh->CreateTriangle(mid,p1,O_po,t2);
+//
+//    Mesh->delCertainEntryET(t2);
+//    Mesh->delCertainEntryPT(t2);
+//    Mesh->establishNeighofTriangle(Ct1);
+//    Mesh->establishNeighofTriangle(Ct2);
 
 
 

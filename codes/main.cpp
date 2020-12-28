@@ -7,7 +7,8 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
-#include "Algorithms/AdaptivieTriangle.h"
+//#include "Algorithms/AdaptivieTriangle.h"
+#include "Algorithms/MidpointSubdivision.h"
 
 
 
@@ -34,15 +35,17 @@ int main() {
 //    std::cout << *sh[0]->getCorners(tri1) << std::endl;
 //    std::cout << *sh[1]->getCorners(tri2) << std::endl;
 
-    EstablishConnectivity * obj =  new EstablishConnectivity(pMesh);
-    obj->loadParameters(v[0],1);
+//    EstablishConnectivity * obj =  new EstablishConnectivity(pMesh);
+//    obj->loadParameters(v[0],2);
 
 //    std::vector<Triangle* > tv;
-//    MidSubdivision * obj = new MidSubdivision(pMesh);
-//    obj->loadParameters(nullptr, nullptr ,2); //allTriangles[0]->getCorners(0) point
-//    //obj->run();
-//    obj->runForCompleteMesh();
-//    obj->getSubdividedTriangles();
+    MidSubdivision * obj = new MidSubdivision(pMesh);
+    obj->loadParameters(v[0], nullptr ,2); //allTriangles[0]->getCorners(0) point
+    obj->run();
+    //obj->runForCompleteMesh();
+
+   obj->getSubdividedTriangles();
+   pMesh->writemesh("SUB.stl");
 //
 //    std::vector<Triangle*> allTriangles;
  //   pMesh->getTriangles(allTriangles);

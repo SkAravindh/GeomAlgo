@@ -54,6 +54,7 @@ Triangle* Triangle::getNeigh(int i) {
 }
 
 void Triangle::addchild(Triangle *t) {
+    t->glob=this;
     vchildren.push_back(t);
 }
 
@@ -75,29 +76,6 @@ void Triangle::clearVchild()  {
     vchildren.clear();
 }
 
-void Triangle::setRefinelevel(int a)  {
-    refineLevel = a;
-}
-
-void Triangle::setRefineStatus(bool flag) {
-    refineStatus = flag;
-}
-
-bool Triangle::isRefined() const {
-    return refineStatus;
-}
-
-int Triangle::getRefinelevel() const {
-    return refineLevel;
-}
-
-bool Triangle::haske() const{
-    return Ke;
-}
-
-void Triangle::setke(bool flag) {
-    Ke=flag;
-}
 
 
 bool Triangle::operator == (const Triangle &rhs) const {

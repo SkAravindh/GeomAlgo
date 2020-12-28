@@ -24,12 +24,6 @@ public:
     bool haschild();
     void getChildren(std::vector<Triangle*> &vchild);
 
-    void setRefineStatus(bool flag);
-    void setRefinelevel(int a);
-    int getRefinelevel() const;
-    bool isRefined() const;
-    bool haske() const;
-    void setke(bool flag);
 
     bool operator == (const Triangle &rhs) const;
     bool operator != (const Triangle &rhs) const;
@@ -42,9 +36,7 @@ private:
     Triangle* neigb[3];
     std::vector<Triangle*> vchildren;
     Mesh *powner;
-    bool refineStatus=false;
-    int refineLevel;
-    bool Ke = false;
+    Triangle* glob=nullptr;
 
 };
 

@@ -4,7 +4,6 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AdaptParent.cpp" "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptParent.cpp.o"
   "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AdaptivieTriangle.cpp" "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptivieTriangle.cpp.o"
   "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/AlgorithmInitialize.cpp" "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/CMakeFiles/Algofiles.dir/Algorithms/AlgorithmInitialize.cpp.o"
   "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/codes/Algorithms/MidpointSubdivision.cpp" "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/CMakeFiles/Algofiles.dir/Algorithms/MidpointSubdivision.cpp.o"
