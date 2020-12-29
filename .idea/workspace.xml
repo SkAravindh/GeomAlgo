@@ -12,7 +12,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d58449c-7dd8-49a6-90b3-8ce82bbd6c92" name="Default Changelist" comment="" />
+    <list default="true" id="7d58449c-7dd8-49a6-90b3-8ce82bbd6c92" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/codes/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/codes/main.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -135,7 +137,7 @@
       <workItem from="1609140362897" duration="2863000" />
       <workItem from="1609246697933" duration="40000" />
       <workItem from="1609253216621" duration="3744000" />
-      <workItem from="1609273624225" duration="1961000" />
+      <workItem from="1609273624225" duration="1595000" />
     </task>
     <servers />
   </component>
