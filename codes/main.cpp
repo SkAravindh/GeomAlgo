@@ -23,7 +23,7 @@ int main() {
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
     std::vector<Triangle*> v;
     pMesh->getTriangles(v);
-    
+    pMesh->printInfo();
 
 
 //    std::cout << "size  " << v.size() << std::endl;
