@@ -24,7 +24,7 @@ int main() {
     std::vector<Triangle*> v;
     pMesh->getTriangles(v);
     pMesh->printInfo();
-    pMesh->printInfo();
+    
 
 //    std::cout << "size  " << v.size() << std::endl;
 //    std::vector<Triangle*> sh;
