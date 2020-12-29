@@ -232,12 +232,6 @@ geom_Algos_BINARY_DIR:STATIC=/home/aravindhkumar.kalimuthu/Desktop/practice/Code
 //Value Computed by CMake
 geom_Algos_SOURCE_DIR:STATIC=/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA
 
-//Value Computed by CMake
-projectASK_BINARY_DIR:STATIC=/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug
-
-//Value Computed by CMake
-projectASK_SOURCE_DIR:STATIC=/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA
-
 
 ########################
 # INTERNAL cache entries

@@ -79,7 +79,7 @@ geom_Algos_EXTERNAL_OBJECTS =
 
 codes/geom_Algos: codes/CMakeFiles/geom_Algos.dir/main.cpp.o
 codes/geom_Algos: codes/CMakeFiles/geom_Algos.dir/build.make
-codes/geom_Algos: codes/libGeom_Algo.so
+codes/geom_Algos: codes/libGeom_Algo.a
 codes/geom_Algos: codes/CMakeFiles/geom_Algos.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable geom_Algos"
 	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/build/codes && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/geom_Algos.dir/link.txt --verbose=$(VERBOSE)

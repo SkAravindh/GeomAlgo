@@ -11,8 +11,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Geom_Algo.dir/Point.cpp.o"
   "CMakeFiles/Geom_Algo.dir/Triangle.cpp.o"
   "CMakeFiles/Geom_Algo.dir/Writedata.cpp.o"
+  "libGeom_Algo.a"
   "libGeom_Algo.pdb"
-  "libGeom_Algo.so"
 )
 
 # Per-language clean rules from dependency scanning.

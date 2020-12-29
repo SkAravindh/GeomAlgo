@@ -6,3 +6,9 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+build*
+install
+.vscode
+.idea/
+cmake-build-debug/
+*.o
