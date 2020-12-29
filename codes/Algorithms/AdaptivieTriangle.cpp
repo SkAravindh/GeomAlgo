@@ -20,10 +20,10 @@ EstablishConnectivity::EstablishConnectivity(Triangle* T, int C_level,std::share
 
 
     //Splitting the parent triangle into four and storeing into alltriangle container(check Mesh.h)
-    Triangle *tri1 = Mesh->CreateTriangle(edge0mid, edge1mid, edge2mid, parentT);
-    Triangle *tri2 = Mesh->CreateTriangle(edge0mid, parentT->getCorners(2), edge1mid, parentT);
-    Triangle *tri3 = Mesh->CreateTriangle(edge1mid, parentT->getCorners(0), edge2mid, parentT);
-    Triangle *tri4 = Mesh->CreateTriangle(edge2mid, parentT->getCorners(1), edge0mid, parentT);
+    Triangle *tri1 = Mesh->createTriangle(edge0mid, edge1mid, edge2mid, parentT);
+    Triangle *tri2 = Mesh->createTriangle(edge0mid, parentT->getCorners(2), edge1mid, parentT);
+    Triangle *tri3 = Mesh->createTriangle(edge1mid, parentT->getCorners(0), edge2mid, parentT);
+    Triangle *tri4 = Mesh->createTriangle(edge2mid, parentT->getCorners(1), edge0mid, parentT);
     std::vector<Triangle *> child;
     parentT->getChildren(child);
 

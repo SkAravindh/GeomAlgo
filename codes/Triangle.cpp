@@ -1,6 +1,6 @@
 #include "Triangle.h"
 
-Triangle::Triangle(){
+Triangle::Triangle() {
     corners[0] = nullptr;
     corners[1] = nullptr;
     corners[2] = nullptr;
@@ -8,7 +8,7 @@ Triangle::Triangle(){
 
 Triangle::Triangle(Point* P0, Point* P1, Point* P2, Mesh* mobj): powner(mobj) {
     Initilize(P0,P1,P2);
-    powner->StoreTriangleInfo(this);
+    powner->storeTriangleInfo(this);
 }
 
 void Triangle::Initilize(Point *P0, Point *P1, Point *P2) {
@@ -53,7 +53,7 @@ Triangle* Triangle::getNeigh(int i) {
     return neigb[i];
 }
 
-void Triangle::addchild(Triangle *t) {
+void Triangle::addChild(Triangle *t) {
     t->glob=this;
     vchildren.push_back(t);
 }
@@ -66,7 +66,7 @@ void Triangle::getChildren(std::vector<Triangle *> &childvector) {
     if(!haschild()){
         childvector.push_back(this);
     } else{
-        for(std::vector<Triangle*>::iterator it = vchildren.begin(); it != vchildren.end(); it++){
+        for(std::vector<Triangle*>::iterator it = vchildren.begin(); it != vchildren.end(); it++) {
             (*it)->getChildren(childvector);
         }
     }
@@ -76,24 +76,21 @@ void Triangle::clearVchild()  {
     vchildren.clear();
 }
 
-
-
 bool Triangle::operator == (const Triangle &rhs) const {
     return (*this->getCorners(0) == *rhs.getCorners(0) && *this->getCorners(1) == *rhs.getCorners(1) && *this->getCorners(2) == *rhs.getCorners(2));
 }
 
 bool Triangle::operator != (const Triangle &rhs) const {
-    if(*this == rhs){
+    if(*this == rhs) {
         return false;
     }
-    else{
+    else {
         return true;
     }
 }
 
 bool Triangle::operator < (const Triangle &rhs) const {
     //lexicographical operation.
-
     if( *this->getCorners(0) < *rhs.getCorners(0) ) return true;
     if( *this->getCorners(0) > *rhs.getCorners(0) ) return false;
     if( *this->getCorners(0) == *rhs.getCorners(0) ) {
@@ -102,14 +99,12 @@ bool Triangle::operator < (const Triangle &rhs) const {
         if( *this->getCorners(1) == *rhs.getCorners(1) ){
             if( *this->getCorners(2) < *rhs.getCorners(2) ) return true;
             if( *this->getCorners(2) > *rhs.getCorners(2) ) return false;
-
         }
     }
     return false;
-
 }
 
-std::ostream & operator << (std::ostream &out, const Triangle &rhs){
+std::ostream & operator << (std::ostream &out, const Triangle &rhs) {
     out<<"p0  "<<*rhs.getCorners(0)<<std::endl;
     out<<"p1  "<<*rhs.getCorners(1)<<std::endl;
     out<<"p2  "<<*rhs.getCorners(2)<<std::endl;

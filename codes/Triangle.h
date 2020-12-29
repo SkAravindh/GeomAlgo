@@ -19,7 +19,7 @@ public:
     Point* getEdgeMidPoint(int i) const;
     void setNeigh(int i, Triangle* t);
     Triangle* getNeigh(int i);
-    void addchild(Triangle* t);
+    void addChild(Triangle* t);
     void clearVchild();
     bool haschild();
     void getChildren(std::vector<Triangle*> &vchild);

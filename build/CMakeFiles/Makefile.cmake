@@ -47,6 +47,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "codes/CMakeFiles/Algofiles.dir/DependInfo.cmake"
-  "codes/CMakeFiles/output.dir/DependInfo.cmake"
+  "codes/CMakeFiles/Geom_Algo.dir/DependInfo.cmake"
+  "codes/CMakeFiles/geom_Algos.dir/DependInfo.cmake"
   )

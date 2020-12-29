@@ -9,13 +9,13 @@ Mesh::Mesh(std::string Filename, size_t Poolsize) : ModelName(Filename), Poolsiz
 
 }
 
-Point* Mesh::CreateVertex(  double x,   double y,   double z) {
+Point* Mesh::createVertex(  double x,   double y,   double z) {
     Point P(x,y,z);
-    Point * Pptr = CreateVertex(P);
+    Point * Pptr = createVertex(P);
     return Pptr;
 }
 
-Point* Mesh::CreateVertex(Point &P) {
+Point* Mesh::createVertex(Point &P) {
 
     std::map<Point, Point*>::iterator it=allvertices.find(P);
     if(it != this->allvertices.end()){
@@ -30,19 +30,19 @@ Point* Mesh::CreateVertex(Point &P) {
     }
 }
 
-Triangle* Mesh::CreateTriangle(Point *P0, Point *P1, Point *P2,Triangle* parent) {
+Triangle* Mesh::createTriangle(Point *P0, Point *P1, Point *P2,Triangle* parent) {
+
     Triangle *newT = new Triangle(P0, P1, P2,this);
     if(parent == nullptr) {
         allTriangles.push_back(newT);
     }
-    else{
-        parent->addchild(newT);
+    else {
+        parent->addChild(newT);
     }
-
     return newT;
 }
 
-void Mesh::StoreTriangleInfo(Triangle *T) {
+void Mesh::storeTriangleInfo(Triangle *T) {
 
     Point* p0 = T->getCorners(0);
     Point* p1 = T->getCorners(1);
@@ -58,11 +58,11 @@ void Mesh::StoreTriangleInfo(Triangle *T) {
 
 }
 
-void Mesh::getAdjustenNeigh(const EdgeOrder &ed, std::vector<Triangle*> &tv){
+void Mesh::getAdjustenNeigh(const EdgeOrder &ed, std::vector<Triangle*> &tv) {
+
     std::vector<Triangle*> temp;
-    typedef std::multimap<EdgeOrder, Triangle *>::iterator MMET;
     std::pair<MMET, MMET> triangle_set = mmedgeTotriangles.equal_range(ed);
-    if (std::distance(triangle_set.first, triangle_set.second) != 2){
+    if (std::distance(triangle_set.first, triangle_set.second) != 2) {
         std::cout << std::distance(triangle_set.first, triangle_set.second) << std::endl;
         std::cout << "Returning empty vector " << std::endl;
         return;
@@ -71,19 +71,19 @@ void Mesh::getAdjustenNeigh(const EdgeOrder &ed, std::vector<Triangle*> &tv){
         temp.push_back(triangle_set_IT->second);
     }
     tv.assign(temp.begin(),temp.end());
+
 }
 
+void Mesh::establishNeighcompleteMesh() {
 
-
-void Mesh::establishNeighcompleteMesh(){
-    std::vector<Triangle*>::iterator it;
-    for(it = allTriangles.begin(); it != allTriangles.end(); it++){
+    TV_it it;
+    for(it = allTriangles.begin(); it != allTriangles.end(); it++) {
         establishNeighofTriangle(*it);
     }
 }
 
 void Mesh::establishNeighofTriangle(Triangle* t) {
-    typedef std::multimap<EdgeOrder, Triangle *>::iterator MMET;
+
     Triangle* currentT(t);
     for(int i=0; i<3; i++) {
         EdgeOrder ed = currentT->getEO(i);
@@ -97,29 +97,29 @@ void Mesh::establishNeighofTriangle(Triangle* t) {
             }
         }
     }
-
 }
 
 void Mesh::reEstablishConnectivity() {
     //Call only when you completely update alltriangle container.
     mmpointTotriangles.clear();
     mmedgeTotriangles.clear();
-    std::vector<Triangle*>::iterator it;
-    for(it=allTriangles.begin(); it != allTriangles.end(); it++){
-        StoreTriangleInfo(*it);
+    TV_it it;
+    for(it=allTriangles.begin(); it != allTriangles.end(); it++) {
+        storeTriangleInfo(*it);
     }
 }
 
-void Mesh::getTriangles(std::vector<Triangle*> &TV){
-    std::vector<Triangle*>::iterator it;
-    for(it=allTriangles.begin(); it!=allTriangles.end(); it++){
+void Mesh::getTriangles(std::vector<Triangle*> &TV) {
+
+    TV_it it;
+    for(it=allTriangles.begin(); it!=allTriangles.end(); it++) {
         Triangle * tri(*it);
         TV.push_back(tri);
     }
 }
 
+void Mesh::fillTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN ) {
 
-void Mesh::fillTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN ){
     switch (VN) {
         case alltri:
             for(auto ele : tv){
@@ -136,7 +136,8 @@ void Mesh::fillTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN
     }
 }
 
-void Mesh::getTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN ){
+void Mesh::getTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN ) {
+
     switch (VN) {
         case alltri:
             for(auto ele : allTriangles){
@@ -153,7 +154,6 @@ void Mesh::getTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN 
     }
 }
 
-
 void Mesh::clearTV(VecContainerName VN) {
 
     switch (VN) {
@@ -168,17 +168,18 @@ void Mesh::clearTV(VecContainerName VN) {
     }
 }
 
-void Mesh::delCertainTriInalltriangles(Triangle* t){
+void Mesh::delCertainTriInalltriangles(Triangle* t) {
+
     eraseCertainTriangle(allTriangles,t);
 }
 
-
 void Mesh::delCertainEntryET(Triangle *t) {
+
     std::multimap<EdgeOrder, Triangle*>::iterator it;
     for(int i=0; i<3; i++){
         EdgeOrder oe = t->getEO(i);
         it = mmedgeTotriangles.find(oe);
-        if(it == mmedgeTotriangles.end()){
+        if(it == mmedgeTotriangles.end()) {
             std::cout<< "Not found " << oe << " " <<"in edge_to_triangle MMap " << std::endl;
             continue;
         }
@@ -188,28 +189,26 @@ void Mesh::delCertainEntryET(Triangle *t) {
     }
 }
 
-void Mesh::delCertainEntryPT(Triangle* t){
+void Mesh::delCertainEntryPT(Triangle* t) {
+
     std::multimap<Point*, Triangle*,ComparePoint>::iterator it;
-    for(int i=0; i<3; i++){
+    for(int i=0; i<3; i++) {
         Point* p0 = t->getCorners(i);
         it = mmpointTotriangles.find(p0);
-        if(it == mmpointTotriangles.end()){
+        if(it == mmpointTotriangles.end()) {
             std::cout<< "Not found " << *p0 << " " <<"in point_to_triangle MMap " << std::endl;
             continue;
         }
-        else{
+        else {
             eraseCertainEntryPT(mmpointTotriangles,p0,t);
         }
     }
 }
 
-
 void Mesh::getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV) {
-
     //iterators
+    TS_it it, itt;
 
-    std::set<Triangle *>::iterator it, itt;
-    typedef std::multimap<EdgeOrder, Triangle *>::iterator MMET;
     //Required Containers.
     std::set<Triangle *> visted;
     std::set<Triangle *> collected_triangles;
@@ -249,21 +248,18 @@ void Mesh::getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vec
     }
     TV.assign(collected_triangles.begin(), collected_triangles.end());
    //std::cout << "size of collected_triangles "<<collected_triangles.size()<<" "<<"vector_size "<<TV.size()<<std::endl;
-
 }
 
 void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::vector<Triangle *> &TV) {
-
     //Required containers
     std::vector<Point*> collected_points, temp_collected_points;;
     std::set<Point*>  visted;
     std::set<Triangle*> collected_triangles;
     std::vector<Triangle*> vec_collected_triangle;
     //Required Iterators
-    std::vector<Point*>::iterator iP;
-    std::set<Point*>::iterator iiP;
-    std::set<Triangle*>::iterator iT;
-    typedef std::multimap<Point*, Triangle*,ComparePoint>::iterator MMPT;
+    PV_it iP;
+    TS_it iT;
+    PS_it iiP;
     collected_points.push_back(p);
 
     for(int i=0; i<order; i++){
@@ -292,18 +288,16 @@ void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::vector<Triang
 
 }
 
-
 void Mesh::standAlone(std::vector<Triangle*> &tv) {
     //std::cout << *allTriangles[0]->getCorners(0) << std::endl;
     getRingNeigbyOrder(allTriangles[0]->getCorners(0), 1, tv);
-
 }
 
 void Mesh::writemesh(std::string filename) {
     writeSTL(filename,allTriangles);
 }
 
-void Mesh::printInfo(){
+void Mesh::printInfo() {
     std::cout << "Size of alltriangles " << allTriangles.size() << std::endl;
     std::cout << "size of point to triangle MMap " << mmpointTotriangles.size() << std::endl;
     std::cout << "size of edge to triangle Mmap " << mmedgeTotriangles.size() << std::endl;

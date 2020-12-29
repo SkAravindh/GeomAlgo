@@ -13,13 +13,12 @@ Vector3 getNormal(const Triangle *t) {
 
     Vector3 edge_1 = vertex1 - vertex0;
     Vector3 edge_2 = vertex2 - vertex0;
-
     Vector3 normal = cross_product(edge_1,edge_2);
 
     return normal;
 }
 
-double getShortestDistance( const Triangle *t, Point *p){
+double getShortestDistance( const Triangle *t, Point *p) {
 
     Point *v0 = t->getCorners(0);
     Vector3 point_on_plane(v0->x(),v0->y(),v0->z());
@@ -30,10 +29,9 @@ double getShortestDistance( const Triangle *t, Point *p){
     double distance = dot(normal, prjP_minus_PP);
 
     return abs(distance);
-
 }
 
-Vector3 getOrthogonalProjectionVector( const Triangle *t, Point *p){
+Vector3 getOrthogonalProjectionVector( const Triangle *t, Point *p) {
 
     Point *v0 = t->getCorners(0);
     Vector3 point_on_plane(v0->x(),v0->y(),v0->z());
@@ -47,25 +45,22 @@ Vector3 getOrthogonalProjectionVector( const Triangle *t, Point *p){
     Vector3 projection_vector = prjP_minus_PP-distance_vector;
 
     return projection_vector;
-
 }
 
-int indexOrder_1(int n){
+int indexOrder_1(int n) {
     int index[]={1,2,0};
     return index[n];
-
 }
 
-int indexOrder_2(int n){
+int indexOrder_2(int n) {
     int index[]={2,0,1};
     return index[n];
 }
 
-bool brayCentric(const Triangle *t, Point *p){
+bool brayCentric(const Triangle *t, Point *p) {
     Point *p0 = t->getCorners(0);
     Point *p1 = t->getCorners(1);
     Point *p2 = t->getCorners(2);
-
 
     Vector3 vertex0 = Vector3(p0->x(), p0->y(), p0->z());
     Vector3 vertex1 = Vector3(p1->x(), p1->y(), p1->z());
@@ -93,16 +88,15 @@ bool brayCentric(const Triangle *t, Point *p){
     bool is_inside = ( (0 <= alpha) && (alpha <= 1) && (0 <= beta)  && (beta  <= 1) && (0 <= gamma) && (gamma <= 1) );
 
     return is_inside;
-
 }
 
-bool checkForHalfEdge(const Triangle *t1, const Triangle *t2){
+bool checkForHalfEdge(const Triangle *t1, const Triangle *t2) {
 
-    for(int i=0; i<3; i++){
+    for(int i=0; i<3; i++) {
         Point *p = t1->getCorners(i);
-        for(int j=0; j<3; j++){
+        for(int j=0; j<3; j++) {
             Point *p1 = t2->getCorners(j);
-            if(*p==*p1){
+            if(*p==*p1) {
                 int T1next = indexOrder_1(i);
                 int T1prev = indexOrder_2(i);
                 int T2next = indexOrder_1(j);
@@ -117,21 +111,21 @@ bool checkForHalfEdge(const Triangle *t1, const Triangle *t2){
 
 bool checkCommonVertex(const Triangle *t1, const Triangle *t2){
 
-    for(int i=0; i<3; i++){
+    for(int i=0; i<3; i++) {
         Point *p = t1->getCorners(i);
-        for(int j=0; j<3; j++){
+        for(int j=0; j<3; j++) {
             Point *p1 = t2->getCorners(j);
             if(*p==*p1) return true;
         }
     }
     return false;
-
 }
 
-void getedgesByOrder(const std::vector<Triangle* > &TV, const int &deg, std::vector<EdgeOrder> &out){
+void getedgesByOrder(const std::vector<Triangle* > &TV, const int &deg, std::vector<EdgeOrder> &out) {
+
     std::vector<EdgeOrder> outtemp;
     std::vector<Triangle*>::const_iterator it;
-    for(it=TV.begin(); it!=TV.end(); it++){
+    for(it=TV.begin(); it!=TV.end(); it++) {
         for(int j=0; j<3; j++) {
             Triangle *tri(*it);
             Point *p0 = tri->getCorners(indexOrder_1(j));
@@ -143,10 +137,10 @@ void getedgesByOrder(const std::vector<Triangle* > &TV, const int &deg, std::vec
     std::sort(outtemp.begin(), outtemp.end());
     std::vector<EdgeOrder>::iterator iter;
 
-    for(iter=outtemp.begin(); iter!=outtemp.end(); iter++){
+    for(iter=outtemp.begin(); iter!=outtemp.end(); iter++) {
         EdgeOrder EO = *iter;
         int count=1;
-        while(++iter!=outtemp.end() && *iter==EO){
+        while(++iter!=outtemp.end() && *iter==EO) {
          ++count;
         }
         --iter;
@@ -164,15 +158,15 @@ void getedgesByOrder(const std::vector<Triangle* > &TV, const int &deg, std::vec
             default:
                 if(deg==count) out.push_back(*iter);
         }
-
     }
 }
 
-void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP){
+void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP) {
+
     std::vector<Point*> points;
     std::vector<EdgeOrder>::const_iterator it;
     std::vector<Point*>::iterator vit;
-    for(it = BE.begin(); it != BE.end(); it++){
+    for(it = BE.begin(); it != BE.end(); it++) {
         points.push_back(it->p0);
         points.push_back(it->p1);
     }
@@ -182,44 +176,45 @@ void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP){
     VP.assign(points.begin(), points.end());
 }
 
-void eraseCertainTriangle(std::vector<Triangle* > &TV, Triangle *t){
-        TV.erase(std::remove(TV.begin(), TV.end(), t), TV.end());
+void eraseCertainTriangle(std::vector<Triangle* > &TV, Triangle *t) {
+    TV.erase(std::remove(TV.begin(), TV.end(), t), TV.end());
 }
 
-void eraseCertainEntryPT(std::multimap<Point*, Triangle*,ComparePoint>&mm, Point *key, Triangle* t){
+void eraseCertainEntryPT(std::multimap<Point*, Triangle*,ComparePoint>&mm, Point *key, Triangle* t) {
 
     typedef std::multimap<Point*, Triangle*,ComparePoint>::iterator MMPT;
     std::pair<MMPT, MMPT> point_triangle = mm.equal_range(key);
-    for(MMPT iter = point_triangle.first; iter != point_triangle.second; iter++ ){
+    for(MMPT iter = point_triangle.first; iter != point_triangle.second; iter++ ) {
         Point *p = iter->first;
         Triangle *tri = iter->second;
-        if( *p == *key && *tri == *t){
+        if( *p == *key && *tri == *t) {
             mm.erase(iter);
             break;
         }
     }
 }
 
-void eraseCertainEntryET(std::multimap<EdgeOrder, Triangle*>&mm, EdgeOrder &key, Triangle* t){
+void eraseCertainEntryET(std::multimap<EdgeOrder, Triangle*>&mm, EdgeOrder &key, Triangle* t) {
+
     typedef std::multimap<EdgeOrder, Triangle *>::iterator MMET;
     std::pair<MMET, MMET> edge_triangle = mm.equal_range(key);
-    for(MMET iter = edge_triangle.first; iter != edge_triangle.second; iter++ ){
+    for(MMET iter = edge_triangle.first; iter != edge_triangle.second; iter++ ) {
         EdgeOrder eo = iter->first;
         Triangle *tri = iter->second;
-        if( eo == key && *tri == *t){
+        if( eo == key && *tri == *t) {
             mm.erase(iter);
             break;
         }
     }
 }
 
-bool getCommonEdge(Triangle *t1, Triangle *t2,EdgeOrder &oe){
+bool getCommonEdge(Triangle *t1, Triangle *t2,EdgeOrder &oe) {
 
     std::vector<Triangle*> tv;
     std::map<EdgeOrder, std::vector<Triangle*>> edtoT;
     tv.push_back(t1);
     tv.push_back(t2);
-    for(int i=0; i<2; i++){
+    for(int i=0; i<2; i++) {
         Triangle* current(tv[i]);
         for(int j=0; j<3; j++) {
             EdgeOrder ed = current->getEO(j);
@@ -227,25 +222,27 @@ bool getCommonEdge(Triangle *t1, Triangle *t2,EdgeOrder &oe){
         }
     }
 
-    for(auto it = edtoT.begin(); it != edtoT.end(); it++ ){
-        if(it->second.size()==2){
+    for(auto it = edtoT.begin(); it != edtoT.end(); it++ ) {
+        if(it->second.size()==2) {
            oe=it->first;
             return true;
         }
     }
+
     std::cout << "No common edge between those two triangles so returning false !!! " << std::endl;
     return false;
 }
 
-int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no){
+int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no) {
     //works only when triangles have halfedge
+
     int id1;
     int id2;
-    for(int i=0; i<3; i++){
+    for(int i=0; i<3; i++) {
         Point* p0 = t1->getCorners(i);
-        for(int j=0; j<3; j++){
+        for(int j=0; j<3; j++) {
             Point * p1 = t2->getCorners(j);
-            if(*p0 == *p1){
+            if(*p0 == *p1) {
                 int T1next = indexOrder_1(i);
                 int T1prev = indexOrder_2(i);
                 int T2next = indexOrder_1(j);
@@ -259,7 +256,6 @@ int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no){
                     id1 = T1next;
                 }
             }
-
         }
     }
     switch (Triangle_no) {
@@ -271,6 +267,5 @@ int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no){
             break;
         default:
             break;
-
     }
 }

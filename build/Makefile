@@ -111,30 +111,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Algofiles
+# Target rules for targets named Geom_Algo
 
 # Build rule for target.
-Algofiles: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Algofiles
-.PHONY : Algofiles
+Geom_Algo: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Geom_Algo
+.PHONY : Geom_Algo
 
 # fast build rule for target.
-Algofiles/fast:
-	$(MAKE) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/build
-.PHONY : Algofiles/fast
+Geom_Algo/fast:
+	$(MAKE) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/build
+.PHONY : Geom_Algo/fast
 
 #=============================================================================
-# Target rules for targets named output
+# Target rules for targets named geom_Algos
 
 # Build rule for target.
-output: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 output
-.PHONY : output
+geom_Algos: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 geom_Algos
+.PHONY : geom_Algos
 
 # fast build rule for target.
-output/fast:
-	$(MAKE) -f codes/CMakeFiles/output.dir/build.make codes/CMakeFiles/output.dir/build
-.PHONY : output/fast
+geom_Algos/fast:
+	$(MAKE) -f codes/CMakeFiles/geom_Algos.dir/build.make codes/CMakeFiles/geom_Algos.dir/build
+.PHONY : geom_Algos/fast
 
 # Help Target
 help:
@@ -144,8 +144,8 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... Algofiles"
-	@echo "... output"
+	@echo "... Geom_Algo"
+	@echo "... geom_Algos"
 .PHONY : help
 
 

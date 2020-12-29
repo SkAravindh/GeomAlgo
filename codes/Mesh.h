@@ -23,10 +23,10 @@ class Mesh{
 public:
     Mesh();
     Mesh(std::string Filename, size_t Poolsize);
-    Point* CreateVertex(  double x,   double y,   double z);
-    Point* CreateVertex(Point &P);
-    Triangle* CreateTriangle(Point *P0, Point *P1, Point *P2, Triangle* parent);
-    void StoreTriangleInfo(Triangle* T);
+    Point* createVertex(  double x,   double y,   double z);
+    Point* createVertex(Point &P);
+    Triangle* createTriangle(Point *P0, Point *P1, Point *P2, Triangle* parent);
+    void storeTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
     void standAlone(std::vector<Triangle*> &tv);
     void printInfo();
@@ -58,6 +58,16 @@ protected:
     //std::multimap<EdgeOrder, std::vector<Triangle*>> map_edgeTotriangles; //using multimap map bcoz easy to acess data but not efficient
     std::vector<Triangle*> allTriangles;
     std::vector<Triangle*> externalUse;
+
+protected:
+    //Iterators
+    typedef std::vector<Triangle*>::iterator TV_it;
+    typedef std::vector<Point*>::iterator PV_it;
+    typedef std::set<Triangle *>::iterator TS_it;
+    typedef std::set<Point*>::iterator PS_it;
+    typedef std::multimap<Point*, Triangle*,ComparePoint>::iterator MMPT;
+    typedef std::multimap<EdgeOrder, Triangle *>::iterator MMET;
+
 
 };
 

@@ -19,7 +19,7 @@ public:
 
 
 public:
-    friend std::ostream & operator << (std::ostream &s, const Point &vertex){
+    friend std::ostream & operator << (std::ostream &s, const Point &vertex) {
         s << vertex.x() << " " << vertex.y() << " " << vertex.z() << " ";
         return s;
     }

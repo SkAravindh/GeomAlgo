@@ -1,4 +1,4 @@
 cmake_minimum_required(VERSION 3.10)
-project(projectASK)
+project(geom_Algos)
 
 add_subdirectory(codes)

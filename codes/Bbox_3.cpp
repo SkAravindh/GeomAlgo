@@ -13,7 +13,7 @@ Bbox_3::Bbox_3(double x_min, double y_min,double z_min, double x_max, double y_m
 
 }
 
-void Bbox_3::add_coordinates(double x, double y, double z){
+void Bbox_3::add_coordinates(double x, double y, double z) {
 
     if(x < x_min){ x_min=x;}
     if(y < y_min) {y_min=y;}
@@ -29,7 +29,7 @@ double Bbox_3::xmin() const {
     return x_min;
 }
 
-double Bbox_3::ymin() const{
+double Bbox_3::ymin() const {
     return y_min;
 }
 
@@ -37,24 +37,23 @@ double Bbox_3::zmin() const {
     return z_min;
 }
 
-double Bbox_3::xmax() const{
+double Bbox_3::xmax() const {
     return x_max;
 }
 
-double Bbox_3::ymax() const{
+double Bbox_3::ymax() const {
     return y_max;
 }
 
-double Bbox_3::zmax() const{
+double Bbox_3::zmax() const {
     return z_max;
 }
 
-bool Bbox_3::check_range(double Amin,double Amax,double Bmin,double Bmax){
-
+bool Bbox_3::check_range(double Amin,double Amax,double Bmin,double Bmax) {
     return (Amax>=Bmin && Amin<=Bmax);
 }
 
-bool Bbox_3::do_overlap(const Bbox_3 &lhs, const Bbox_3 &rhs){
+bool Bbox_3::do_overlap(const Bbox_3 &lhs, const Bbox_3 &rhs) {
     return(  check_range( lhs.xmin(), lhs.xmax(), rhs.xmin(), rhs.xmax()) &&
              check_range( lhs.ymin(), lhs.ymax(), rhs.ymin(), rhs.ymax()) &&
              check_range( lhs.zmin(), lhs.zmax(), rhs.zmin(), rhs.zmax())  );
@@ -76,7 +75,7 @@ Bbox_3 Bbox_3::operator +(const Bbox_3 &rhs)  {
     return *this;
 }
 
-void Bbox_3::getbounds(double &a_xmin, double &a_ymin, double &a_zmin,double &a_xmax, double &a_ymax, double &a_zmax) const{
+void Bbox_3::getbounds(double &a_xmin, double &a_ymin, double &a_zmin,double &a_xmax, double &a_ymax, double &a_zmax) const {
     a_xmin=x_min;
     a_ymin=y_min;
     a_zmin=z_min;

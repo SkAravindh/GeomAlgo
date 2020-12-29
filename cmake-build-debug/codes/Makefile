@@ -76,17 +76,6 @@ CMAKE_BINARY_DIR = /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectS
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/137/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -97,6 +86,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/snap/clion/137/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -131,34 +131,34 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-codes/CMakeFiles/output.dir/rule:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 codes/CMakeFiles/output.dir/rule
-.PHONY : codes/CMakeFiles/output.dir/rule
+codes/CMakeFiles/geom_Algos.dir/rule:
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 codes/CMakeFiles/geom_Algos.dir/rule
+.PHONY : codes/CMakeFiles/geom_Algos.dir/rule
 
 # Convenience name for target.
-output: codes/CMakeFiles/output.dir/rule
+geom_Algos: codes/CMakeFiles/geom_Algos.dir/rule
 
-.PHONY : output
+.PHONY : geom_Algos
 
 # fast build rule for target.
-output/fast:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/output.dir/build.make codes/CMakeFiles/output.dir/build
-.PHONY : output/fast
+geom_Algos/fast:
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/geom_Algos.dir/build.make codes/CMakeFiles/geom_Algos.dir/build
+.PHONY : geom_Algos/fast
 
 # Convenience name for target.
-codes/CMakeFiles/Algofiles.dir/rule:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 codes/CMakeFiles/Algofiles.dir/rule
-.PHONY : codes/CMakeFiles/Algofiles.dir/rule
+codes/CMakeFiles/Geom_Algo.dir/rule:
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 codes/CMakeFiles/Geom_Algo.dir/rule
+.PHONY : codes/CMakeFiles/Geom_Algo.dir/rule
 
 # Convenience name for target.
-Algofiles: codes/CMakeFiles/Algofiles.dir/rule
+Geom_Algo: codes/CMakeFiles/Geom_Algo.dir/rule
 
-.PHONY : Algofiles
+.PHONY : Geom_Algo
 
 # fast build rule for target.
-Algofiles/fast:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/build
-.PHONY : Algofiles/fast
+Geom_Algo/fast:
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/build
+.PHONY : Geom_Algo/fast
 
 Algorithms/AdaptivieTriangle.o: Algorithms/AdaptivieTriangle.cpp.o
 
@@ -166,7 +166,7 @@ Algorithms/AdaptivieTriangle.o: Algorithms/AdaptivieTriangle.cpp.o
 
 # target to build an object file
 Algorithms/AdaptivieTriangle.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptivieTriangle.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Algorithms/AdaptivieTriangle.cpp.o
 .PHONY : Algorithms/AdaptivieTriangle.cpp.o
 
 Algorithms/AdaptivieTriangle.i: Algorithms/AdaptivieTriangle.cpp.i
@@ -175,7 +175,7 @@ Algorithms/AdaptivieTriangle.i: Algorithms/AdaptivieTriangle.cpp.i
 
 # target to preprocess a source file
 Algorithms/AdaptivieTriangle.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptivieTriangle.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Algorithms/AdaptivieTriangle.cpp.i
 .PHONY : Algorithms/AdaptivieTriangle.cpp.i
 
 Algorithms/AdaptivieTriangle.s: Algorithms/AdaptivieTriangle.cpp.s
@@ -184,7 +184,7 @@ Algorithms/AdaptivieTriangle.s: Algorithms/AdaptivieTriangle.cpp.s
 
 # target to generate assembly for a file
 Algorithms/AdaptivieTriangle.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AdaptivieTriangle.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Algorithms/AdaptivieTriangle.cpp.s
 .PHONY : Algorithms/AdaptivieTriangle.cpp.s
 
 Algorithms/AlgorithmInitialize.o: Algorithms/AlgorithmInitialize.cpp.o
@@ -193,7 +193,7 @@ Algorithms/AlgorithmInitialize.o: Algorithms/AlgorithmInitialize.cpp.o
 
 # target to build an object file
 Algorithms/AlgorithmInitialize.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AlgorithmInitialize.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Algorithms/AlgorithmInitialize.cpp.o
 .PHONY : Algorithms/AlgorithmInitialize.cpp.o
 
 Algorithms/AlgorithmInitialize.i: Algorithms/AlgorithmInitialize.cpp.i
@@ -202,7 +202,7 @@ Algorithms/AlgorithmInitialize.i: Algorithms/AlgorithmInitialize.cpp.i
 
 # target to preprocess a source file
 Algorithms/AlgorithmInitialize.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AlgorithmInitialize.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Algorithms/AlgorithmInitialize.cpp.i
 .PHONY : Algorithms/AlgorithmInitialize.cpp.i
 
 Algorithms/AlgorithmInitialize.s: Algorithms/AlgorithmInitialize.cpp.s
@@ -211,7 +211,7 @@ Algorithms/AlgorithmInitialize.s: Algorithms/AlgorithmInitialize.cpp.s
 
 # target to generate assembly for a file
 Algorithms/AlgorithmInitialize.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/AlgorithmInitialize.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Algorithms/AlgorithmInitialize.cpp.s
 .PHONY : Algorithms/AlgorithmInitialize.cpp.s
 
 Algorithms/MidpointSubdivision.o: Algorithms/MidpointSubdivision.cpp.o
@@ -220,7 +220,7 @@ Algorithms/MidpointSubdivision.o: Algorithms/MidpointSubdivision.cpp.o
 
 # target to build an object file
 Algorithms/MidpointSubdivision.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/MidpointSubdivision.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Algorithms/MidpointSubdivision.cpp.o
 .PHONY : Algorithms/MidpointSubdivision.cpp.o
 
 Algorithms/MidpointSubdivision.i: Algorithms/MidpointSubdivision.cpp.i
@@ -229,7 +229,7 @@ Algorithms/MidpointSubdivision.i: Algorithms/MidpointSubdivision.cpp.i
 
 # target to preprocess a source file
 Algorithms/MidpointSubdivision.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/MidpointSubdivision.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Algorithms/MidpointSubdivision.cpp.i
 .PHONY : Algorithms/MidpointSubdivision.cpp.i
 
 Algorithms/MidpointSubdivision.s: Algorithms/MidpointSubdivision.cpp.s
@@ -238,7 +238,7 @@ Algorithms/MidpointSubdivision.s: Algorithms/MidpointSubdivision.cpp.s
 
 # target to generate assembly for a file
 Algorithms/MidpointSubdivision.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Algorithms/MidpointSubdivision.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Algorithms/MidpointSubdivision.cpp.s
 .PHONY : Algorithms/MidpointSubdivision.cpp.s
 
 Bbox_3.o: Bbox_3.cpp.o
@@ -247,7 +247,7 @@ Bbox_3.o: Bbox_3.cpp.o
 
 # target to build an object file
 Bbox_3.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Bbox_3.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Bbox_3.cpp.o
 .PHONY : Bbox_3.cpp.o
 
 Bbox_3.i: Bbox_3.cpp.i
@@ -256,7 +256,7 @@ Bbox_3.i: Bbox_3.cpp.i
 
 # target to preprocess a source file
 Bbox_3.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Bbox_3.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Bbox_3.cpp.i
 .PHONY : Bbox_3.cpp.i
 
 Bbox_3.s: Bbox_3.cpp.s
@@ -265,7 +265,7 @@ Bbox_3.s: Bbox_3.cpp.s
 
 # target to generate assembly for a file
 Bbox_3.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Bbox_3.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Bbox_3.cpp.s
 .PHONY : Bbox_3.cpp.s
 
 Collision.o: Collision.cpp.o
@@ -274,7 +274,7 @@ Collision.o: Collision.cpp.o
 
 # target to build an object file
 Collision.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Collision.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Collision.cpp.o
 .PHONY : Collision.cpp.o
 
 Collision.i: Collision.cpp.i
@@ -283,7 +283,7 @@ Collision.i: Collision.cpp.i
 
 # target to preprocess a source file
 Collision.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Collision.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Collision.cpp.i
 .PHONY : Collision.cpp.i
 
 Collision.s: Collision.cpp.s
@@ -292,7 +292,7 @@ Collision.s: Collision.cpp.s
 
 # target to generate assembly for a file
 Collision.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Collision.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Collision.cpp.s
 .PHONY : Collision.cpp.s
 
 EdgeOrder.o: EdgeOrder.cpp.o
@@ -301,7 +301,7 @@ EdgeOrder.o: EdgeOrder.cpp.o
 
 # target to build an object file
 EdgeOrder.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/EdgeOrder.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/EdgeOrder.cpp.o
 .PHONY : EdgeOrder.cpp.o
 
 EdgeOrder.i: EdgeOrder.cpp.i
@@ -310,7 +310,7 @@ EdgeOrder.i: EdgeOrder.cpp.i
 
 # target to preprocess a source file
 EdgeOrder.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/EdgeOrder.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/EdgeOrder.cpp.i
 .PHONY : EdgeOrder.cpp.i
 
 EdgeOrder.s: EdgeOrder.cpp.s
@@ -319,7 +319,7 @@ EdgeOrder.s: EdgeOrder.cpp.s
 
 # target to generate assembly for a file
 EdgeOrder.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/EdgeOrder.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/EdgeOrder.cpp.s
 .PHONY : EdgeOrder.cpp.s
 
 Geom_Support.o: Geom_Support.cpp.o
@@ -328,7 +328,7 @@ Geom_Support.o: Geom_Support.cpp.o
 
 # target to build an object file
 Geom_Support.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Geom_Support.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Geom_Support.cpp.o
 .PHONY : Geom_Support.cpp.o
 
 Geom_Support.i: Geom_Support.cpp.i
@@ -337,7 +337,7 @@ Geom_Support.i: Geom_Support.cpp.i
 
 # target to preprocess a source file
 Geom_Support.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Geom_Support.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Geom_Support.cpp.i
 .PHONY : Geom_Support.cpp.i
 
 Geom_Support.s: Geom_Support.cpp.s
@@ -346,7 +346,7 @@ Geom_Support.s: Geom_Support.cpp.s
 
 # target to generate assembly for a file
 Geom_Support.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Geom_Support.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Geom_Support.cpp.s
 .PHONY : Geom_Support.cpp.s
 
 InOut.o: InOut.cpp.o
@@ -355,7 +355,7 @@ InOut.o: InOut.cpp.o
 
 # target to build an object file
 InOut.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/InOut.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/InOut.cpp.o
 .PHONY : InOut.cpp.o
 
 InOut.i: InOut.cpp.i
@@ -364,7 +364,7 @@ InOut.i: InOut.cpp.i
 
 # target to preprocess a source file
 InOut.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/InOut.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/InOut.cpp.i
 .PHONY : InOut.cpp.i
 
 InOut.s: InOut.cpp.s
@@ -373,7 +373,7 @@ InOut.s: InOut.cpp.s
 
 # target to generate assembly for a file
 InOut.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/InOut.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/InOut.cpp.s
 .PHONY : InOut.cpp.s
 
 Mesh.o: Mesh.cpp.o
@@ -382,7 +382,7 @@ Mesh.o: Mesh.cpp.o
 
 # target to build an object file
 Mesh.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Mesh.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Mesh.cpp.o
 .PHONY : Mesh.cpp.o
 
 Mesh.i: Mesh.cpp.i
@@ -391,7 +391,7 @@ Mesh.i: Mesh.cpp.i
 
 # target to preprocess a source file
 Mesh.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Mesh.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Mesh.cpp.i
 .PHONY : Mesh.cpp.i
 
 Mesh.s: Mesh.cpp.s
@@ -400,7 +400,7 @@ Mesh.s: Mesh.cpp.s
 
 # target to generate assembly for a file
 Mesh.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Mesh.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Mesh.cpp.s
 .PHONY : Mesh.cpp.s
 
 Point.o: Point.cpp.o
@@ -409,7 +409,7 @@ Point.o: Point.cpp.o
 
 # target to build an object file
 Point.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Point.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Point.cpp.o
 .PHONY : Point.cpp.o
 
 Point.i: Point.cpp.i
@@ -418,7 +418,7 @@ Point.i: Point.cpp.i
 
 # target to preprocess a source file
 Point.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Point.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Point.cpp.i
 .PHONY : Point.cpp.i
 
 Point.s: Point.cpp.s
@@ -427,7 +427,7 @@ Point.s: Point.cpp.s
 
 # target to generate assembly for a file
 Point.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Point.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Point.cpp.s
 .PHONY : Point.cpp.s
 
 Triangle.o: Triangle.cpp.o
@@ -436,7 +436,7 @@ Triangle.o: Triangle.cpp.o
 
 # target to build an object file
 Triangle.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Triangle.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Triangle.cpp.o
 .PHONY : Triangle.cpp.o
 
 Triangle.i: Triangle.cpp.i
@@ -445,7 +445,7 @@ Triangle.i: Triangle.cpp.i
 
 # target to preprocess a source file
 Triangle.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Triangle.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Triangle.cpp.i
 .PHONY : Triangle.cpp.i
 
 Triangle.s: Triangle.cpp.s
@@ -454,7 +454,7 @@ Triangle.s: Triangle.cpp.s
 
 # target to generate assembly for a file
 Triangle.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Triangle.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Triangle.cpp.s
 .PHONY : Triangle.cpp.s
 
 Writedata.o: Writedata.cpp.o
@@ -463,7 +463,7 @@ Writedata.o: Writedata.cpp.o
 
 # target to build an object file
 Writedata.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Writedata.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Writedata.cpp.o
 .PHONY : Writedata.cpp.o
 
 Writedata.i: Writedata.cpp.i
@@ -472,7 +472,7 @@ Writedata.i: Writedata.cpp.i
 
 # target to preprocess a source file
 Writedata.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Writedata.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Writedata.cpp.i
 .PHONY : Writedata.cpp.i
 
 Writedata.s: Writedata.cpp.s
@@ -481,7 +481,7 @@ Writedata.s: Writedata.cpp.s
 
 # target to generate assembly for a file
 Writedata.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Algofiles.dir/build.make codes/CMakeFiles/Algofiles.dir/Writedata.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/Geom_Algo.dir/build.make codes/CMakeFiles/Geom_Algo.dir/Writedata.cpp.s
 .PHONY : Writedata.cpp.s
 
 main.o: main.cpp.o
@@ -490,7 +490,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/output.dir/build.make codes/CMakeFiles/output.dir/main.cpp.o
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/geom_Algos.dir/build.make codes/CMakeFiles/geom_Algos.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -499,7 +499,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/output.dir/build.make codes/CMakeFiles/output.dir/main.cpp.i
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/geom_Algos.dir/build.make codes/CMakeFiles/geom_Algos.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -508,7 +508,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/output.dir/build.make codes/CMakeFiles/output.dir/main.cpp.s
+	cd /home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug && $(MAKE) $(MAKESILENT) -f codes/CMakeFiles/geom_Algos.dir/build.make codes/CMakeFiles/geom_Algos.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -519,8 +519,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Algofiles"
-	@echo "... output"
+	@echo "... Geom_Algo"
+	@echo "... geom_Algos"
 	@echo "... Algorithms/AdaptivieTriangle.o"
 	@echo "... Algorithms/AdaptivieTriangle.i"
 	@echo "... Algorithms/AdaptivieTriangle.s"
