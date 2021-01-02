@@ -14,7 +14,6 @@ set (Hpp
     Bbox_3.h
     Writedata.h
     Algorithms/MidpointSubdivision.h
-    Algorithms/AdaptivieTriangle.h
     Algorithms/LaplacianSmoothing.h
     )
     
@@ -29,7 +28,6 @@ set (Cpp
     Bbox_3.cpp
     Writedata.cpp
     Algorithms/MidpointSubdivision.cpp
-    Algorithms/AdaptivieTriangle.cpp
     Algorithms/LaplacianSmoothing.cpp
     )
     
