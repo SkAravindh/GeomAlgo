@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/geom_Algos.dir/main.cpp.o  -o geom_Algos  libGeom_Algo.a 

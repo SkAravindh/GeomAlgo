@@ -1,6 +1,0 @@
-/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/build/CMakeFiles/rebuild_cache.dir
-/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/build/CMakeFiles/edit_cache.dir
-/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/build/codes/CMakeFiles/rebuild_cache.dir
-/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/build/codes/CMakeFiles/edit_cache.dir
-/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/build/codes/CMakeFiles/Geom_Algo.dir
-/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/build/codes/CMakeFiles/geom_Algos.dir
