@@ -61,7 +61,7 @@ int main() {
 //    pMesh->writemesh("glob.stl");
 
 LaplacianSmooth obj = LaplacianSmooth(pMesh);
-obj.loadParameters(15);
+obj.loadParameters(20);
  obj.smoothMesh();
 
 
