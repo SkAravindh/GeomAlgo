@@ -32,10 +32,7 @@ MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &M
     //Storing Triangle for further subdivision.
      std::vector<Triangle*> thisTvec;
      parentT->getChildren(thisTvec);
-//    thisTvec.push_back(tri1);
-//    thisTvec.push_back(tri2);
-//    thisTvec.push_back(tri3);
-//    thisTvec.push_back(tri4);
+
 
     //Level Increment
     ++level;
