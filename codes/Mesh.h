@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <memory>
+#include <math.h>
 #include "Point.h"
 #include "Triangle.h"
 #include "EdgeOrder.h"
@@ -28,6 +29,7 @@ public:
     Triangle* createTriangle(Point *P0, Point *P1, Point *P2, Triangle* parent);
     void storeTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
+    void getVertices(std::vector<Point*> &vp);
     void standAlone(std::vector<Triangle*> &tv);
     void printInfo();
     void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV);

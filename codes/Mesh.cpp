@@ -64,7 +64,7 @@ void Mesh::getAdjustenNeigh(const EdgeOrder &ed, std::vector<Triangle*> &tv) {
     std::pair<MMET, MMET> triangle_set = mmedgeTotriangles.equal_range(ed);
     if (std::distance(triangle_set.first, triangle_set.second) != 2) {
         std::cout << std::distance(triangle_set.first, triangle_set.second) << std::endl;
-        std::cout << "Returning empty vector " << std::endl;
+        std::cout << "Returning empty vector from ---> getAdjustenNeigh(Mesh.cpp)  " << std::endl;
         return;
     }
     for (MMET triangle_set_IT = triangle_set.first; triangle_set_IT != triangle_set.second; triangle_set_IT++) {
@@ -116,6 +116,19 @@ void Mesh::getTriangles(std::vector<Triangle*> &TV) {
         Triangle * tri(*it);
         TV.push_back(tri);
     }
+}
+
+void Mesh::getVertices(std::vector<Point*> &vp) {
+
+    std::set<Point*> allpoints;
+    TV_it it;
+    for(it = allTriangles.begin(); it != allTriangles.end(); it++) {
+        for(int i=0; i<3; i++) {
+            Point* p = (*it)->getCorners(i);
+            allpoints.insert(p);
+        }
+    }
+    vp.assign(allpoints.begin(),allpoints.end());
 }
 
 void Mesh::fillTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN ) {
@@ -298,6 +311,8 @@ void Mesh::writemesh(std::string filename) {
 }
 
 void Mesh::printInfo() {
+
+    std::cout << "Size of allvertices " << allvertices.size() << std::endl;
     std::cout << "Size of alltriangles " << allTriangles.size() << std::endl;
     std::cout << "size of point to triangle MMap " << mmpointTotriangles.size() << std::endl;
     std::cout << "size of edge to triangle Mmap " << mmedgeTotriangles.size() << std::endl;

@@ -58,6 +58,7 @@ int indexOrder_2(int n) {
 }
 
 bool brayCentric(const Triangle *t, Point *p) {
+
     Point *p0 = t->getCorners(0);
     Point *p1 = t->getCorners(1);
     Point *p2 = t->getCorners(2);
@@ -233,7 +234,7 @@ bool getCommonEdge(Triangle *t1, Triangle *t2,EdgeOrder &oe) {
     return false;
 }
 
-int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no) {
+int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no, std::vector<int> &IDV) {
     //works only when triangles have halfedge
 
     int id1;
@@ -266,6 +267,19 @@ int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no) {
             return id2;
             break;
         default:
+            IDV.push_back(id1);
+            IDV.push_back(id2);
             break;
     }
+}
+
+double getAngleBtwVectors(const Vector3 v1, const Vector3 v2) {
+
+    double vec_dot   =  dot(v1,v2);
+    double v1_length = v1.lenght();
+    double v2_length = v2.lenght();
+    double angle = acos( vec_dot/(v1_length * v2_length) );
+   // double degree = (angle * 180) / pi;   //converting radian to degree.
+   // std::cout << "angle " << angle << std::endl;
+    return angle; //return by radians
 }

@@ -7,7 +7,8 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
-#include "Algorithms/AdaptivieTriangle.h"
+#include "Algorithms/LaplacianSmoothing.h"
+ 
 
 
 
@@ -22,8 +23,17 @@ int main() {
     //std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
     std::vector<Triangle*> v;
-    pMesh->getTriangles(v);
-    pMesh->printInfo();
+   pMesh->getTriangles(v);
+
+
+// vector3 a(3,4,0);
+//    vector3 b(4,3,0);
+//    getAngleBtwVectors(a,b);
+//    double at = cos(  0.283794);
+//    double bt = sin(  0.283794);
+//
+//    std::cout << "atan " << at/bt << std::endl;
+
 
 
 //    std::cout << "size  " << v.size() << std::endl;
@@ -50,10 +60,9 @@ int main() {
 //    obj->getSubdividedTriangles();
 //    pMesh->writemesh("glob.stl");
 
-
-
-
-
+LaplacianSmooth obj = LaplacianSmooth(pMesh);
+obj.loadParameters(15);
+ obj.smoothMesh();
 
 
 

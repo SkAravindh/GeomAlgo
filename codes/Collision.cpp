@@ -163,7 +163,7 @@ bool TriangleTriangleIntersection(Triangle *T1,Triangle *T2){
     double du0du2 = du0*du2;
 
     if (du0du1 > 0.0f && du0du2 > 0.0f) {
-        //return false;   //same sign which means triangle two is located other side of Triangle 1.
+        return false;   //same sign which means triangle two is located other side of Triangle 1.
     }
 
     double dv0 =  dot(N2, v0-u0);
@@ -174,7 +174,7 @@ bool TriangleTriangleIntersection(Triangle *T1,Triangle *T2){
     double dv0dv2 = dv0*dv2;
 
     if (dv0dv1 > 0.0f && dv0dv2 > 0.0f) {
-      //  return false;  //same sign which means triangle one is located other side of Triangle 2.
+        return false;  //same sign which means triangle one is located other side of Triangle 2.
     }
 
     //check for plane intersection and get line L.

@@ -76,6 +76,17 @@ void Triangle::clearVchild()  {
     vchildren.clear();
 }
 
+int Triangle::getVertexID(Point *p) {
+
+    for(int i =0; i<3; i++) {
+        if(*corners[i] == *p) return i;
+    }
+}
+
+void Triangle::setNewVertex(Point *p, int idx) {
+    corners[idx] = p;
+}
+
 bool Triangle::operator == (const Triangle &rhs) const {
     return (*this->getCorners(0) == *rhs.getCorners(0) && *this->getCorners(1) == *rhs.getCorners(1) && *this->getCorners(2) == *rhs.getCorners(2));
 }

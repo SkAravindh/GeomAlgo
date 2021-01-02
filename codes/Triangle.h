@@ -23,6 +23,8 @@ public:
     void clearVchild();
     bool haschild();
     void getChildren(std::vector<Triangle*> &vchild);
+    int getVertexID(Point* p);
+    void setNewVertex(Point*p , int idx);
 
 
     bool operator == (const Triangle &rhs) const;

@@ -41,6 +41,7 @@ T & operator [] (int i);
 inline Vector_3<T>& operator + (const Vector_3<T> &rhs);
 inline Vector_3<T>& operator - (const Vector_3<T> & rhs);
 inline Vector_3<T>& operator = (const Vector_3<T> &rhs);
+inline Vector_3<T>& operator * (  double t);
 inline Vector_3<T>& operator += (const Vector_3<T> & rhs);
 inline Vector_3<T>& operator -= (const Vector_3<T> & rhs);
 inline Vector_3<T>& operator *= (const Vector_3<T> & rhs);
@@ -104,6 +105,15 @@ Vector_3<T>& Vector_3<T>::operator - (const Vector_3<T> & rhs) {
 }
 
 template<typename T>
+Vector_3<T>& Vector_3<T>::operator * (  double t) {
+
+    e[0] = e[0]*t;
+    e[1] = e[1]*t;
+    e[2] = e[2]*t;
+    return *this;
+}
+
+template<typename T>
 Vector_3<T>& Vector_3<T>::operator = (const Vector_3<T> &rhs) {
 
     if(this == &rhs){
@@ -127,7 +137,7 @@ T Vector_3<T>::squared_length() const {
 }
 
 template<typename T>
-inline Vector_3<T> Vector_3<T>::make_unit_vector() {
+inline Vector_3<T> Vector_3<T>::make_unit_vector()  {
 
     float k = 1/ sqrt(e[0]*e[0] + e[1]*e[1] + e[2]*e[2]);
     e[0]=e[0]*k;

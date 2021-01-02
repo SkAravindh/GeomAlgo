@@ -1,7 +1,7 @@
 #include "Writedata.h"
 
 void writePoints(std::string filename, std::vector<Point*> &bp) {
-    std::cout <<"bp " <<bp.size() << std::endl;
+
     std::ofstream vtk_file;
     vtk_file.open(filename);
     vtk_file << "# vtk DataFile Version 2.0" << std::endl;

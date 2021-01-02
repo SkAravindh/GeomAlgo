@@ -1,5 +1,8 @@
 
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set (Hpp
     Triangle.h
     Point.h
@@ -11,8 +14,8 @@ set (Hpp
     Bbox_3.h
     Writedata.h
     Algorithms/MidpointSubdivision.h
-    Algorithms/AlgorithmInitialize.h
     Algorithms/AdaptivieTriangle.h
+    Algorithms/LaplacianSmoothing.h
     )
     
 set (Cpp
@@ -26,9 +29,12 @@ set (Cpp
     Bbox_3.cpp
     Writedata.cpp
     Algorithms/MidpointSubdivision.cpp
-    Algorithms/AlgorithmInitialize.cpp
     Algorithms/AdaptivieTriangle.cpp
+    Algorithms/LaplacianSmoothing.cpp
     )
+    
+ 
+
 
 add_library(Geom_Algo STATIC ${Hpp} ${Cpp})
 
@@ -36,4 +42,9 @@ add_library(Geom_Algo STATIC ${Hpp} ${Cpp})
 add_executable(${PROJECT_NAME} main.cpp)
 
 target_link_libraries(${PROJECT_NAME} Geom_Algo)
+
+#target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR}) ${PROJECT_BINARY_DIR}--> path to the build directory
+
+ 
+ 
 

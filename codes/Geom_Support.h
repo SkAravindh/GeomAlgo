@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "Vector_3.h"
 #include "Mesh.h"
+#define pi 3.14;
 typedef Vector_3<double> Vector3;
 class Triangle; //fwd
 
@@ -22,7 +23,8 @@ void eraseCertainTriangle(std::vector<Triangle* > &TV, Triangle *t);
 void eraseCertainEntryPT(std::multimap<Point*, Triangle*,ComparePoint>&mm, Point *key, Triangle* t);
 void eraseCertainEntryET(std::multimap<EdgeOrder, Triangle*>&mm, EdgeOrder &key, Triangle* t);
 bool getCommonEdge(Triangle *t1, Triangle *t2,EdgeOrder &oe );
-int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no );
+int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no, std::vector<int> &IDV );
+double getAngleBtwVectors(const Vector3 v1, const Vector3 v2);
 
 
 
