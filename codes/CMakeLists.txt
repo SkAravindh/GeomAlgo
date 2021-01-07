@@ -13,6 +13,7 @@ set (Hpp
     Geom_Support.h
     Bbox_3.h
     Writedata.h
+    Edge.h
     Algorithms/MidpointSubdivision.h
     Algorithms/LaplacianSmoothing.h
     )
@@ -26,7 +27,9 @@ set (Cpp
     Collision.cpp
     Geom_Support.cpp
     Bbox_3.cpp
+    Edge.cpp
     Writedata.cpp
+    test_connectivity.cpp
     Algorithms/MidpointSubdivision.cpp
     Algorithms/LaplacianSmoothing.cpp
     )

@@ -10,8 +10,8 @@ class Triangle; //fwd
 
 
 Vector3 getNormal(const Triangle *t);
-double getShortestDistance( const Triangle *t, Point *p);
-Vector3 getOrthogonalProjectionVector( const Triangle *t, Point *p);
+double getShortestDisPointToPlane( const Triangle *t, const Point *p) ;
+Vector3 getOrthogonalProjectionVector( const Triangle *t, const Point *p);
 int indexOrder_1(int n);
 int indexOrder_2(int n);
 bool brayCentric(const Triangle *t, Point *p);
@@ -24,7 +24,9 @@ void eraseCertainEntryPT(std::multimap<Point*, Triangle*,ComparePoint>&mm, Point
 void eraseCertainEntryET(std::multimap<EdgeOrder, Triangle*>&mm, EdgeOrder &key, Triangle* t);
 bool getCommonEdge(Triangle *t1, Triangle *t2,EdgeOrder &oe );
 int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no, std::vector<int> &IDV );
-double getAngleBtwVectors(const Vector3 v1, const Vector3 v2);
+double getAngleBtwVectors(const Vector3 &v1, const Vector3 &v2);
+double getDistance(const Point* p0, const Point* p1);
+
 
 
 

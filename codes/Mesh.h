@@ -5,7 +5,8 @@
 #include <vector>
 #include <algorithm>
 #include <memory>
-#include <math.h>
+#include <cmath>
+#include <cfloat>
 #include "Point.h"
 #include "Triangle.h"
 #include "EdgeOrder.h"

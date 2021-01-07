@@ -4,6 +4,7 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Vector_3.h"
+#include "Edge.h"
 typedef Vector_3<double> Vector3;
 
 class Mesh; //fwd
@@ -15,6 +16,7 @@ public:
     void Initilize(Point* P0, Point* P1, Point* P2);
     Point* getCorners(int i) const;
     EdgeOrder getEO(int i) const;
+    Edge getEd(int i) const;
     Vector3 getNormalVector() const;
     Point* getEdgeMidPoint(int i) const;
     void setNeigh(int i, Triangle* t);
@@ -25,6 +27,8 @@ public:
     void getChildren(std::vector<Triangle*> &vchild);
     int getVertexID(Point* p);
     void setNewVertex(Point*p , int idx);
+    int getLongestEdgeID()  ;
+    int getPeakVertexID(const EdgeOrder &c_ed);
 
 
     bool operator == (const Triangle &rhs) const;

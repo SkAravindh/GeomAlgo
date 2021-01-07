@@ -135,12 +135,12 @@ void Mesh::fillTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN
 
     switch (VN) {
         case alltri:
-            for(auto ele : tv){
+            for(auto ele : tv) {
                 allTriangles.push_back(ele);
             }
             break;
         case external:
-            for(auto ele : tv){
+            for(auto ele : tv) {
                 externalUse.push_back(ele);
             }
             break;

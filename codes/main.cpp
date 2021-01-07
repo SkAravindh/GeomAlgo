@@ -8,7 +8,8 @@
 #include "Geom_Support.h"
 #include "Writedata.h"
 #include "Algorithms/LaplacianSmoothing.h"
- 
+#include "test_connectivity.cpp"
+
 
 
 
@@ -18,12 +19,31 @@
 
 
 int main() {
-    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/bunny_S_Up_R.stl";
+    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+   //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/testtriangle.stl";
+
 
     //std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
-    std::vector<Triangle*> v;
-   pMesh->getTriangles(v);
+
+    AdaptiveTriangle obj(pMesh);
+    obj.edgeRefinement();
+
+
+//    std::shared_ptr<Mesh> mesh(new Mesh);
+//    Point*p1 = new Point(2,1,2);
+//    Point*p2 = new Point(8,3,2);
+//    Point*p3 = new Point(4,6,2);
+//    Point*p4 = new Point(3,-5,1);
+//    Point*p5 = new Point(9,-7,1);
+//    Point*p6 = new Point(10,-2,1);
+//    mesh->createTriangle(p1,p2,p3, nullptr);
+//    mesh->createTriangle(p1,p4,p2, nullptr);
+//    mesh->createTriangle(p2,p4,p5, nullptr);
+//    mesh->createTriangle(p2,p5,p6, nullptr);
+//    mesh->writemesh("testtriangle.stl");
+//    double dis = getDistance(p2,p5);
+//   std::cout << "dis " <<dis << std::endl;
 
 
 // vector3 a(3,4,0);
@@ -60,9 +80,7 @@ int main() {
 //    obj->getSubdividedTriangles();
 //    pMesh->writemesh("glob.stl");
 
-LaplacianSmooth obj = LaplacianSmooth(pMesh);
-obj.loadParameters(20);
- obj.smoothMesh();
+
 
 
 

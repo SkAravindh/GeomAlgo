@@ -18,7 +18,7 @@ Vector3 getNormal(const Triangle *t) {
     return normal;
 }
 
-double getShortestDistance( const Triangle *t, Point *p) {
+double getShortestDisPointToPlane( const Triangle *t, const Point *p)  {
 
     Point *v0 = t->getCorners(0);
     Vector3 point_on_plane(v0->x(),v0->y(),v0->z());
@@ -31,7 +31,7 @@ double getShortestDistance( const Triangle *t, Point *p) {
     return abs(distance);
 }
 
-Vector3 getOrthogonalProjectionVector( const Triangle *t, Point *p) {
+Vector3 getOrthogonalProjectionVector( const Triangle *t, const Point *p) {
 
     Point *v0 = t->getCorners(0);
     Vector3 point_on_plane(v0->x(),v0->y(),v0->z());
@@ -108,6 +108,10 @@ bool checkForHalfEdge(const Triangle *t1, const Triangle *t2) {
         }
     }
     return false;
+}
+
+double getDistance(const Point* p0, const Point* p1) {
+    return (std::sqrt( std::pow((p1->x()-p0->x()),2) + std::pow((p1->y()-p0->y()),2) + std::pow((p1->z()-p0->z()),2)) );
 }
 
 bool checkCommonVertex(const Triangle *t1, const Triangle *t2){
@@ -273,7 +277,7 @@ int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no, std::vect
     }
 }
 
-double getAngleBtwVectors(const Vector3 v1, const Vector3 v2) {
+double getAngleBtwVectors(const Vector3 &v1, const Vector3 &v2) {
 
     double vec_dot   =  dot(v1,v2);
     double v1_length = v1.lenght();
