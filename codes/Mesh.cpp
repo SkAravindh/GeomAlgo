@@ -133,6 +133,7 @@ void Mesh::getVertices(std::vector<Point*> &vp) {
 
 void Mesh::fillTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN ) {
 
+
     switch (VN) {
         case alltri:
             for(auto ele : tv) {
@@ -306,14 +307,15 @@ void Mesh::standAlone(std::vector<Triangle*> &tv) {
     getRingNeigbyOrder(allTriangles[0]->getCorners(0), 1, tv);
 }
 
-void Mesh::writemesh(std::string filename) {
+void Mesh::writeMeshSTL(std::string filename) {
     writeSTL(filename,allTriangles);
 }
 
-void Mesh::printInfo() {
+void Mesh::printContainersInfo() {
 
     std::cout << "Size of allvertices " << allvertices.size() << std::endl;
     std::cout << "Size of alltriangles " << allTriangles.size() << std::endl;
     std::cout << "size of point to triangle MMap " << mmpointTotriangles.size() << std::endl;
     std::cout << "size of edge to triangle Mmap " << mmedgeTotriangles.size() << std::endl;
+
 }

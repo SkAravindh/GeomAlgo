@@ -16,6 +16,7 @@ set (Hpp
     Edge.h
     Algorithms/MidpointSubdivision.h
     Algorithms/LaplacianSmoothing.h
+    Algorithms/AdaptiveRefinement_EdgeBased.h
     )
     
 set (Cpp
@@ -32,6 +33,7 @@ set (Cpp
     test_connectivity.cpp
     Algorithms/MidpointSubdivision.cpp
     Algorithms/LaplacianSmoothing.cpp
+    Algorithms/AdaptiveRefinement_EdgeBased.cpp
     )
     
  

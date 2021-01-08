@@ -6,8 +6,9 @@
 class LaplacianSmooth{
 public:
     LaplacianSmooth()=default;
-    LaplacianSmooth(std::shared_ptr<Mesh> &mesh);
+    explicit LaplacianSmooth(std::shared_ptr<Mesh> &mesh);
     void loadParameters(int No_of_Iteration);
+    void run();
     void smoothMesh();
     void setupToEstimateWeights(Point* original, std::vector<Point*> &neigh_points);
     double coTangent(Point* p1, Point* p2, EdgeOrder c_ed);

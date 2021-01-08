@@ -8,6 +8,10 @@ void LaplacianSmooth::loadParameters(int No_of_Iteration) {
     Iteration_count = No_of_Iteration;
 }
 
+void LaplacianSmooth::run() {
+    smoothMesh();
+}
+
 void LaplacianSmooth::smoothMesh() {
 
     std::map<Point*, Point*,ComparePoint>::iterator it;
@@ -34,7 +38,7 @@ void LaplacianSmooth::smoothMesh() {
         pMesh->reEstablishConnectivity();
     }
 
-    pMesh->writemesh("smooth.stl");
+  //  pMesh->writeMeshSTL("smooth.stl");
 
 }
 

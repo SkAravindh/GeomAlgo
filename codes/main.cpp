@@ -7,10 +7,9 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
+//#include "test_connectivity.cpp"
+//#include "Algorithms/AdaptiveRefinement_EdgeBased.h"
 #include "Algorithms/LaplacianSmoothing.h"
-#include "test_connectivity.cpp"
-
-
 
 
 
@@ -20,54 +19,35 @@
 
 int main() {
     std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-   //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/testtriangle.stl";
+  // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/testalgo.stl";
 
 
     //std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
 
-    AdaptiveTriangle obj(pMesh);
-    obj.edgeRefinement();
-
-
-//    std::shared_ptr<Mesh> mesh(new Mesh);
-//    Point*p1 = new Point(2,1,2);
-//    Point*p2 = new Point(8,3,2);
-//    Point*p3 = new Point(4,6,2);
-//    Point*p4 = new Point(3,-5,1);
-//    Point*p5 = new Point(9,-7,1);
-//    Point*p6 = new Point(10,-2,1);
-//    mesh->createTriangle(p1,p2,p3, nullptr);
-//    mesh->createTriangle(p1,p4,p2, nullptr);
-//    mesh->createTriangle(p2,p4,p5, nullptr);
-//    mesh->createTriangle(p2,p5,p6, nullptr);
-//    mesh->writemesh("testtriangle.stl");
-//    double dis = getDistance(p2,p5);
-//   std::cout << "dis " <<dis << std::endl;
-
-
-// vector3 a(3,4,0);
-//    vector3 b(4,3,0);
-//    getAngleBtwVectors(a,b);
-//    double at = cos(  0.283794);
-//    double bt = sin(  0.283794);
-//
-//    std::cout << "atan " << at/bt << std::endl;
-
-
-
-//    std::cout << "size  " << v.size() << std::endl;
-//    std::vector<Triangle*> sh;
-//    EdgeOrder ed = v[1673]->getEO(0);
-//    pMesh->getAdjustenNeigh(ed,sh);
-//    for(auto ele :sh){
-//        std::cout << *ele << std::endl;
+    std::vector<Triangle*> tv;
+    pMesh->getTriangles(tv);
+//    int count =0;
+//    for (auto ele : tv) {
+//        std::cout <<"count "<<count<<" " << *ele << std::endl;
+//        ++count;
 //    }
-//    int tri1 = getNonCommonPointsIDs(sh[0],sh[1],1);
-//    int tri2 = getNonCommonPointsIDs(sh[0],sh[1],2);
-//    std::cout << tri1 <<" "<<tri2<<std::endl;
-//    std::cout << *sh[0]->getCorners(tri1) << std::endl;
-//    std::cout << *sh[1]->getCorners(tri2) << std::endl;
+//    AdaptiveTriangle obj(pMesh);
+//  obj.edgeRefinement();
+//  pMesh->writeMeshSTL("hiii1.stl");
+// pMesh->printContainersInfo();
+
+// AdaptRefineED obj(pMesh);
+// //obj.edgeRefinement();
+// obj.loadParameters(tv[0],300);
+//obj.run();
+// //pMesh->writeMeshSTL("testalgonew.stl");
+// pMesh->printContainersInfo();
+
+
+
+
+
 
 //    EstablishConnectivity * obj =  new EstablishConnectivity(pMesh);
 //    obj->loadParameters(v[0],2);

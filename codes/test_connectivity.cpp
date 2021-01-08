@@ -36,6 +36,8 @@ public:
 private:
     std::shared_ptr<Mesh> pMesh;
     std::set<Triangle*> parents;
+    std::set<Triangle*> childinfo;
+    typedef std::set<Triangle*>::iterator sit;
 };
 
 AdaptiveTriangle::AdaptiveTriangle(std::shared_ptr<Mesh> &mesh) {
@@ -45,9 +47,10 @@ AdaptiveTriangle::AdaptiveTriangle(std::shared_ptr<Mesh> &mesh) {
 void AdaptiveTriangle::edgeRefinement() {
     std::vector<Triangle*> trianglevector;
     pMesh->getTriangles(trianglevector);
+   // std::cout << "trivec " << *trianglevector[6000] << std::endl;
     int count =0;
     std::vector<Triangle*> Input_triangles;
-    Input_triangles.push_back(trianglevector[0]);
+    Input_triangles.push_back(trianglevector[5300]);
     while(!Input_triangles.empty()) {
         Triangle* CT = *Input_triangles.begin();
         eraseCertainTriangle(Input_triangles,CT);
@@ -75,28 +78,27 @@ void AdaptiveTriangle::edgeRefinement() {
 
         HasCommonLE re = hassameedges(cT_Ledge,nT_Ledge);
         if (re == HasCommonLE::same) {
-            std::cout << "sharing the same edge " << std::endl;
+       //     std::cout << "sharing the same edge " << std::endl;
             dividetwo(cT_Ledge,CT,direct_neigh,nT_Ledge);
         }
 
         if (re == HasCommonLE::not_same) {
-            std::cout << "not sharing the same edge " << std::endl;
+         //   std::cout << "not sharing the same edge " << std::endl;
             dividethree(cT_Ledge,CT,direct_neigh,nT_Ledge);
         }
-        ++count;
-        if (count == 300) {
+
+
+        if (count == 300 ) {
             break;
         }
+        ++count;
         Input_triangles.push_back(cT_child1);
         Input_triangles.push_back(cT_child2);
-//        std::cout << "cT_child1 " << std::endl;
-//        std::cout << *cT_child1 << std::endl;
-//        std::cout << "cT_child2 " << std::endl;
-//        std::cout << *cT_child2  << std::endl;
+
 
 
     }
-    pMesh->writemesh("check_7.stl");
+    //pMesh->writemesh("check9.stl");
 }
 
 void AdaptiveTriangle::dividethree( EdgeOrder &currLongEdge,  Triangle* CT,  Triangle *Neigh,  EdgeOrder &NeighLedge) {
@@ -129,12 +131,12 @@ void AdaptiveTriangle::dividethree( EdgeOrder &currLongEdge,  Triangle* CT,  Tri
     getNeighTriandLedge(NeighLedge,Neigh,second_direct_neigh,second_nT_Ledge);
     HasCommonLE re = hassameedges(NeighLedge,second_nT_Ledge);
     if (re == HasCommonLE::same) {
-        std::cout << "sharing the same edge " << std::endl;
+      //  std::cout << "sharing the same edge " << std::endl;
         dividetwo(NeighLedge,Neigh,second_direct_neigh,second_nT_Ledge);
 
     }
     else if (re == HasCommonLE::not_same) {
-        std::cout << "not sharing the same edge, second " << std::endl;
+       // std::cout << "not sharing the same edge, second " << std::endl;
         dividethree(NeighLedge,Neigh,second_direct_neigh,second_nT_Ledge);
     }
 
@@ -168,12 +170,14 @@ void AdaptiveTriangle::delInfoInDS(Triangle *T) {
 }
 
 void AdaptiveTriangle::upDateDS(Triangle *T) {
+
     std::vector<Triangle*> TV;
     T->getChildren(TV);
     for (auto ele : TV) {
-        pMesh->fillTriangleContainers(TV,alltri);
-     //   pMesh->establishNeighofTriangle(ele);
+
+           pMesh->establishNeighofTriangle(ele);
     }
+    pMesh->fillTriangleContainers(TV,alltri);
 }
 void AdaptiveTriangle::getNeighTriandLedge(const EdgeOrder&ed, const Triangle* CT,  Triangle* &Neigh, EdgeOrder &NeighLedge) {
     std::vector<Triangle*> adjusten_triangles;

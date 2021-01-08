@@ -32,7 +32,7 @@ public:
     void getTriangles(std::vector<Triangle*> &TV);
     void getVertices(std::vector<Point*> &vp);
     void standAlone(std::vector<Triangle*> &tv);
-    void printInfo();
+    void printContainersInfo();
     void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV);
     void getRingNeigbyOrder(Point* p, unsigned int &&order, std::vector<Triangle*> &TV);
     void fillTriangleContainers(std::vector<Triangle*> &etv,VecContainerName VN );
@@ -45,7 +45,7 @@ public:
     void establishNeighcompleteMesh();
     void establishNeighofTriangle(Triangle *t);
     void getAdjustenNeigh(const EdgeOrder &oe,std::vector<Triangle*> &tv);
-    void writemesh(std::string filename);
+    void writeMeshSTL(std::string filename);
 
 
 private:
