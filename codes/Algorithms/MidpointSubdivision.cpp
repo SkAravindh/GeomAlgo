@@ -11,6 +11,7 @@ MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &M
     //Assigning current triangle to parent.
     parentT = T;
 
+
     //Return current triangle object as if reach the given level.
     if(level >= RefineLevel){
         return;
@@ -56,26 +57,33 @@ void MidSubdivision::loadParameters(Triangle* TInput, Point* PInput , int Refine
     }
     else{
         std::cout << "Midpoint Subdivision Initialized for complete mesh " << std::endl;
+        forCompleteMesh = true;
     }
 }
 
 void MidSubdivision::run() {
 
-    std::vector<Triangle*> splitvector;
-    pMesh->getTriangleContainers(splitvector,external);
-    for(auto ele : splitvector) {
+    if (forCompleteMesh) {
+        
+        runForCompleteMesh();
+        forCompleteMesh = false;
+        return;
+    }
+
+    pMesh->getTriangleContainers(TV,external);
+    for(auto ele : TV) {
         pMesh->delCertainTriInalltriangles(ele);
     }
 
-    for(int i=0; i<splitvector.size(); i++) {
-        MidSubdivision *obj = new MidSubdivision(splitvector[i], 0, pMesh); //use [2] for proper result
+    for(int i=0; i<TV.size(); i++) {
+        MidSubdivision *obj = new MidSubdivision(TV[i], 0, pMesh); //use [2] for proper result
         MidSubVector.push_back(obj);
     }
+
 }
 
 void MidSubdivision::runForCompleteMesh() {
 
-    std::vector<Triangle*> TV;
     pMesh->getTriangles(TV);
     pMesh->clearTV(alltri);
 
@@ -83,36 +91,49 @@ void MidSubdivision::runForCompleteMesh() {
         MidSubdivision *obj = new MidSubdivision(TV[i], 0, pMesh); //use [2] for proper result
         MidSubVector.push_back(obj);
     }
+
 }
 
 void MidSubdivision::getSubdividedTriangles() {
 
-    std::vector<Triangle*> out;
-    for(MSI iter = MidSubVector.begin(); iter!= MidSubVector.end(); iter++){
-        MidSubdivision* C_obj(*iter);
-        C_obj->collectallMSDtriangles(out);
+    std::vector<Triangle *> out;
+    for (auto ele : TV) {
+        ele->getChildren(out);
     }
 
-    pMesh->fillTriangleContainers(out,alltri);
+    pMesh->fillTriangleContainers(out, alltri);
     pMesh->reEstablishConnectivity();
+    TV.clear();
+
 }
 
-void MidSubdivision::collectallMSDtriangles( std::vector<Triangle *> &STV) {
+//void MidSubdivision::getSubdividedTriangles() {
 
-    if( Vchild.empty() ) {
-        STV.push_back(this->getParent());
-    }
-    else{
-        //return;
-    }
+//    std::vector<Triangle*> out;
+//    for(MSI iter = MidSubVector.begin(); iter!= MidSubVector.end(); iter++){
+//        MidSubdivision* C_obj(*iter);
+//        C_obj->collectallMSDtriangles(out);
+//    }
+//    std::cout << "out "<<out.size() << std::endl;
 
-    //recursively collect all subdivided triangle object.
-    for(MSI iter = Vchild.begin(); iter!= Vchild.end(); iter++) {
-        MidSubdivision* C_vc(*iter);
-        C_vc->collectallMSDtriangles(STV);
-    }
-}
+//}
 
-Triangle* MidSubdivision::getParent() {
-    return parentT;
-}
+//void MidSubdivision::collectallMSDtriangles( std::vector<Triangle *> &STV) {
+//
+//    if( Vchild.empty() ) {
+//        STV.push_back(this->getParent());
+//    }
+//    else{
+//        //return;
+//    }
+//
+//    //recursively collect all subdivided triangle object.
+//    for(MSI iter = Vchild.begin(); iter!= Vchild.end(); iter++) {
+//        MidSubdivision* C_vc(*iter);
+//        C_vc->collectallMSDtriangles(STV);
+//    }
+//}
+
+//Triangle* MidSubdivision::getParent() {
+//    return parentT;
+//}

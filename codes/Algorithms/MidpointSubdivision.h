@@ -6,6 +6,9 @@
 #include "../Writedata.h"
 
 static int RefineLevel;
+static std::vector<Triangle*> TV;
+static bool forCompleteMesh=false;
+
 class MidSubdivision  {
 public:
     explicit MidSubdivision (std::shared_ptr<Mesh> &Mesh);
@@ -13,11 +16,9 @@ public:
     void loadParameters( Triangle* TInput, Point* PInput , int Refinement_Level);
     void run();
     void getSubdividedTriangles();
-    void collectallMSDtriangles( std::vector<Triangle *> &STV);
-    Triangle* getParent();
+   // void collectallMSDtriangles( std::vector<Triangle *> &STV);
+   // Triangle* getParent();
     void runForCompleteMesh();
-
-
 
 private:
     std::shared_ptr<Mesh> pMesh;
