@@ -11,6 +11,7 @@ static bool forCompleteMesh=false;
 
 class MidSubdivision  {
 public:
+    MidSubdivision () = default;
     explicit MidSubdivision (std::shared_ptr<Mesh> &Mesh);
     MidSubdivision(Triangle* T, int C_level,std::shared_ptr<Mesh> &Mesh );
     void loadParameters( Triangle* TInput, Point* PInput , int Refinement_Level);
@@ -24,8 +25,6 @@ private:
     std::shared_ptr<Mesh> pMesh;
     int level;
     Triangle* parentT = nullptr;
-    std::vector<MidSubdivision*> Vchild;
-    std::vector<MidSubdivision*> MidSubVector;
 
 protected:
     //Iterators;

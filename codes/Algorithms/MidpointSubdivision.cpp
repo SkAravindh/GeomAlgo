@@ -11,12 +11,10 @@ MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &M
     //Assigning current triangle to parent.
     parentT = T;
 
-
     //Return current triangle object as if reach the given level.
     if(level >= RefineLevel){
         return;
     }
-
 
     //Taking Midpoint of Current Triangle to initiate the splitting process.
     Point* edge0mid = parentT->getEdgeMidPoint(0);
@@ -25,21 +23,20 @@ MidSubdivision::MidSubdivision(Triangle *T, int C_level,std::shared_ptr<Mesh> &M
 
 
     //Splitting the parent triangle into four and storeing into alltriangle container(check Mesh.h)
-    Triangle* tri1  = Mesh->createTriangle(edge0mid,edge1mid,edge2mid,parentT);
-    Triangle* tri2  = Mesh->createTriangle(edge0mid,parentT->getCorners(2),edge1mid, parentT);
-    Triangle* tri3  = Mesh->createTriangle(edge1mid,parentT->getCorners(0),edge2mid, parentT);
-    Triangle* tri4  = Mesh->createTriangle(edge2mid,parentT->getCorners(1),edge0mid, parentT);
+     Mesh->createTriangle(edge0mid,edge1mid,edge2mid,parentT);
+     Mesh->createTriangle(edge0mid,parentT->getCorners(2),edge1mid, parentT);
+     Mesh->createTriangle(edge1mid,parentT->getCorners(0),edge2mid, parentT);
+     Mesh->createTriangle(edge2mid,parentT->getCorners(1),edge0mid, parentT);
 
     //Storing Triangle for further subdivision.
      std::vector<Triangle*> thisTvec;
      parentT->getChildren(thisTvec);
 
-
     //Level Increment
     ++level;
 
-    for(TI it=thisTvec.begin(); it!=thisTvec.end(); it++){
-        Vchild.push_back(new MidSubdivision(*it, level,Mesh) );
+    for(TI it=thisTvec.begin(); it!=thisTvec.end(); it++) {
+        MidSubdivision* subdi = new MidSubdivision(*it, level,Mesh);
     }
 }
 
@@ -55,7 +52,7 @@ void MidSubdivision::loadParameters(Triangle* TInput, Point* PInput , int Refine
         pMesh->getRingNeigbyOrder(PInput,1,tv);
         pMesh->fillTriangleContainers(tv, external);
     }
-    else{
+    else {
         std::cout << "Midpoint Subdivision Initialized for complete mesh " << std::endl;
         forCompleteMesh = true;
     }
@@ -64,7 +61,6 @@ void MidSubdivision::loadParameters(Triangle* TInput, Point* PInput , int Refine
 void MidSubdivision::run() {
 
     if (forCompleteMesh) {
-        
         runForCompleteMesh();
         forCompleteMesh = false;
         return;
@@ -77,7 +73,6 @@ void MidSubdivision::run() {
 
     for(int i=0; i<TV.size(); i++) {
         MidSubdivision *obj = new MidSubdivision(TV[i], 0, pMesh); //use [2] for proper result
-        MidSubVector.push_back(obj);
     }
 
 }
@@ -89,7 +84,6 @@ void MidSubdivision::runForCompleteMesh() {
 
     for(int i=0; i<TV.size(); i++) {
         MidSubdivision *obj = new MidSubdivision(TV[i], 0, pMesh); //use [2] for proper result
-        MidSubVector.push_back(obj);
     }
 
 }
