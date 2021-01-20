@@ -48,9 +48,12 @@ void AdaptiveTriangle::edgeRefinement() {
     std::vector<Triangle*> trianglevector;
     pMesh->getTriangles(trianglevector);
    // std::cout << "trivec " << *trianglevector[6000] << std::endl;
+  // std::vector<Triangle*> ringvec;
+   //pMesh->getRingNeigbyOrder(trianglevector[0]->getCorners(0),1,ringvec);
     int count =0;
     std::vector<Triangle*> Input_triangles;
-    Input_triangles.push_back(trianglevector[5300]);
+   // Input_triangles.assign(ringvec.begin(),ringvec.end());
+    Input_triangles.push_back(trianglevector[0]);
     while(!Input_triangles.empty()) {
         Triangle* CT = *Input_triangles.begin();
         eraseCertainTriangle(Input_triangles,CT);
@@ -88,12 +91,17 @@ void AdaptiveTriangle::edgeRefinement() {
         }
 
 
-        if (count == 300 ) {
-            break;
+        if (count < 300 ) {
+            Input_triangles.push_back(cT_child1);
+            Input_triangles.push_back(cT_child2);
+            //std::cout << "size " <<Input_triangles.size() << std::endl;
+         //   break;
+        }
+        if(Input_triangles.empty()) {
+            std::cout << "yes empty " << std::endl;
         }
         ++count;
-        Input_triangles.push_back(cT_child1);
-        Input_triangles.push_back(cT_child2);
+
 
 
 

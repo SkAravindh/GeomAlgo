@@ -25,7 +25,7 @@ private:
     //Input parameters
     std::shared_ptr<Mesh> pMesh;
     Triangle* inputTriangle;
-    int refineCount=0;
+    int refineCount=1;
 
 private:
     std::set<Triangle*> parents;

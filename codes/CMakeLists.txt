@@ -14,6 +14,7 @@ set (Hpp
     Bbox_3.h
     Writedata.h
     Edge.h
+    Macros.h
     Algorithms/MidpointSubdivision.h
     Algorithms/LaplacianSmoothing.h
     Algorithms/AdaptiveRefinement_EdgeBased.h
@@ -31,6 +32,7 @@ set (Cpp
     Edge.cpp
     Writedata.cpp
     test_connectivity.cpp
+    test_connectivity1.cpp
     Algorithms/MidpointSubdivision.cpp
     Algorithms/LaplacianSmoothing.cpp
     Algorithms/AdaptiveRefinement_EdgeBased.cpp

@@ -8,8 +8,9 @@
 #include "Geom_Support.h"
 #include "Writedata.h"
 //#include "test_connectivity.cpp"
+#include "Algorithms/MidpointSubdivision.h"
 //#include "Algorithms/AdaptiveRefinement_EdgeBased.h"
-#include "Algorithms/LaplacianSmoothing.h"
+//#include "test_connectivity1.cpp"
 
 
 
@@ -18,33 +19,18 @@
 
 
 int main() {
-    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-  // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/testalgo.stl";
+  //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/patch.stl";
 
 
     //std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
-
     std::vector<Triangle*> tv;
     pMesh->getTriangles(tv);
-//    int count =0;
-//    for (auto ele : tv) {
-//        std::cout <<"count "<<count<<" " << *ele << std::endl;
-//        ++count;
-//    }
-//    AdaptiveTriangle obj(pMesh);
-//  obj.edgeRefinement();
-//  pMesh->writeMeshSTL("hiii1.stl");
-// pMesh->printContainersInfo();
-
-// AdaptRefineED obj(pMesh);
-// //obj.edgeRefinement();
-// obj.loadParameters(tv[0],300);
-//obj.run();
-// //pMesh->writeMeshSTL("testalgonew.stl");
-// pMesh->printContainersInfo();
-
-
+   FaceMidPoint::Subdivision obj(pMesh);
+   obj.loadParameter(nullptr,tv[0]->getCorners(0),0);
+   obj.run();
+   pMesh->writeMeshSTL("patch.stl");
 
 
 

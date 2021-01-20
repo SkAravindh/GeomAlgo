@@ -89,10 +89,10 @@ void Mesh::establishNeighofTriangle(Triangle* t) {
         EdgeOrder ed = currentT->getEO(i);
         std::vector<Triangle*> adjT;
         getAdjustenNeigh(ed,adjT);
-        for(auto ele : adjT){
-            if(*ele == *currentT){
+        for(auto ele : adjT) {
+            if(*ele == *currentT) {
                 continue;
-            } else{
+            } else {
                 currentT->setNeigh(i,ele);
             }
         }

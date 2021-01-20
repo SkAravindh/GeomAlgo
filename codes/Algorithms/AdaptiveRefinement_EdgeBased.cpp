@@ -16,10 +16,13 @@ void AdaptRefineED::run() {
 
 void AdaptRefineED::edgeRefinement() {
 
-   // std::vector<Triangle*> trianglevector;
-    //pMesh->getTriangles(trianglevector);
+    //std::vector<Triangle*> trianglevector;
+    //std::vector<Triangle*> ringtrianglevector;
+   // pMesh->getTriangles(trianglevector);
+  //  pMesh->getRingNeigbyOrder(trianglevector[0]->getCorners(0),1,ringtrianglevector);
     int count = 0;
     std::vector<Triangle*> Triangles_to_Refine;
+    //Triangles_to_Refine.assign(ringtrianglevector.begin(),ringtrianglevector.end());
     Triangles_to_Refine.push_back(inputTriangle);
 
     while(!Triangles_to_Refine.empty()) {

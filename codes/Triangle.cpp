@@ -40,6 +40,7 @@ Vector3 Triangle::getNormalVector() const {
 }
 
 Point* Triangle::getEdgeMidPoint(int i) const {
+
     Point *p0 = getCorners(indexOrder_1(i));
     Point *p1 = getCorners(indexOrder_2(i));
     Vector3 v0(p0->x(),p0->y(),p0->z());
@@ -47,6 +48,24 @@ Point* Triangle::getEdgeMidPoint(int i) const {
     Vector3 sum = v0+v1;
     Point* mid = new Point(sum.x()/2,sum.y()/2,sum.z()/2);
     return mid;
+}
+
+Point* Triangle::getCentroid() const {
+
+    Point *p0 =  this->getCorners(0);
+    Point *p1 =  this->getCorners(1);
+    Point *p2 =  this->getCorners(2);
+
+    Vector3 v0(p0->x(),p0->y(),p0->z());
+    Vector3 v1(p1->x(),p1->y(),p1->z());
+    Vector3 v2(p2->x(),p2->y(),p2->z());
+
+    v0+v1;
+    v0+v2;
+
+    Point* centeroid = new Point(v0.x()/3, v0.y()/3, v0.z()/3);
+    return centeroid;
+
 }
 
 void Triangle::setNeigh(int i, Triangle *t) {
@@ -58,8 +77,16 @@ Triangle* Triangle::getNeigh(int i) {
 }
 
 void Triangle::addChild(Triangle *t) {
-    t->glob=this;
+    t->parentT=this;
     vchildren.push_back(t);
+}
+
+Triangle* Triangle::getParent() {
+    return parentT;
+}
+
+int Triangle::getChildSize() {
+    return vchildren.size();
 }
 
 bool Triangle::haschild() {
@@ -75,6 +102,14 @@ int Triangle::getVertexID(Point *p) {
     for(int i =0; i<3; i++) {
         if(*corners[i] == *p) return i;
     }
+}
+
+int Triangle::getTriangleID(Triangle *t) {
+
+    if(*neigb[0] == *t) return 0;
+    if(*neigb[1] == *t) return 1;
+    if(*neigb[2] == *t) return 2;
+
 }
 
 void Triangle::setNewVertex(Point *p, int idx) {
@@ -138,7 +173,7 @@ bool Triangle::operator < (const Triangle &rhs) const {
     if( *this->getCorners(0) == *rhs.getCorners(0) ) {
         if( *this->getCorners(1) < *rhs.getCorners(1) ) return true;
         if( *this->getCorners(1) > *rhs.getCorners(1) ) return false;
-        if( *this->getCorners(1) == *rhs.getCorners(1) ){
+        if( *this->getCorners(1) == *rhs.getCorners(1) ) {
             if( *this->getCorners(2) < *rhs.getCorners(2) ) return true;
             if( *this->getCorners(2) > *rhs.getCorners(2) ) return false;
         }
