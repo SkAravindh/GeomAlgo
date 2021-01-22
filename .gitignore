@@ -3,4 +3,5 @@ install
 .vscode
 .idea/
 cmake-build-debug/
+codes/verification/
 *.o
