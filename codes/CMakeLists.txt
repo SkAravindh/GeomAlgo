@@ -31,8 +31,9 @@ set (Cpp
     Bbox_3.cpp
     Edge.cpp
     Writedata.cpp
-    test_connectivity.cpp
-    test_connectivity1.cpp
+    verification/test_connectivity.cpp
+    verification/test_connectivity1.cpp
+    verification/establishNeigh.cpp
     Algorithms/MidpointSubdivision.cpp
     Algorithms/LaplacianSmoothing.cpp
     Algorithms/AdaptiveRefinement_EdgeBased.cpp
