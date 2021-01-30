@@ -16,14 +16,14 @@ public:
     void edgeRefinement();
     void getNeighTriandLedge(const EdgeOrder &ed, const Triangle* CT, Triangle* & Neigh, EdgeOrder &NeighLedge);
     HasCommonLE hassameedges(const EdgeOrder &ed1,const EdgeOrder &ed2);
-    void splitIntoTwo(EdgeOrder &currLongEdge,  Triangle* CT,  Triangle *Neigh,  EdgeOrder &NeighLedge);
-    void splitIntoThree( EdgeOrder &currLongEdge,  Triangle* CT,  Triangle *Neigh,  EdgeOrder &NeighLedge);
+    void splitIntoTwo(EdgeOrder &currLongEdge,  Triangle* CT,  Triangle *Neigh,  EdgeOrder &NeighLedge, bool flag);
+    void splitIntoThree( EdgeOrder &currLongEdge,  Triangle* CT,  Triangle *Neigh,  EdgeOrder &NeighLedge, bool flag);
+    void avoidCOllision(EdgeOrder &currLongEdge, Triangle *CT, Triangle *Neigh, EdgeOrder &NeighLedge,bool flag);
     void deleteInfoFromDS(Triangle* T);
     void upDateDS(Triangle* T);
 
 private:
     //Input parameters
-    std::shared_ptr<Mesh> pMesh;
     Triangle* inputTriangle;
     int refineCount=1;
 
@@ -32,6 +32,8 @@ private:
 
 protected:
     //iterators
+    std::shared_ptr<Mesh> pMesh;
+    std::vector<EdgeOrder> BED;
     typedef std::set<Triangle*>::iterator TS_it;
 };
 

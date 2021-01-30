@@ -11,6 +11,7 @@ void AdaptRefineED::loadParameters(Triangle *input_Triangle, int refine_Level) {
 }
 
 void AdaptRefineED::run() {
+    std::cout << "run from adaptive refinement " << std::endl;
     edgeRefinement();
 }
 
@@ -53,10 +54,10 @@ void AdaptRefineED::edgeRefinement() {
         HasCommonLE re = hassameedges(CurrentT_Ledge,NeighT_Ledge);
 
         if (re == HasCommonLE::same) {
-            splitIntoTwo(CurrentT_Ledge,CT,direct_neigh,NeighT_Ledge);
+            splitIntoTwo(CurrentT_Ledge,CT,direct_neigh,NeighT_Ledge,true);
         }
         else if (re == HasCommonLE::not_same) {
-            splitIntoThree(CurrentT_Ledge,CT,direct_neigh,NeighT_Ledge);
+            splitIntoThree(CurrentT_Ledge,CT,direct_neigh,NeighT_Ledge, true);
         }
 
         if (count == refineCount ) {
@@ -70,7 +71,7 @@ void AdaptRefineED::edgeRefinement() {
     }
 }
 
-void AdaptRefineED::splitIntoTwo(EdgeOrder &currLongEdge, Triangle *CT, Triangle *Neigh, EdgeOrder &NeighLedge) {
+void AdaptRefineED::splitIntoTwo(EdgeOrder &currLongEdge, Triangle *CT, Triangle *Neigh, EdgeOrder &NeighLedge,bool flag) {
 
     if (currLongEdge != NeighLedge) {
         std::cout << "Error at SplitIntoTwo function" << std::endl; //should not happen.
@@ -87,12 +88,14 @@ void AdaptRefineED::splitIntoTwo(EdgeOrder &currLongEdge, Triangle *CT, Triangle
 
     pMesh->createTriangle(CurrentT_midpoint,NeighT_peakvertex_ID,F_4,Neigh);
     pMesh->createTriangle(CurrentT_midpoint,F_5,NeighT_peakvertex_ID,Neigh);
-    deleteInfoFromDS(CT);
+    if (flag) {
+        deleteInfoFromDS(CT);
+    }
     deleteInfoFromDS(Neigh);
 
 }
 
-void AdaptRefineED::splitIntoThree(EdgeOrder &currLongEdge, Triangle *CT, Triangle *Neigh, EdgeOrder &NeighLedge) {
+void AdaptRefineED::splitIntoThree(EdgeOrder &currLongEdge, Triangle *CT, Triangle *Neigh, EdgeOrder &NeighLedge,bool flag) {
 
     Point* NeighT_LedgeMP     =  NeighLedge.getMidPoint();
     Point* CurrentT_LedgeMP   =  currLongEdge.getMidPoint();
@@ -114,7 +117,10 @@ void AdaptRefineED::splitIntoThree(EdgeOrder &currLongEdge, Triangle *CT, Triang
     pMesh->createTriangle(CurrentT_LedgeMP,NeighT_LedgeMP, F_4,Neigh);
     pMesh->createTriangle(NeighT_LedgeMP,NeighT_peakVertex,F_5,Neigh);
 
-    deleteInfoFromDS(CT);
+    if(flag) {
+        deleteInfoFromDS(CT);
+    }
+
     Triangle* second_direct_NeighT ;
     EdgeOrder second_NeighT_Ledge;
 
@@ -122,11 +128,33 @@ void AdaptRefineED::splitIntoThree(EdgeOrder &currLongEdge, Triangle *CT, Triang
     HasCommonLE re = hassameedges(NeighLedge,second_NeighT_Ledge);
 
     if (re == HasCommonLE::same) {
-        splitIntoTwo(NeighLedge,Neigh,second_direct_NeighT,second_NeighT_Ledge);
+        splitIntoTwo(NeighLedge,Neigh,second_direct_NeighT,second_NeighT_Ledge, true);
     }
     else if (re == HasCommonLE::not_same) {
-        splitIntoThree(NeighLedge,Neigh,second_direct_NeighT,second_NeighT_Ledge);
+
+        if (std::count(BED.begin(), BED.end(), second_NeighT_Ledge)) {
+            avoidCOllision(NeighLedge, Neigh, second_direct_NeighT, second_NeighT_Ledge, true);
+        }
+        else {
+            splitIntoThree(NeighLedge, Neigh, second_direct_NeighT, second_NeighT_Ledge, true);
+        }
     }
+
+}
+
+void AdaptRefineED::avoidCOllision(EdgeOrder &currLongEdge, Triangle *CT, Triangle *Neigh, EdgeOrder &NeighLedge,bool flag) {
+
+    Point* CurrentT_midpoint    =  currLongEdge.getMidPoint();
+    int peak    = Neigh->getPeakVertexID(currLongEdge);
+    Point* vert = Neigh->getCorners(peak);
+    Point* F_4  = Neigh->getCorners(indexOrder_2(peak));
+    Point* F_5  = Neigh->getCorners(indexOrder_1(peak));
+    pMesh->createTriangle(CurrentT_midpoint,vert,F_4,Neigh);
+    pMesh->createTriangle(CurrentT_midpoint,F_5,vert,Neigh);
+    if (flag) {
+        deleteInfoFromDS(CT);
+    }
+    deleteInfoFromDS(Neigh);
 
 }
 
@@ -150,6 +178,7 @@ void AdaptRefineED::getNeighTriandLedge(const EdgeOrder &ed, const Triangle *CT,
     NeighLedge         = nT_Ledge;
 
 }
+
 
 HasCommonLE AdaptRefineED::hassameedges(const EdgeOrder &ed1,const EdgeOrder &ed2) {
 
@@ -178,7 +207,7 @@ void AdaptRefineED::upDateDS(Triangle *T) {
     T->getChildren(TV);
 
     for (auto ele : TV) {
-        pMesh->establishNeighofTriangle(ele);
+     //   pMesh->establishNeighofTriangle(ele);
     }
     pMesh->fillTriangleContainers(TV,alltri);
 
