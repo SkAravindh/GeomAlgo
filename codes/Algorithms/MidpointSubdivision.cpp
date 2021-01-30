@@ -116,7 +116,7 @@ namespace FaceMidPoint {
 //        finalT.push_back(allTriangles[0]);
 
         std::vector<Triangle*> datastructT;
-        for(int i=0; i<1; i++) {
+        for(int i=0; i<RefineLevel; i++) {
 
             std::vector<Triangle*> tritorefine;
             tritorefine.assign(TV.begin(),TV.end());
