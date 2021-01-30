@@ -19,7 +19,7 @@ public:
     Point *p0;
     Point *p1;
 
-    friend std::ostream & operator << (std::ostream & out, const EdgeOrder &rhs){
+    friend std::ostream & operator << (std::ostream & out, const EdgeOrder &rhs) {
         out<<"OrderEdge "<<"P0 "<< *rhs.p0 <<" "<<"P1 "<< *rhs.p1 << " ";
         return out;
     }

@@ -15,9 +15,6 @@ set (Hpp
     Writedata.h
     Edge.h
     Macros.h
-    Algorithms/MidpointSubdivision.h
-    Algorithms/LaplacianSmoothing.h
-    Algorithms/AdaptiveRefinement_EdgeBased.h
     )
     
 set (Cpp
@@ -31,24 +28,42 @@ set (Cpp
     Bbox_3.cpp
     Edge.cpp
     Writedata.cpp
-    verification/test_connectivity.cpp
-    verification/test_connectivity1.cpp
-    verification/establishNeigh.cpp
+    )
+    
+set (Algorithm_header
+    Algorithms/MidpointSubdivision.h
+    Algorithms/LaplacianSmoothing.h
+    Algorithms/AdaptiveRefinement_EdgeBased.h
+    Algorithms/SelectiveRefinement.h
+    )
+    
+set (Algorithm_Source
     Algorithms/MidpointSubdivision.cpp
     Algorithms/LaplacianSmoothing.cpp
     Algorithms/AdaptiveRefinement_EdgeBased.cpp
+    Algorithms/SelectiveRefinement.cpp
     )
     
- 
+set (samples
+    verification/test_connectivity.cpp
+    verification/red_green_try.cpp
+    verification/establishNeigh.cpp
+    verification/estnadapt.cpp
+    verification/estnadaptCOM.cpp
+    verification/looping.cpp
+    )
+    
+add_library(Algos STATIC ${samples} ${Algorithm_header} ${Algorithm_Source})
 
-
-add_library(Geom_Algo STATIC ${Hpp} ${Cpp})
-
+add_library(Geom_Algo STATIC ${Hpp} ${Cpp} )
 
 add_executable(${PROJECT_NAME} main.cpp)
 
-target_link_libraries(${PROJECT_NAME} Geom_Algo)
-
+target_link_libraries(${PROJECT_NAME}
+                        Geom_Algo
+                        Algos
+                        )
+                        
 #target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR}) ${PROJECT_BINARY_DIR}--> path to the build directory
 
  

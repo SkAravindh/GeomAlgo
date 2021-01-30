@@ -7,9 +7,10 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
-//#include "test_connectivity.cpp"
-#include "verification/establishNeigh.cpp"
-//#include "test_connectivity1.cpp"
+//#include "verification/estnadapt.cpp"
+//#include "verification/estnadaptCOM.cpp"
+#include "Algorithms/SelectiveRefinement.h"
+//#include "Algorithms/AdaptiveRefinement_EdgeBased.h"
 
 
 
@@ -18,30 +19,45 @@
 
 
 int main() {
-    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-  // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/patch.stl";
+   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+  // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunnyhole.stl";
 
 
     //std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
-    Refine obj(pMesh);
-    obj.doRefine();
-    pMesh->writeMeshSTL("checking1.stl");
+     //   std::vector<Triangle*> alltv;
+       // pMesh->getTriangles(alltv);
+//    SelectiveRefine obj(pMesh);
+//    obj.loadParameter(2);
+//    obj.createPatch(alltv[0], nullptr,10);
+//    obj.doRefine();
+//    obj.createPatch(alltv[3000], nullptr,10);
+//    obj.doRefine();
+//    obj.createPatch(alltv[4000], nullptr,10);
+//    obj.doRefine();
+//    obj.createPatch(alltv[450], nullptr,10);
+//    obj.doRefine();
+//    pMesh->writeMeshSTL("out.stl");
 
 
+//   Refine obj(pMesh);
+//   obj.doRefine(0);
+//   obj.doRefine(4000);
+//   obj.doRefine(8000);
+//   std::vector<Triangle*> vecall;
+//    pMesh->getTriangles(vecall);
+//    std::cout << "size " << vecall.size() << std::endl;
+
+//    pMesh->writeMeshSTL("trisend1.stl");
 
 
-//    EstablishConnectivity * obj =  new EstablishConnectivity(pMesh);
-//    obj->loadParameters(v[0],2);
-
-//    std::vector<Triangle* > tv;
-//    MidSubdivision * obj = new MidSubdivision(pMesh);
-//    obj->loadParameters(nullptr, nullptr ,2); //allTriangles[0]->getCorners(0) point
-//   obj->run();
-//    obj->runForCompleteMesh();
-//    obj->getSubdividedTriangles();
-//    pMesh->writemesh("glob.stl");
-
+//std::vector<Triangle*> alltv;
+//pMesh->getTriangles(alltv);
+//
+//FaceMidPoint::Subdivision obj(pMesh);
+//obj.loadParameter(nullptr,alltv[0]->getCorners(0),2);
+//obj.run();
+//pMesh->writeMeshSTL("griffdivision.stl");
 
 
 
@@ -87,17 +103,6 @@ int main() {
 //    std::cout << tri2->getNormalVector() << std::endl;
   //bool result = TriangleTriangleIntersection(tri1,tri2);
 
-//  Bbox_3 obj;
-//  obj.add_coordinates(5,6,7);
-//    obj.add_coordinates(-1,-2,-7);
-//    obj.add_coordinates(10,21,5);
-//
-//    std::cout << obj << std::endl;
-//  Bbox_3 b1(1,2,3,4,5,6);
-//  Bbox_3 b2(11,12,13,14,15,16);
-//  b1+b2;
-//  std::cout <<b1<<std::endl;
-//
 
 
 

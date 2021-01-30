@@ -21,13 +21,12 @@ Point* EdgeOrder::getMidPoint() const{
     return mid;
 }
 
-
-
-
 bool EdgeOrder::operator <  (const EdgeOrder & rhs) const {
+
     if(*p0 < *rhs.p0) return true;
     if(*p0 > *rhs.p0) return false;
     return (*p1 < *rhs.p1);
+
 }
 
 bool EdgeOrder::operator == (const EdgeOrder &rhs) const{
