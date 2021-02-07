@@ -31,6 +31,7 @@ int main() {
     edgesByOrder(tv,1,ed);
     std::cout<<"size of ed "<<ed.size()<<std::endl;
     writePoint(ed);
+    std::cout << std::endl;
 
 
  
