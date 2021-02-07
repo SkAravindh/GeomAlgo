@@ -50,7 +50,6 @@ bool Point::operator==(const Point &rhs) const {
 
 
 bool Point::operator!=(const Point &rhs) const {
-    //std::cout<< "x compare "<<rhs.x()<<" "<<"y "<<rhs.y()<<" "<<"z "<<rhs.z()<<std::endl;
     return (  (this->x()!=rhs.x()) || (this->y()!=rhs.y()) || (this->z()!=rhs.z()) );
 }
 
