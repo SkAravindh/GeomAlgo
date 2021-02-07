@@ -49,7 +49,8 @@ set (samples
     verification/red_green_try.cpp
     verification/establishNeigh.cpp
     verification/estnadapt.cpp
-    verification/estnadaptCOM.cpp
+    verification/subdivision_EDbased.cpp
+    verification/adaptdesirededge.cpp
     verification/looping.cpp
     )
     

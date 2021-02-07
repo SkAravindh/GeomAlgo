@@ -3,9 +3,10 @@
 #include <algorithm>
 #include "Vector_3.h"
 #include "Mesh.h"
-#define pi 3.14;
+#define PI 3.14
 typedef Vector_3<double> Vector3;
 class Triangle; //fwd
+class EdgeOrder; //fwd
 
 
 
@@ -19,6 +20,7 @@ bool checkForHalfEdge(const Triangle *t1, const Triangle *t2);
 bool checkCommonVertex(const Triangle *t1, const Triangle *t2);
 void getedgesByOrder(const std::vector<Triangle* > &TV, const int &i, std::vector<EdgeOrder> &out);
 void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP);
+void getEdgesofTrianlges( const std::vector<Triangle* > &TV, std::vector<EdgeOrder> &BE);
 void eraseCertainTriangle(std::vector<Triangle* > &TV, Triangle *t);
 void eraseCertainEntryPT(std::multimap<Point*, Triangle*,ComparePoint>&mm, Point *key, Triangle* t);
 void eraseCertainEntryET(std::multimap<EdgeOrder, Triangle*>&mm, EdgeOrder &key, Triangle* t);

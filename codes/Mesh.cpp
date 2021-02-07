@@ -219,6 +219,54 @@ void Mesh::delCertainEntryPT(Triangle* t) {
     }
 }
 
+//used during edge collapse operation.
+std::vector< std::pair<EdgeOrder,EdgeOrder> > Mesh::updateEdgeInfo(Triangle* To_change, Point* oldVertex, Point* newVertex) {
+
+    int oldPoint_id = To_change->getVertexID(oldVertex);
+    Point* p1 = To_change->getCorners(indexOrder_1(oldPoint_id));
+    Point* p2 = To_change->getCorners(indexOrder_2(oldPoint_id));
+
+    EdgeOrder ed1;
+    EdgeOrder ed2;
+    EdgeOrder ed1_new;
+    EdgeOrder ed2_new;
+
+    //Update Edge to triangle multimap.
+    if (*p1 != *oldVertex) {
+         ed1 = EdgeOrder(p1,oldVertex);
+         eraseCertainEntryET(mmedgeTotriangles,ed1,To_change);
+    }
+    if (*p2 != *oldVertex) {
+        ed2 = EdgeOrder(p2,oldVertex);
+        eraseCertainEntryET(mmedgeTotriangles,ed2,To_change);
+    }
+
+    if (*p1 != *newVertex) {
+        ed1_new = EdgeOrder(p1,newVertex);
+        mmedgeTotriangles.insert(std::make_pair(ed1_new,To_change));
+    }
+    if (*p2 != *newVertex) {
+        ed2_new = EdgeOrder(p2,newVertex);
+        mmedgeTotriangles.insert(std::make_pair(ed2_new,To_change));
+    }
+
+    //Update point to triangle multimap.
+    if (*oldVertex != *newVertex) {
+        eraseCertainEntryPT(mmpointTotriangles,oldVertex,To_change);
+    }
+    if (*p1 != *newVertex && *p2 != *newVertex) {
+        mmpointTotriangles.insert(std::make_pair(newVertex,To_change));
+    }
+
+    //Update triangle
+    To_change->setNewVertex(newVertex,oldPoint_id);
+
+    std::vector< std::pair<EdgeOrder,EdgeOrder> > old_to_new;
+    old_to_new.emplace_back(std::make_pair(ed1,ed1_new));
+    old_to_new.emplace_back(std::make_pair(ed2,ed2_new));
+    return old_to_new;
+}
+
 void Mesh::getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV) {
     //iterators
     TS_it it, itt;

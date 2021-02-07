@@ -181,6 +181,19 @@ void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP) 
     VP.assign(points.begin(), points.end());
 }
 
+void getEdgesofTrianlges( const std::vector<Triangle* > &TV, std::vector<EdgeOrder> &BE) {
+
+    std::set<EdgeOrder> edge;
+    for(auto triangle : TV) {
+        Triangle* CT(triangle);
+        for (int i=0; i<3; i++) {
+            EdgeOrder ed = CT->getEO(i);
+            edge.insert(ed);
+        }
+    }
+    BE.assign(edge.begin(),edge.end());
+}
+
 void eraseCertainTriangle(std::vector<Triangle* > &TV, Triangle *t) {
     TV.erase(std::remove(TV.begin(), TV.end(), t), TV.end());
 }

@@ -120,7 +120,7 @@ void Triangle::getChildren(std::vector<Triangle *> &childvector) {
 
     if(!haschild()){
         childvector.push_back(this);
-    } else{
+    } else {
         for(std::vector<Triangle*>::iterator it = vchildren.begin(); it != vchildren.end(); it++) {
             (*it)->getChildren(childvector);
         }

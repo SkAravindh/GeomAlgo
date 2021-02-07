@@ -198,4 +198,6 @@ void SelectiveRefine::splitType(Node *cnode) {
 
 }
 
-
+void SelectiveRefine::run() {
+    doRefine();
+}

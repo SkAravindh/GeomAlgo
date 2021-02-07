@@ -7,11 +7,9 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
-//#include "verification/estnadapt.cpp"
-//#include "verification/estnadaptCOM.cpp"
-#include "Algorithms/SelectiveRefinement.h"
-//#include "Algorithms/AdaptiveRefinement_EdgeBased.h"
-
+//#include "verification/subdivision_EDbased.cpp"
+#include "verification/adaptdesirededge.cpp"
+//#include "Algorithms/SelectiveRefinement.h"
 
 
 
@@ -20,11 +18,18 @@
 
 int main() {
    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-  // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunnyhole.stl";
+  // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/final.stl";
 
 
-    //std::string filename1 = "/home/aravindhkumar.kalimuthu/Downloads/bunny.stl";
+
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
+
+    DesiredEdge obj(pMesh);
+
+    obj.do_refine();
+
+   pMesh->writeMeshSTL("final.stl");
+
      //   std::vector<Triangle*> alltv;
        // pMesh->getTriangles(alltv);
 //    SelectiveRefine obj(pMesh);
@@ -40,15 +45,20 @@ int main() {
 //    pMesh->writeMeshSTL("out.stl");
 
 
-//   Refine obj(pMesh);
-//   obj.doRefine(0);
+
+  // Refine obj(pMesh);
+   //obj.doRefine(0);
 //   obj.doRefine(4000);
 //   obj.doRefine(8000);
 //   std::vector<Triangle*> vecall;
 //    pMesh->getTriangles(vecall);
 //    std::cout << "size " << vecall.size() << std::endl;
 
-//    pMesh->writeMeshSTL("trisend1.stl");
+//    std::vector<Triangle*> alltv;
+//    pMesh->getTriangles(alltv);
+//    std::vector<EdgeOrder> ed;
+//    getedgesByOrder(alltv,3,ed);
+//    std::cout << "size of ed " <<ed.size()<< std::endl;
 
 
 //std::vector<Triangle*> alltv;

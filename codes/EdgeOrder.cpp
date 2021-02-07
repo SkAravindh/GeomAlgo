@@ -29,6 +29,11 @@ bool EdgeOrder::operator <  (const EdgeOrder & rhs) const {
 
 }
 
+double EdgeOrder::getlength() const {
+    double a = (std::sqrt( std::pow((p1->x()-p0->x()),2) + std::pow((p1->y()-p0->y()),2) + std::pow((p1->z()-p0->z()),2)) );
+    return abs(a);
+}
+
 bool EdgeOrder::operator == (const EdgeOrder &rhs) const{
     return ( (*p0 == *rhs.p0) && (*p1 == *rhs.p1));
 }

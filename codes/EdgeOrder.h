@@ -2,6 +2,7 @@
 #define EDGEORDER_H
 #include "Point.h"
 #include "Vector_3.h"
+//#include "Geom_Support.h"
 
 typedef Vector_3<double> Vector3;
 
@@ -10,6 +11,7 @@ public:
     EdgeOrder();
     EdgeOrder(Point *P0, Point *P1);
     Point* getMidPoint() const;
+    double getlength() const;
     bool operator <  (const EdgeOrder & rhs) const;
     bool operator == (const EdgeOrder & rhs) const;
     bool operator != (const EdgeOrder & rhs) const;
