@@ -30,8 +30,8 @@ int main() {
 
    pMesh->writeMeshSTL("final.stl");
 
-     //   std::vector<Triangle*> alltv;
-       // pMesh->getTriangles(alltv);
+        std::vector<Triangle*> alltv;
+        pMesh->getTriangles(alltv);
 //    SelectiveRefine obj(pMesh);
 //    obj.loadParameter(2);
 //    obj.createPatch(alltv[0], nullptr,10);
