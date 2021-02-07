@@ -26,9 +26,9 @@ int main() {
 
     DesiredEdge obj(pMesh);
 
-    obj.do_refine();
+     obj.do_refine();
 
-   pMesh->writeMeshSTL("final.stl");
+     pMesh->writeMeshSTL("final.stl");
 
         std::vector<Triangle*> alltv;
         pMesh->getTriangles(alltv);
