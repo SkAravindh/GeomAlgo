@@ -8,8 +8,11 @@
 #include "Geom_Support.h"
 #include "Writedata.h"
 //#include "verification/subdivision_EDbased.cpp"
-#include "verification/adaptdesirededge.cpp"
-//#include "Algorithms/SelectiveRefinement.h"
+//#include "verification/adaptdesirededge.cpp"
+
+//#include "verification/adaptdesire_version2.cpp"
+#include "verification/adaptdesire_version2_Send.cpp"
+
 
 
 
@@ -18,20 +21,30 @@
 
 int main() {
    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-  // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/final.stl";
+   //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/check.stl";
 
 
 
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
+    std::vector<Triangle*> vectortri;
 
-    DesiredEdge obj(pMesh);
+    DesiredEdge2Send obj(pMesh);
+    obj.doRefine();
+    //pMesh->writeMeshSTL("re3.stl");
 
-     obj.do_refine();
+    //edgedesiredversion_2
+//    DesiredEdge_2 obj(pMesh);
+//    obj.do_refine();
+//    pMesh->writeMeshSTL("re1.stl");
 
-     pMesh->writeMeshSTL("final.stl");
 
-        std::vector<Triangle*> alltv;
-        pMesh->getTriangles(alltv);
+//edgedesired
+//    DesiredEdge obj(pMesh);
+//    obj.do_refine();
+//    pMesh->writeMeshSTL("finall1.stl");
+
+//        std::vector<Triangle*> alltv;
+//        pMesh->getTriangles(alltv);
 //    SelectiveRefine obj(pMesh);
 //    obj.loadParameter(2);
 //    obj.createPatch(alltv[0], nullptr,10);

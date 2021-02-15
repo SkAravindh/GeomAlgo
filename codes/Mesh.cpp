@@ -74,6 +74,25 @@ void Mesh::getAdjustenNeigh(const EdgeOrder &ed, std::vector<Triangle*> &tv) {
 
 }
 
+void Mesh::getAdjustenNeigh_1(const EdgeOrder &ed,std::vector<Triangle*> &tv) {
+
+    std::vector<Triangle*> temp;
+    std::pair<MMET, MMET> triangle_set = mmedgeTotriangles.equal_range(ed);
+    int dis = std::distance(triangle_set.first, triangle_set.second);
+    if ( dis == 2 || dis == 1) {
+        for (MMET triangle_set_IT = triangle_set.first; triangle_set_IT != triangle_set.second; triangle_set_IT++) {
+            temp.push_back(triangle_set_IT->second);
+        }
+    }
+    else {
+        std::cout << std::distance(triangle_set.first, triangle_set.second) << std::endl;
+        std::cout << "Returning empty vector from ---> getAdjustenNeigh_1(Mesh.cpp) and size is either 1 or 2  " << std::endl;
+        return;
+    }
+
+    tv.assign(temp.begin(),temp.end());
+}
+
 void Mesh::establishNeighcompleteMesh() {
 
     TV_it it;

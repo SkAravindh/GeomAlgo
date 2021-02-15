@@ -40,14 +40,14 @@ void DesiredEdge::do_refine() {
     std::vector<Triangle*> all_triangles;
     std::vector<Triangle*> Ring;
     pMesh->getTriangles(all_triangles);
-    pMesh->getNeigTrianglesbyOrder(all_triangles[0],50,Ring);
+    pMesh->getNeigTrianglesbyOrder(all_triangles[0],3,Ring);
     //writeSTL("patch.stl", Ring);
    std::vector<EdgeOrder> input;
     getEdgesofTrianlges(Ring, input);
     for (auto in : input) {
         input_edges.insert(in);
     }
-    for(int i=0; i<2; i++) {
+    for(int i=0; i<4; i++) {
         std::cout<< "iteration: "<<i<<" "<<input_edges.size()<<std::endl;
         int count = 0;
         for (auto edge : input_edges) {
@@ -60,7 +60,7 @@ void DesiredEdge::do_refine() {
                 continue;
             }
             double edlen = edge.getlength();
-            if (edlen > (4.0/3.0)*3) {
+            if (edlen > (4.0/3.0)*0.3) {
                 split(edge);
             //    std::cout <<"greater" <<edge.getlength() << std::endl;
             }
@@ -83,11 +83,11 @@ void DesiredEdge::do_refine() {
 
      //   std::cout << "childsize after "<<children_ED.size()<< std::endl;
         visited.clear();
-
+//
         tocollapse.clear();
         for(auto chiled : children_ED) {
             double len = chiled.getlength();
-            if ( len < (4.0/5.0)*2.0 ) {
+            if ( len < (4.0/5.0)*1.0 ) {
              tocollapse.insert(chiled);
                // collapse(chiled);
             }
@@ -96,7 +96,7 @@ void DesiredEdge::do_refine() {
 
         while(!tocollapse.empty()) {
             EdgeOrder childdd = *tocollapse.begin();
-        //   std::cout << "childsize " <<tocollapse.size()<<std::endl;
+          // std::cout << "collapse is happening " <<std::endl;
             collapse(childdd);
          //
        //  break;
@@ -281,9 +281,7 @@ void DesiredEdge::splitIntoThree( EdgeOrder &currLongEdge, Triangle *currenT ,Tr
     std::vector<EdgeOrder> childedges;
     getEdgesofTrianlges(childs,childedges);
 
-    Point * p0 =new Point(-86.5618, 142.492, 8.43268);
-    Point * p1 =new Point(-85.1487, 139.655, 2.48083 );
-    EdgeOrder ch(p0,p1);
+
     for(auto c_ed : childedges) {
         auto iit = input_edges.find(c_ed);
         if(iit == input_edges.end()) {
@@ -364,9 +362,9 @@ void DesiredEdge::upDateDS(Triangle *T) {
     std::vector<Triangle*> TV;
     T->getChildren(TV);
 
-    for (auto ele : TV) {
-        //   pMesh->establishNeighofTriangle(ele);
-    }
+//    for (auto ele : TV) {
+//        //   pMesh->establishNeighofTriangle(ele);
+//    }
     pMesh->fillTriangleContainers(TV,alltri);
 
 }

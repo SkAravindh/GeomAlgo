@@ -51,6 +51,8 @@ set (samples
     verification/estnadapt.cpp
     verification/subdivision_EDbased.cpp
     verification/adaptdesirededge.cpp
+    verification/adaptdesire_version2.cpp
+    verification/adaptdesire_version2_Send.cpp
     verification/looping.cpp
     )
     

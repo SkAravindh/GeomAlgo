@@ -30,7 +30,8 @@ public:
     bool haschild();
     int getVertexID(Point* p);
     int getTriangleID(Triangle* t);
-    int getLongestEdgeID()  ;
+    int getLongestEdgeID();
+    int getShortestEdgeID();
     int getPeakVertexID(const EdgeOrder &c_ed);
     int getChildSize();
     void setNeigh(int i, Triangle* t);

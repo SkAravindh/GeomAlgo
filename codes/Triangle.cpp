@@ -143,6 +143,22 @@ int Triangle::getLongestEdgeID()   {
     return idx;
 }
 
+int Triangle::getShortestEdgeID()   {
+
+    double dis = DBL_MAX;
+    int idx;
+    for(int i=0; i<3; i++) {
+        EdgeOrder ed = this->getEO(i);
+        double current_dis =  abs( getDistance(ed.p0,ed.p1) );
+        if (current_dis < dis) {
+            dis = current_dis;
+            idx = i;
+            //    std::cout << ed << "distance " << current_dis << " " << "id " << idx << std::endl;
+        }
+    }
+    return idx;
+}
+
 int Triangle::getPeakVertexID(const EdgeOrder &c_ed) {
 
     for(int i=0; i<3; i++) {

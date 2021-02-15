@@ -45,7 +45,8 @@ public:
     void delCertainEntryET(Triangle* t);
     void establishNeighcompleteMesh();
     void establishNeighofTriangle(Triangle *t);
-    void getAdjustenNeigh(const EdgeOrder &oe,std::vector<Triangle*> &tv);
+    void getAdjustenNeigh(const EdgeOrder &ed,std::vector<Triangle*> &tv);
+    void getAdjustenNeigh_1(const EdgeOrder &ed,std::vector<Triangle*> &tv);
     std::vector< std::pair<EdgeOrder,EdgeOrder> > updateEdgeInfo(Triangle* To_change, Point* oldVertex, Point* newVertex); //used during edge collapse operation.
     void writeMeshSTL(std::string filename);
 
