@@ -9,10 +9,11 @@
 #include "Writedata.h"
 //#include "verification/subdivision_EDbased.cpp"
 //#include "verification/adaptdesirededge.cpp"
+#include <unordered_map>
 
 //#include "verification/adaptdesire_version2.cpp"
-#include "verification/adaptdesire_version2_Send.cpp"
-
+//#include "verification/adaptdesire_version2_Send.cpp"
+#include "verification/adaptdesire_version2_1_Send.cpp"
 
 
 
@@ -21,21 +22,33 @@
 
 int main() {
    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-   //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/check.stl";
+   //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/single_cube_holes_stl.stl";
+
+  //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunnywithseveralholes.stl";
+
 
 
 
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
-    std::vector<Triangle*> vectortri;
-
-    DesiredEdge2Send obj(pMesh);
-    obj.doRefine();
-    //pMesh->writeMeshSTL("re3.stl");
+ //   std::shared_ptr<Mesh> pMesh1 = ReadSTL(filename);
+ //   std::vector<Triangle*> vectortri;
+   DesiredEdge2_1Send obj(pMesh);
+   obj.doRefine(0);
+    obj.doRefine(3000);
+    obj.doRefine(500);
+   // std::cout << "another -------------- " << std::endl;
+ //   DesiredEdge2Send obj1(pMesh);
+  //  obj1.doRefine(0);
+ //   obj.findTriToFixWindError();
+ //   obj.doRefine(3000);
+   // obj.findTriToFixWindError();
+  // pMesh->writeMeshSTL("bunny.stl");
+   // pMesh->printContainersInfo();
 
     //edgedesiredversion_2
 //    DesiredEdge_2 obj(pMesh);
 //    obj.do_refine();
-//    pMesh->writeMeshSTL("re1.stl");
+    pMesh->writeMeshSTL("re2bu.stl");
 
 
 //edgedesired
