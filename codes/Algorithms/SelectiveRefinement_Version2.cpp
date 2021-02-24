@@ -166,7 +166,7 @@ void SelectiveRefinement_2::splitIntoTwo(const EdgeOrder &currLongEdge, Triangle
 
     pMesh->createTriangle(midpoint,NeighT_peakvertex,RightVertex,Neigh);
     pMesh->createTriangle(NeighT_peakvertex,midpoint,LeftVertex,Neigh);
-    checkNormal(Neigh);
+    checkNormalOrientation(Neigh);
     EdgeOrder ed_1(midpoint,LeftVertex);
     EdgeOrder ed_2(midpoint,RightVertex);
     EdgeOrder ed_3(midpoint,NeighT_peakvertex);
@@ -219,7 +219,7 @@ void SelectiveRefinement_2::splitIntoThree(const EdgeOrder &currLongEdge,  Trian
     pMesh->createTriangle(NeighT_peakVertex,CurrentT_LedgeMP,NeighT_LedgeMP,Neigh);
     pMesh->createTriangle(NeighT_peakVertex,NeighT_LedgeMP,LeftVertex,Neigh);
     pMesh->createTriangle(RightVertex,NeighT_LedgeMP,CurrentT_LedgeMP, Neigh);
-    checkNormal(Neigh);
+    checkNormalOrientation(Neigh);
 
     EdgeOrder c_ed1(CurrentT_LedgeMP,NeighT_peakVertex);
     EdgeOrder c_ed2(CurrentT_LedgeMP,RightVertex);
