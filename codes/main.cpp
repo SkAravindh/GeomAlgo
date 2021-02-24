@@ -34,8 +34,8 @@ int main() {
  //   std::vector<Triangle*> vectortri;
    DesiredEdge2_1Send obj(pMesh);
    obj.doRefine(0);
-    obj.doRefine(3000);
-    obj.doRefine(500);
+    //obj.doRefine(3000);
+  // obj.doRefine(500);
    // std::cout << "another -------------- " << std::endl;
  //   DesiredEdge2Send obj1(pMesh);
   //  obj1.doRefine(0);
@@ -48,7 +48,7 @@ int main() {
     //edgedesiredversion_2
 //    DesiredEdge_2 obj(pMesh);
 //    obj.do_refine();
-    pMesh->writeMeshSTL("re2bu.stl");
+ //   pMesh->writeMeshSTL("reout.stl");
 
 
 //edgedesired

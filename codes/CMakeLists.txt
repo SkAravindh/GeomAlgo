@@ -42,6 +42,7 @@ set (Algorithm_Source
     Algorithms/LaplacianSmoothing.cpp
     Algorithms/AdaptiveRefinement_EdgeBased.cpp
     Algorithms/SelectiveRefinement.cpp
+    Algorithms/SelectiveRefinement_Version2.cpp
     )
     
 set (samples
