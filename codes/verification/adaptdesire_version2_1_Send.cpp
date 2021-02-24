@@ -11,6 +11,9 @@ bool avoidDupicate(std::set<T_key> &container, const T_key &data);
 template<class T_key>
 bool isExist(std::set<T_key> & container, const T_key &data);
 
+template<class Iter, class T>
+void _Copy(Iter _begin, Iter _end, std::set<T> &container);
+
 class DesiredEdge2_1Send {
 public:
     DesiredEdge2_1Send() = default;
@@ -39,6 +42,7 @@ private:
 
     //track edges
     std::set<EdgeOrder> childEdgesInside;
+    std::set<EdgeOrder> childEdgesOutside;
     bool enablechildoutside = false;
     //Iterators
     typedef std::set<Triangle*>::iterator ST_Itr;
@@ -62,13 +66,15 @@ void DesiredEdge2_1Send::doRefine(int a) {
 
     getEdgesofTrianlges(Ring,EIT);
     if(checkForBorder(EIT)) {
-        std::cout<< "Input patch has non manifold properties " << std::endl;
+        std::cout<< "Input patch has non manifold properties: Process Terminated " << std::endl;
         return;
     }
     for(VE_itr it = EIT.begin(); it != EIT.end(); it++) {
         edgesToRefine.insert(*it);
     }
-
+    if(enablechildoutside) {
+        std::cout << "Outside edges has been enabled " << std::endl;
+    }
     for(int i=0; i<3; i++) {
         std::cout<< "Iteration: " <<i <<" "<<"Edges_to_split "<<edgesToRefine.size()<< std::endl;
         for(SE_Itr itr = edgesToRefine.begin(); itr != edgesToRefine.end(); itr++) {
@@ -81,12 +87,16 @@ void DesiredEdge2_1Send::doRefine(int a) {
                 split(*itr);
             }
         }
-        std::cout << "Childinsidesize " << childEdgesInside.size() << std::endl;
+
         edgesToRefine.clear();
-        for (auto child : childEdgesInside) {
-            edgesToRefine.insert(child);
+        _Copy(childEdgesInside.begin(),childEdgesInside.end(),edgesToRefine);
+
+        if(enablechildoutside) {
+            _Copy(childEdgesOutside.begin(),childEdgesOutside.end(),edgesToRefine);
         }
+        std::cout << "Edges_inside: " << childEdgesInside.size()<<" "<<"Edges_outside: " <<childEdgesOutside.size()<< std::endl;
         childEdgesInside.clear();
+        childEdgesOutside.clear();
         std::cout << "edges_to_refine " << edgesToRefine.size() << std::endl;
         if (edgesToRefine.empty()) {
             std::cout<< "Stop at iteration: " << i << " " << " Since it is reached given edge threshold " << std::endl;
@@ -147,7 +157,12 @@ void DesiredEdge2_1Send::splitIntoTwo(const EdgeOrder &currLongEdge, Triangle *c
         childEdgesInside.insert(ed_3);
     }
     else if (enablechildoutside) {
-
+      //  if (isExist(childEdgesOutside,NeighLongest_edge )) {
+            childEdgesOutside.erase(NeighLongest_edge);
+            childEdgesOutside.insert(ed_1);
+            childEdgesOutside.insert(ed_2);
+            childEdgesOutside.insert(ed_3);
+       // }
     }
 
     if(currenT != nullptr) {
@@ -200,7 +215,12 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
         childEdgesInside.insert(n_ed3);
     }
     else if (enablechildoutside) {
-
+      //  if(isExist(childEdgesOutside,NeighLongest_edge)) {
+            childEdgesOutside.erase(NeighLongest_edge);
+            childEdgesOutside.insert(n_ed1);
+            childEdgesOutside.insert(n_ed2);
+            childEdgesOutside.insert(n_ed3);
+       // }
     }
 
     if (isExist(edgesToRefine,currLongEdge)) {
@@ -216,7 +236,12 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
         childEdgesInside.insert(c_ed3);
     }
     else if (enablechildoutside) {
-
+       // if(isExist(childEdgesOutside,currLongEdge)) {
+            childEdgesOutside.erase(currLongEdge);
+            childEdgesOutside.insert(c_ed1);
+            childEdgesOutside.insert(c_ed2);
+            childEdgesOutside.insert(c_ed3);
+       // }
     }
 
     if(currenT != nullptr) {
@@ -316,7 +341,7 @@ bool DesiredEdge2_1Send::checkForBorder(std::vector<EdgeOrder> &EV) {
 
     if (EV.empty()) {
         std::cout << "Input edge vector is empty " << std::endl;
-        return false;
+        return true;
     }
 
     for (auto edge : EV) {
@@ -360,3 +385,13 @@ bool isExist(std::set<T_key> & container, const T_key &data) {
         return false;
     }
 }
+
+template<class Iter, class T>
+void _Copy(Iter _begin, Iter _end, std::set<T> &container) {
+
+    while(_begin != _end ) {
+        container.insert(*_begin);
+        _begin++;
+    }
+}
+
