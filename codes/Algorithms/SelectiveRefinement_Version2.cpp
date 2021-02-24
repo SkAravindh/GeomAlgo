@@ -98,6 +98,7 @@ void SelectiveRefinement_2::doRefine() {
         std::cout << " ********** Edges outside of the patch have been included to refine ********** " << std::endl;
     }
     for(int i=0; i<refineLevel; i++) {
+
         std::cout<< "Iteration: " <<i <<" "<<"Edges_to_split "<<edgesToRefine.size()<< std::endl;
         for(SE_Itr itr = edgesToRefine.begin(); itr != edgesToRefine.end(); itr++) {
             bool re = avoidDupicate(allEdges,*itr);
@@ -373,6 +374,7 @@ bool SelectiveRefinement_2::checkForBorder(std::vector<EdgeOrder> &EV) {
     }
 
     for (auto edge : EV) {
+
         std::vector<Triangle*> sharing_triangles;
         pMesh->getAdjustenNeigh(edge,sharing_triangles);
         int size = sharing_triangles.size();
