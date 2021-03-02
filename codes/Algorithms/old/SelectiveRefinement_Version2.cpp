@@ -14,23 +14,23 @@ bool isExist(std::set<T_key> & container, const T_key &data);
 template<class Iter, class T>
 void _Copy(Iter _begin, Iter _end, std::set<T> &container);
 
-class DesiredEdge2_1Send {
+class SelectiveRefinement_2 {
 public:
-    DesiredEdge2_1Send() = default;
-    explicit DesiredEdge2_1Send(std::shared_ptr<Mesh> &pmesh);
-    void doRefine(int a);
+    SelectiveRefinement_2() = default;
+    explicit SelectiveRefinement_2(std::shared_ptr<Mesh> &pmesh);
+    void loadParameters(int refineL, double edgelen,bool enableoutchild=false);
+    void run();
+    void doRefine();
     void split(const EdgeOrder &ed);
     HasCommonLE hassameedges(const EdgeOrder &ed1,const EdgeOrder &ed2);
-    void splitIntoTwo(const EdgeOrder &currLongEdge,  Triangle* currenT, const EdgeOrder &NeighLongest_edge,Triangle *Neigh, bool flag, bool mid);
-    void splitIntoThree(const EdgeOrder &currLongEdge,  Triangle* currenT, const EdgeOrder &NeighLongest_edge, Triangle *Neigh,bool flag,bool mid);
+    void splitIntoTwo(const EdgeOrder &currLongEdge,  Triangle* currenT, const EdgeOrder &NeighLongest_edge,Triangle *Neigh, bool flag);
+    void splitIntoThree(const EdgeOrder &currLongEdge,  Triangle* currenT, const EdgeOrder &NeighLongest_edge, Triangle *Neigh,bool flag);
     void deleteInfoFromDS(Triangle *T);
     void upDateDS(Triangle *T);
     void getNeighTriandLedge(const EdgeOrder &ed, const Triangle *CT, Triangle* &Neigh, EdgeOrder &NeighLedge);
-    void checkNormal(Triangle* t);
+    void checkNormalOrientation(Triangle* t);
     void flipNormal(Triangle* t);
     bool checkForBorder(std::vector<EdgeOrder> & EV);
-
-    void fun(const EdgeOrder &ED, std::vector<Triangle*> &sharing_tri);
 
 private:
     std::shared_ptr<Mesh> pMesh;
@@ -41,77 +41,72 @@ private:
     std::set<EdgeOrder> edgesToRefine;
     std::set<EdgeOrder> allEdges;
     std::set<EdgeOrder> visited;
-    std::set<EdgeOrder> border_Edges;
-    std::set<EdgeOrder> nonManifold_Edges;
-    std::set<EdgeOrder> visited_border_Edges;
 
-    //track edges
+    //track inisde and outside edges
     std::set<EdgeOrder> childEdgesInside;
     std::set<EdgeOrder> childEdgesOutside;
-    bool enablechildoutside = false;
+
     //Iterators
     typedef std::set<Triangle*>::iterator ST_Itr;
     typedef std::set<EdgeOrder>::iterator SE_Itr;
     typedef std::vector<Triangle*>::iterator VT_itr;
     typedef std::vector<EdgeOrder>::iterator VE_itr;
+
+    int refineLevel=1;
+    double edgeLength = 1;
+    bool enablechildoutside = false;
 };
 
-DesiredEdge2_1Send::DesiredEdge2_1Send(std::shared_ptr<Mesh> &pmesh):pMesh(pmesh) {
+SelectiveRefinement_2::SelectiveRefinement_2(std::shared_ptr<Mesh> &pmesh):pMesh(pmesh) {
 }
 
-void DesiredEdge2_1Send::doRefine(int a) {
+void SelectiveRefinement_2::loadParameters(int refineL, double edgelen, bool enableoutchild) {
+
+    refineLevel        = refineL;
+    edgeLength         = edgelen;
+    enablechildoutside = enableoutchild;
+
+}
+
+void SelectiveRefinement_2::run() {
+    doRefine();
+}
+
+void SelectiveRefinement_2::doRefine() {
 
     std::vector<Triangle*> allTriangles;
     pMesh->getTriangles(allTriangles);
 
-    std::vector<EdgeOrder> b_edges;
-    std::vector<EdgeOrder> nonmani_edges;
+    std::vector<Triangle*> Ring;
+    pMesh->getNeigTrianglesbyOrder(allTriangles[0],3,Ring);
 
-   // getedgesByOrder(allTriangles,-1,b_edges);
-    pMesh->getBorder_Nonmanifold_Edges(b_edges,nonmani_edges);
-    _Copy(b_edges.begin(),b_edges.end(),border_Edges);
-    _Copy(nonmani_edges.begin(),nonmani_edges.end(),nonManifold_Edges);
-//     for(auto ele : nonManifold_Edges ) {
-//         auto iit = border_Edges.find(ele);
-//         if (iit == border_Edges.end()) {
-//             std::cout << "exisit " << std::endl;
-//         }
-//     }
-   // std::vector<Point*> bpoints;
-  //  getBorderPoints(b_edges,bpoints);
-  //  writePoints("points.vtk", bpoints);
-  //  std::vector<Triangle*> Ring;
-   // writeSTL("input.stl", Ring);
-  //  pMesh->getNeigTrianglesbyOrder(allTriangles[a],12,Ring);
-  //  writeSTL("input.stl"+std::to_string(a), Ring);
     std::vector<EdgeOrder> EIT;
 
-    getEdgesofTrianlges(allTriangles,EIT);
-//    if(checkForBorder(EIT)) {
-//        std::cout<< "Input patch has non manifold properties: Process Terminated " << std::endl;
-//        return;
-//    }
+    getEdgesofTrianlges(Ring,EIT);
+
+    if(checkForBorder(EIT)) {
+        std::cout<< "Input patch has non manifold properties: Process Terminated " << std::endl;
+        return;
+    }else {
+        std::cout << "Refinement process has started for input patch " << std::endl;
+    }
+
     for(VE_itr it = EIT.begin(); it != EIT.end(); it++) {
         edgesToRefine.insert(*it);
     }
     if(enablechildoutside) {
-        std::cout << "Outside edges has been enabled " << std::endl;
+        std::cout << " ********** Edges outside of the patch have been included to refine ********** " << std::endl;
     }
-    for(int i=0; i<2; i++) {
+    for(int i=0; i<refineLevel; i++) {
+
         std::cout<< "Iteration: " <<i <<" "<<"Edges_to_split "<<edgesToRefine.size()<< std::endl;
         for(SE_Itr itr = edgesToRefine.begin(); itr != edgesToRefine.end(); itr++) {
             bool re = avoidDupicate(allEdges,*itr);
             if(re) continue;
             SE_Itr it = visited.find(*itr);
             if(it != visited.end()) continue;
-            if(border_Edges.find(*itr) != border_Edges.end()) continue;
-
-            if(nonManifold_Edges.find(*itr) != nonManifold_Edges.end()) {
-              //  std::cout<<"non mani " << std::endl;
-                continue;
-            }
             double current_edge_length = itr->getlength();
-            if (current_edge_length > (4.0 / 3.6) *3) {
+            if (current_edge_length > (4.0 / 3.6) *edgeLength ) {
                 split(*itr);
             }
         }
@@ -122,10 +117,12 @@ void DesiredEdge2_1Send::doRefine(int a) {
         if(enablechildoutside) {
             _Copy(childEdgesOutside.begin(),childEdgesOutside.end(),edgesToRefine);
         }
+
         std::cout << "Edges_inside: " << childEdgesInside.size()<<" "<<"Edges_outside: " <<childEdgesOutside.size()<< std::endl;
         childEdgesInside.clear();
         childEdgesOutside.clear();
         std::cout << "edges_to_refine " << edgesToRefine.size() << std::endl;
+
         if (edgesToRefine.empty()) {
             std::cout<< "Stop at iteration: " << i << " " << " Since it is reached given edge threshold " << std::endl;
             break;
@@ -133,84 +130,35 @@ void DesiredEdge2_1Send::doRefine(int a) {
     }
 }
 
-void DesiredEdge2_1Send::split(const EdgeOrder &ed) {
+void SelectiveRefinement_2::split(const EdgeOrder &ed) {
 
     std::vector<Triangle*> sharing_triangle;
     pMesh->getAdjustenNeigh_1(ed,sharing_triangle);
-    //if( !( (sharing_triangle.size() == 1 && isExist(border_Edges,ed)) || sharing_triangle.size() == 2) ) {}
-//    if(sharing_triangle.size() > 2) {
-//        return;
-//    }
     if (sharing_triangle.size() != 2) {
-        if(sharing_triangle.size() == 1 && isExist(border_Edges,ed)) {
-            visited_border_Edges.insert(ed);
-            fun(ed,sharing_triangle);
-            return;
-        } else{
-            return;
-            std::cout << "triangle vector size is not either two or one at split function  " << std::endl;
-
-        }
+       // std::cout << "C_edge " <<ed<<std::endl;
+        std::cout << "triangle vector size is not two at split function  " << std::endl;
+        return;
     }
-//    if (sharing_triangle.size() != 2) {
-//       // std::cout << "C_edge " <<ed<<std::endl;
-//        std::cout << "triangle vector size is not two at split function  " << std::endl;
-//        return;
-//    }
     for (auto triangle : sharing_triangle) {
+
         Triangle* current_neigh_triangle(triangle);
         int id = current_neigh_triangle->getLongestEdgeID();
         EdgeOrder current_neigh_triangle_longED = current_neigh_triangle->getEO(id);
         HasCommonLE re = hassameedges(ed,current_neigh_triangle_longED);
+
         if (re == HasCommonLE::same) {
-           // std::cout << "first split into two " << std::endl;
-            splitIntoTwo(ed, nullptr,current_neigh_triangle_longED,current_neigh_triangle,true,true);
+            splitIntoTwo(ed, nullptr,current_neigh_triangle_longED,current_neigh_triangle,true);
         }
         else if (re == HasCommonLE::not_same) {
-
-            if(isExist(nonManifold_Edges,current_neigh_triangle_longED)) {
-            //    std::cout << "non mani at split  " << std::endl;
-                splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,true);
-            }
-            else if (isExist(border_Edges, current_neigh_triangle_longED)) {
-                splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,true);
-            } else {
-                splitIntoThree(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, true,true);
-            }
+            splitIntoThree(ed, nullptr,current_neigh_triangle_longED,current_neigh_triangle,true);
         }
     }
 }
 
-void DesiredEdge2_1Send::fun(const EdgeOrder &ed, std::vector<Triangle*> &sharing_tri) {
+void SelectiveRefinement_2::splitIntoTwo(const EdgeOrder &currLongEdge, Triangle *currenT, const EdgeOrder &NeighLongest_edge, Triangle *Neigh, bool flag) {
 
-    for(Triangle* ele : sharing_tri) {
-        Triangle* current_neigh_triangle(ele);
-        int id = current_neigh_triangle->getLongestEdgeID();
-        EdgeOrder current_neigh_triangle_longED = current_neigh_triangle->getEO(id);
-        HasCommonLE re = hassameedges(ed,current_neigh_triangle_longED);
-        if (re == HasCommonLE::same) {
-            splitIntoTwo(ed, nullptr,current_neigh_triangle_longED,current_neigh_triangle,true, false);
-        } else if (re == HasCommonLE::not_same) {
-            if(isExist(nonManifold_Edges,current_neigh_triangle_longED)) {
-                std::cout << "non mani at fun  " << std::endl;
-                splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,true);
-            }
-             else if (isExist(border_Edges, current_neigh_triangle_longED)) {
-                splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,false); //chaged true to false---> flag
-            } else {
-                splitIntoThree(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, true,false);
-            }
-        }
-    }
-}
-void DesiredEdge2_1Send::splitIntoTwo(const EdgeOrder &currLongEdge, Triangle *currenT, const EdgeOrder &NeighLongest_edge, Triangle *Neigh, bool flag,bool mid) {
-  //  std::cout << "split into two " << std::endl;
     Point* midpoint = currLongEdge.getMidPoint();
     int NeighT_LedgeID          =  Neigh->getLongestEdgeID();
-
-    if(!flag) {
-        NeighT_LedgeID = Neigh->getPeakVertexID(currLongEdge);
-    }
     Point* NeighT_peakvertex    =  Neigh->getCorners(NeighT_LedgeID);
 
     Point* RightVertex = Neigh->getCorners(indexOrder_2(NeighT_LedgeID));
@@ -218,42 +166,22 @@ void DesiredEdge2_1Send::splitIntoTwo(const EdgeOrder &currLongEdge, Triangle *c
 
     pMesh->createTriangle(midpoint,NeighT_peakvertex,RightVertex,Neigh);
     pMesh->createTriangle(NeighT_peakvertex,midpoint,LeftVertex,Neigh);
-    checkNormal(Neigh);
+    checkNormalOrientation(Neigh);
     EdgeOrder ed_1(midpoint,LeftVertex);
     EdgeOrder ed_2(midpoint,RightVertex);
     EdgeOrder ed_3(midpoint,NeighT_peakvertex);
-    EdgeOrder ed_4(LeftVertex,NeighT_peakvertex);
-    EdgeOrder ed_5(RightVertex,NeighT_peakvertex);
-    if(NeighLongest_edge == ed_4 ) {
-        nonManifold_Edges.insert(ed_4);
-    //    std::cout << "added ed_4 from split into 2 " << std::endl;
-    }
-    if(NeighLongest_edge == ed_5 ) {
-        nonManifold_Edges.insert(ed_5);
-     //   std::cout << "added ed_5 from split into 2 " << std::endl;
-    }
-
-
-    if(!mid) {
-        border_Edges.insert(EdgeOrder(midpoint, currLongEdge.p0));
-        border_Edges.insert(EdgeOrder(midpoint, currLongEdge.p1));
-    }
 
     if (isExist(edgesToRefine,NeighLongest_edge)) {
         visited.insert(NeighLongest_edge);
         childEdgesInside.insert(ed_1);
         childEdgesInside.insert(ed_2);
         childEdgesInside.insert(ed_3);
-        childEdgesInside.insert(ed_4);
-        childEdgesInside.insert(ed_5);
     }
     else if (isExist(childEdgesInside,NeighLongest_edge )) {
         childEdgesInside.erase(NeighLongest_edge);
         childEdgesInside.insert(ed_1);
         childEdgesInside.insert(ed_2);
         childEdgesInside.insert(ed_3);
-        childEdgesInside.insert(ed_4);
-        childEdgesInside.insert(ed_5);
     }
     else if (enablechildoutside) {
       //  if (isExist(childEdgesOutside,NeighLongest_edge )) {
@@ -261,8 +189,6 @@ void DesiredEdge2_1Send::splitIntoTwo(const EdgeOrder &currLongEdge, Triangle *c
             childEdgesOutside.insert(ed_1);
             childEdgesOutside.insert(ed_2);
             childEdgesOutside.insert(ed_3);
-            childEdgesOutside.insert(ed_4);
-            childEdgesOutside.insert(ed_5);
        // }
     }
 
@@ -272,15 +198,8 @@ void DesiredEdge2_1Send::splitIntoTwo(const EdgeOrder &currLongEdge, Triangle *c
     deleteInfoFromDS(Neigh);
 }
 
-void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle* currenT, const EdgeOrder &NeighLongest_edge, Triangle *Neigh,bool flag,bool mid) {
+void SelectiveRefinement_2::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle* currenT, const EdgeOrder &NeighLongest_edge, Triangle *Neigh,bool flag) {
 
-
-    std::vector<Triangle*> adjacent_triangles;
-    pMesh->getAdjustenNeigh_1(NeighLongest_edge,adjacent_triangles);
-    if(adjacent_triangles.size() >2) {
-        std::cout<< "greater two recent " << std::endl;
-        return;
-    }
     Point* NeighT_LedgeMP     =  NeighLongest_edge.getMidPoint();
     Point* CurrentT_LedgeMP   =  currLongEdge.getMidPoint();
     int NeighT_LedgeID        =  Neigh->getLongestEdgeID();
@@ -300,7 +219,7 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
     pMesh->createTriangle(NeighT_peakVertex,CurrentT_LedgeMP,NeighT_LedgeMP,Neigh);
     pMesh->createTriangle(NeighT_peakVertex,NeighT_LedgeMP,LeftVertex,Neigh);
     pMesh->createTriangle(RightVertex,NeighT_LedgeMP,CurrentT_LedgeMP, Neigh);
-    checkNormal(Neigh);
+    checkNormalOrientation(Neigh);
 
     EdgeOrder c_ed1(CurrentT_LedgeMP,NeighT_peakVertex);
     EdgeOrder c_ed2(CurrentT_LedgeMP,RightVertex);
@@ -309,18 +228,6 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
     EdgeOrder n_ed1(NeighT_LedgeMP,LeftVertex);
     EdgeOrder n_ed2(NeighT_LedgeMP,RightVertex);
     EdgeOrder n_ed3(NeighT_LedgeMP,NeighT_peakVertex);
-    if (NeighLongest_edge == n_ed2) {
-      //  std::cout << "added ed_2 from split into 3 " << std::endl;
-        nonManifold_Edges.insert(n_ed2);
-    }
-    if (NeighLongest_edge == n_ed1) {
-       // std::cout << "added ed_2 from split into 3 " << std::endl;
-        nonManifold_Edges.insert(n_ed1);
-    }
-    if(!mid) {
-        border_Edges.insert(EdgeOrder(CurrentT_LedgeMP, currLongEdge.p0));
-        border_Edges.insert(EdgeOrder(CurrentT_LedgeMP, currLongEdge.p1));
-    }
 
     if (isExist(edgesToRefine,NeighLongest_edge)) {
         visited.insert(NeighLongest_edge);
@@ -376,40 +283,26 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
     HasCommonLE re = hassameedges(NeighLongest_edge,second_NeighT_Ledge);
 
     if (re == HasCommonLE::same) {
-        splitIntoTwo(NeighLongest_edge,Neigh,second_NeighT_Ledge,second_direct_NeighT ,true,true);
+        splitIntoTwo(NeighLongest_edge,Neigh,second_NeighT_Ledge,second_direct_NeighT ,true);
     }
     else if (re == HasCommonLE::not_same) {
-        if(isExist(nonManifold_Edges,second_NeighT_Ledge)) {
-      //      std::cout << "non mani at split 3 " << std::endl;
-            splitIntoTwo(NeighLongest_edge, Neigh, second_NeighT_Ledge, second_direct_NeighT, false, true);
-        }
-        else if (isExist(border_Edges, second_NeighT_Ledge)) {
-            splitIntoTwo(NeighLongest_edge, Neigh, second_NeighT_Ledge, second_direct_NeighT, false, true);
-        } else {
-            splitIntoThree(NeighLongest_edge, Neigh, second_NeighT_Ledge, second_direct_NeighT, true, true);
-        }
+        splitIntoThree(NeighLongest_edge, Neigh, second_NeighT_Ledge,second_direct_NeighT, true);
     }
 
 }
 
-void DesiredEdge2_1Send::getNeighTriandLedge(const EdgeOrder &ed, const Triangle *CT, Triangle* &Neigh, EdgeOrder &NeighLedge) {
+void SelectiveRefinement_2::getNeighTriandLedge(const EdgeOrder &ed, const Triangle *CT, Triangle* &Neigh, EdgeOrder &NeighLedge) {
 
     std::vector<Triangle*> adjacent_triangles;
     pMesh->getAdjustenNeigh_1(ed,adjacent_triangles);
 
-    if (!( (adjacent_triangles.size() == 1 && isExist(border_Edges,ed)) || (adjacent_triangles.size() == 2) ) ) {
-        std::cout<<"adjacent_triangles "<<adjacent_triangles.size()<< std::endl;
+
+    if ( adjacent_triangles.size() != 2) {
         std::cout << "size is not 2 @checkForLongEdge" << std::endl;
         // std::cout << "ed " <<ed << std::endl;
         // std::cout << "ct " <<*CT << std::endl;
         return;
     }
-//    if ( adjacent_triangles.size() != 2) {
-//        std::cout << "size is not 2 @checkForLongEdge" << std::endl;
-//        // std::cout << "ed " <<ed << std::endl;
-//        // std::cout << "ct " <<*CT << std::endl;
-//        return;
-//    }
 
     for(auto ele : adjacent_triangles) {
         if (*ele == *CT ) continue;
@@ -422,7 +315,7 @@ void DesiredEdge2_1Send::getNeighTriandLedge(const EdgeOrder &ed, const Triangle
 
 }
 
-HasCommonLE DesiredEdge2_1Send::hassameedges(const EdgeOrder &ed1,const EdgeOrder &ed2) {
+HasCommonLE SelectiveRefinement_2::hassameedges(const EdgeOrder &ed1,const EdgeOrder &ed2) {
 
     if(ed1 == ed2 ) {
         return HasCommonLE::same;
@@ -433,7 +326,8 @@ HasCommonLE DesiredEdge2_1Send::hassameedges(const EdgeOrder &ed1,const EdgeOrde
 
 }
 
-void DesiredEdge2_1Send::checkNormal(Triangle *t) {
+void SelectiveRefinement_2::checkNormalOrientation(Triangle *t) {
+
     std::vector<Triangle*> kids;
     t->getChildren(kids);
     Vector3 partentNormal = t->getNormalVector();
@@ -446,14 +340,15 @@ void DesiredEdge2_1Send::checkNormal(Triangle *t) {
     }
 }
 
-void  DesiredEdge2_1Send::flipNormal(Triangle *t) {
+void  SelectiveRefinement_2::flipNormal(Triangle *t) {
+
     Point* vertex0 = t->getCorners(0);
     Point* vertex1 = t->getCorners(1);
     t->setNewVertex(vertex1,0);
     t->setNewVertex(vertex0,1);
 }
 
-void DesiredEdge2_1Send::deleteInfoFromDS(Triangle *T) {
+void SelectiveRefinement_2::deleteInfoFromDS(Triangle *T) {
 
     pMesh->delCertainEntryPT(T);
     pMesh->delCertainEntryET(T);
@@ -462,7 +357,7 @@ void DesiredEdge2_1Send::deleteInfoFromDS(Triangle *T) {
     upDateDS(T);
 }
 
-void DesiredEdge2_1Send::upDateDS(Triangle *T) {
+void SelectiveRefinement_2::upDateDS(Triangle *T) {
 
     std::vector<Triangle*> TV;
     T->getChildren(TV);
@@ -470,7 +365,7 @@ void DesiredEdge2_1Send::upDateDS(Triangle *T) {
 
 }
 
-bool DesiredEdge2_1Send::checkForBorder(std::vector<EdgeOrder> &EV) {
+bool SelectiveRefinement_2::checkForBorder(std::vector<EdgeOrder> &EV) {
     bool hasmanifold = false;
 
     if (EV.empty()) {
@@ -479,6 +374,7 @@ bool DesiredEdge2_1Send::checkForBorder(std::vector<EdgeOrder> &EV) {
     }
 
     for (auto edge : EV) {
+
         std::vector<Triangle*> sharing_triangles;
         pMesh->getAdjustenNeigh(edge,sharing_triangles);
         int size = sharing_triangles.size();

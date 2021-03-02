@@ -79,16 +79,16 @@ void Mesh::getAdjustenNeigh_1(const EdgeOrder &ed,std::vector<Triangle*> &tv) {
     std::vector<Triangle*> temp;
     std::pair<MMET, MMET> triangle_set = mmedgeTotriangles.equal_range(ed);
     int dis = std::distance(triangle_set.first, triangle_set.second);
-    if ( dis == 2 || dis == 1) {
+  //  if ( dis == 2 || dis == 1) {
         for (MMET triangle_set_IT = triangle_set.first; triangle_set_IT != triangle_set.second; triangle_set_IT++) {
             temp.push_back(triangle_set_IT->second);
         }
-    }
-    else {
-        std::cout << std::distance(triangle_set.first, triangle_set.second) << std::endl;
-        std::cout << "Returning empty vector from ---> getAdjustenNeigh_1(Mesh.cpp) and size is either 1 or 2  " << std::endl;
-        return;
-    }
+   // }
+//    else {
+//        std::cout << std::distance(triangle_set.first, triangle_set.second) << std::endl;
+//        std::cout << "Returning empty vector from ---> getAdjustenNeigh_1(Mesh.cpp) and size is either 1 or 2  " << std::endl;
+//        return;
+//    }
 
     tv.assign(temp.begin(),temp.end());
 }
@@ -368,6 +368,27 @@ void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::vector<Triang
     //std::cout << "collected_triangles "<<collected_triangles.size()<<" "<<"TV "<<TV.size() << std::endl;
 
 }
+void Mesh::getBorder_Nonmanifold_Edges(std::vector<EdgeOrder> &border, std::vector<EdgeOrder> &nonmanifold) {
+
+    MMET iter;
+    EV_it it;
+    unsigned int border_count = 0;
+    unsigned int nonmanifold_count = 0;
+    std::vector<EdgeOrder> allEdges;
+    getEdgesofTrianlges(allTriangles,allEdges);
+    for (it = allEdges.begin(); it != allEdges.end(); it++) {
+        std::pair<MMET, MMET> triangle_set = mmedgeTotriangles.equal_range(*it);
+        unsigned int distance = std::distance(triangle_set.first, triangle_set.second);
+        if (distance < 2) {
+            border.push_back(*it);
+            ++border_count;
+        } else if (distance > 2) {
+            nonmanifold.push_back(*it);
+            ++nonmanifold_count;
+        }
+    }
+    std::cout << "Border_Edges: " << border_count << " " << "NonManifold_Edges: " << nonmanifold_count << std::endl;
+}
 
 void Mesh::standAlone(std::vector<Triangle*> &tv) {
     //std::cout << *allTriangles[0]->getCorners(0) << std::endl;
@@ -376,6 +397,16 @@ void Mesh::standAlone(std::vector<Triangle*> &tv) {
 
 void Mesh::writeMeshSTL(std::string filename) {
     writeSTL(filename,allTriangles);
+}
+
+void Mesh::clear() {
+
+    allvertices.clear();
+    vAllvertices.clear();
+    mmpointTotriangles.clear();
+    mmedgeTotriangles.clear();
+    allTriangles.clear();
+    externalUse.clear();
 }
 
 void Mesh::printContainersInfo() {

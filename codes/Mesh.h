@@ -25,6 +25,7 @@ enum VecContainerName{
 class Mesh{
 public:
     Mesh();
+    ~Mesh(){};
     Mesh(std::string Filename, size_t Poolsize);
     Point* createVertex(  double x,   double y,   double z);
     Point* createVertex(Point &P);
@@ -34,6 +35,7 @@ public:
     void getVertices(std::vector<Point*> &vp);
     void standAlone(std::vector<Triangle*> &tv);
     void printContainersInfo();
+    void clear();
     void getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vector<Triangle*> &TV);
     void getRingNeigbyOrder(Point* p, unsigned int &&order, std::vector<Triangle*> &TV);
     void fillTriangleContainers(std::vector<Triangle*> &etv,VecContainerName VN );
@@ -49,6 +51,7 @@ public:
     void getAdjustenNeigh_1(const EdgeOrder &ed,std::vector<Triangle*> &tv);
     std::vector< std::pair<EdgeOrder,EdgeOrder> > updateEdgeInfo(Triangle* To_change, Point* oldVertex, Point* newVertex); //used during edge collapse operation.
     void writeMeshSTL(std::string filename);
+    void getBorder_Nonmanifold_Edges(std::vector<EdgeOrder> &border, std::vector<EdgeOrder> &nonmanifold);
 
 
 private:
@@ -61,18 +64,19 @@ protected:
     int Number_OF_Vertices=0;
     std::multimap<Point*, Triangle*,ComparePoint> mmpointTotriangles;
     std::multimap<EdgeOrder, Triangle*> mmedgeTotriangles;
-    //std::multimap<EdgeOrder, std::vector<Triangle*>> map_edgeTotriangles; //using multimap map bcoz easy to acess data but not efficient
+    //std::map<EdgeOrder, std::vector<Triangle*>> map_edgeTotriangles; //using multimap map bcoz easy to acess data but not efficient
     std::vector<Triangle*> allTriangles;
     std::vector<Triangle*> externalUse;
 
 protected:
     //Iterators
     typedef std::vector<Triangle*>::iterator TV_it;
+    typedef std::vector<EdgeOrder>::iterator EV_it;
     typedef std::vector<Point*>::iterator PV_it;
     typedef std::set<Triangle *>::iterator TS_it;
     typedef std::set<Point*>::iterator PS_it;
     typedef std::multimap<Point*, Triangle*,ComparePoint>::iterator MMPT;
-    typedef std::multimap<EdgeOrder, Triangle *>::iterator MMET;
+    typedef std::multimap<EdgeOrder, Triangle*>::iterator MMET;
 
 
 };

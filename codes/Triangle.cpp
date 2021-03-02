@@ -26,6 +26,9 @@ Point* Triangle::getCorners(int i) const {
 }
 
 EdgeOrder Triangle::getEO(int i) const {
+
+//    EdgeOrder* ed = new EdgeOrder(corners[indexOrder_1(i)],corners[indexOrder_2(i)] );
+//    return ed;
     return EdgeOrder(corners[indexOrder_1(i)],corners[indexOrder_2(i)] );
     //return EdgeOrder(corners[(i+1)%3],corners[(i+2)%3] );
 }
@@ -162,7 +165,7 @@ int Triangle::getShortestEdgeID()   {
 int Triangle::getPeakVertexID(const EdgeOrder &c_ed) {
 
     for(int i=0; i<3; i++) {
-        if (this->getEO(i) == c_ed) {
+        if ( this->getEO(i) == c_ed ) {
             return i;
         }
     }

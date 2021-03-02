@@ -46,16 +46,16 @@ set (Algorithm_Source
     )
     
 set (samples
-    verification/test_connectivity.cpp
-    verification/red_green_try.cpp
-    verification/establishNeigh.cpp
-    verification/estnadapt.cpp
-    verification/subdivision_EDbased.cpp
-    verification/adaptdesirededge.cpp
-    verification/adaptdesire_version2.cpp
+   # verification/test_connectivity.cpp
+   # verification/red_green_try.cpp
+   # verification/establishNeigh.cpp
+   # verification/estnadapt.cpp
+   # verification/subdivision_EDbased.cpp
+   # verification/adaptdesirededge.cpp
+   # verification/adaptdesire_version2.cpp
     verification/adaptdesire_version2_Send.cpp
     verification/adaptdesire_version2_1_Send.cpp
-    verification/looping.cpp
+   # verification/looping.cpp
     )
     
 add_library(Algos STATIC ${samples} ${Algorithm_header} ${Algorithm_Source})

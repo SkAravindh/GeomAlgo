@@ -18,22 +18,32 @@
 
 
 
-
-
 int main() {
-   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-   //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/single_cube_holes_stl.stl";
+ //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
 
-  //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunnywithseveralholes.stl";
+  //  std::string filename="/home/aravindhkumar.kalimuthu/Downloads/testing_stls/patch.stl";
 
+    //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/single_cube_holes_stl.stl";
+   // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunnywithseveralholes.stl";
+
+
+   // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/bpillar.stl";
+    std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/BMW.stl";
+//    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/PipeTShape_1.stl";
+
+
+
+
+    // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/reout.stl";
 
 
 
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
- //   std::shared_ptr<Mesh> pMesh1 = ReadSTL(filename);
- //   std::vector<Triangle*> vectortri;
+
    DesiredEdge2_1Send obj(pMesh);
-   obj.doRefine(0);
+  obj.doRefine(0);
+//    obj.doRefine(4000);
+//    obj.doRefine(40000);
     //obj.doRefine(3000);
   // obj.doRefine(500);
    // std::cout << "another -------------- " << std::endl;
@@ -48,7 +58,7 @@ int main() {
     //edgedesiredversion_2
 //    DesiredEdge_2 obj(pMesh);
 //    obj.do_refine();
- //   pMesh->writeMeshSTL("reout.stl");
+   pMesh->writeMeshSTL("reout.stl");
 
 
 //edgedesired
