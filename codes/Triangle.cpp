@@ -4,6 +4,10 @@ Triangle::Triangle() {
     corners[0] = nullptr;
     corners[1] = nullptr;
     corners[2] = nullptr;
+
+    edges[0] = nullptr;
+    edges[1] = nullptr;
+    edges[2] = nullptr;
 }
 
 Triangle::Triangle(Point* P0, Point* P1, Point* P2, Mesh* mobj): powner(mobj) {
@@ -25,10 +29,14 @@ Point* Triangle::getCorners(int i) const {
     return corners[i];
 }
 
+EdgeOrder* Triangle::getEdge(int i) const {
+    return edges[i];
+}
+
 EdgeOrder Triangle::getEO(int i) const {
 
-//    EdgeOrder* ed = new EdgeOrder(corners[indexOrder_1(i)],corners[indexOrder_2(i)] );
-//    return ed;
+   // EdgeOrder* ed = new EdgeOrder(corners[indexOrder_1(i)],corners[indexOrder_2(i)] );
+   // return ed;
     return EdgeOrder(corners[indexOrder_1(i)],corners[indexOrder_2(i)] );
     //return EdgeOrder(corners[(i+1)%3],corners[(i+2)%3] );
 }
@@ -115,8 +123,12 @@ int Triangle::getTriangleID(Triangle *t) {
 
 }
 
-void Triangle::setNewVertex(Point *p, int idx) {
+void Triangle::setNewVertex(Point *p, unsigned int idx) {
     corners[idx] = p;
+}
+
+void Triangle::setEdge(EdgeOrder *ed, unsigned int id) {
+    edges[id] = ed;
 }
 
 void Triangle::getChildren(std::vector<Triangle *> &childvector) {
@@ -162,7 +174,7 @@ int Triangle::getShortestEdgeID()   {
     return idx;
 }
 
-int Triangle::getPeakVertexID(const EdgeOrder &c_ed) {
+int Triangle::getPeakVertexID(const EdgeOrder& c_ed) {
 
     for(int i=0; i<3; i++) {
         if ( this->getEO(i) == c_ed ) {

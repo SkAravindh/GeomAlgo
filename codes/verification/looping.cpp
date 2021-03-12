@@ -1,25 +1,26 @@
 #include "../Mesh.h"
 
 
-class LoopFinalize{
+class Looping {
 public:
-    LoopFinalize()=default;
+    Looping() = default;
+    bool hasLoopCompleted();
     void addEdge(Edge &ed);
-    bool isClosed();
-
+    void getEdgevector(std::vector<Edge> &loopedges) {
+        loopedges.assign(edgevec.begin(),edgevec.end());
+    }
 private:
-    std::vector<Edge> VED;
+    std::vector<Edge> edgevec;
 };
 
-void LoopFinalize::addEdge(Edge &ed) {
-    VED.push_back(ed);
+void Looping::addEdge(Edge &ed) {
+    edgevec.push_back(ed);
 }
 
-bool LoopFinalize::isClosed() {
-    Edge first_ed = *VED.begin();
-    Edge last_ed = VED.back();
-    std::cout << *first_ed.p0 <<" " << " " <<*last_ed.p1 << std::endl;
-    if(*first_ed.p0 == *last_ed.p1) {
+bool Looping::hasLoopCompleted() {
+    Point* start = edgevec.begin()->p0;
+    Point* end = edgevec.back().p1;
+    if(*start == *end) {
         return true;
     }
     else {
@@ -27,109 +28,70 @@ bool LoopFinalize::isClosed() {
     }
 }
 
-class Loop {
+class InitilizeLoop{
 public:
-    Loop() = default;
-    Loop(std::vector<EdgeOrder> &B_Edges);
-    void CreateLoop(std::vector<EdgeOrder> &B_Edges);
-    bool GetNextEdge(Edge &current, Edge &next, std::map<Point*, std::vector<EdgeOrder>, ComparePoint> &Point_to_edge);
-
+    InitilizeLoop() = default;
+    void createLoop(std::vector<EdgeOrder> &Border_ed);
+    bool getNextEdge(Edge &current, Edge &next, std::multimap<Point*, EdgeOrder,ComparePoint> &point_to_edge);
+    void getLoopVector(std::vector<Looping*> &inputvec) {
+        inputvec.assign(loopVec.begin(),loopVec.end());
+    }
 private:
-    LoopFinalize* LF;
-    std::vector<LoopFinalize*> loopVector;
-
+    std::vector<Looping*> loopVec;
 };
 
-Loop::Loop(std::vector<EdgeOrder> &B_Edges) {
-    CreateLoop(B_Edges);
-}
+bool InitilizeLoop::getNextEdge(Edge &current, Edge &next, std::multimap<Point*, EdgeOrder,ComparePoint> &point_to_edge) {
 
-bool Loop::GetNextEdge(Edge &current, Edge &next,
-                       std::map<Point *, std::vector<EdgeOrder>, ComparePoint> &Point_to_edge) {
-
-    Point* plast = current.p0;
-    std::vector<EdgeOrder> edvector = Point_to_edge[plast];
-    if (edvector.size() != 2 ) {
-
-        std::cout << "size of the vector is != 2  @GetNextEdge " << std::endl;
+    typedef std::multimap<Point*, EdgeOrder,ComparePoint>::iterator IT;
+    Point *p0 = current.p0;
+    Point *p1 = current.p1;
+    std::pair<IT,IT> edges = point_to_edge.equal_range(p1);
+    int distance = std::distance(edges.first,edges.second);
+    if (distance !=2 ) {
         return false;
     }
-    std::cout<<"current    "<<current<< std::endl;
-    for(auto ele : edvector) {
-        std::cout <<ele << std::endl;
-        EdgeOrder nxt = ele;
-        if(*current.p0 != *nxt.p0) {
-            if(*current.p0 == *nxt.p1) {
-                if(*current.p1 != *nxt.p0) {
-                    next=Edge(nxt.p1,nxt.p0);
-                    std::cout << "hi" << std::endl;
-                    return true;
-                }
-            }
-        }
-        else {
-            if(*current.p1 != *nxt.p1) {
-                next=Edge(nxt.p0,nxt.p1);
-                std::cout << "hi 2" << std::endl;
-                return true;
-            }
-        }
-
+    for(IT iter = edges.first; iter != edges.second; iter++) {
+        Point* Nxt_p0 = iter->second.p0;
+        Point* Nxt_p1 = iter->second.p1;
+        if(*p1==*Nxt_p1) std::swap(Nxt_p0,Nxt_p1);
+        if (!(*Nxt_p0==*p1)) return false;
+        if(*Nxt_p1 == *p0) continue;
+        next = Edge(Nxt_p0,Nxt_p1);
+        return true;
     }
     return false;
 }
 
+void InitilizeLoop::createLoop(std::vector<EdgeOrder> &Border_ed) {
 
-void Loop::CreateLoop(std::vector<EdgeOrder> &B_Edges) {
-
-
-    std::vector<EdgeOrder>::iterator it;
-    std::map<Point*, std::vector<EdgeOrder>, ComparePoint> Point_to_edge;
-    for(it = B_Edges.begin(); it!= B_Edges.end(); it++) {
-        Point_to_edge[it->p0].emplace_back(it->p0,it->p1);
-        Point_to_edge[it->p1].emplace_back(it->p0,it->p1);
+    std::multimap<Point*, EdgeOrder,ComparePoint> point_to_edge;
+    for(auto iter = Border_ed.begin(); iter != Border_ed.end(); iter++) {
+        point_to_edge.insert(std::make_pair(iter->p0,*iter));
+        point_to_edge.insert(std::make_pair(iter->p1,*iter));
     }
 
-  //  std::set<EdgeOrder> Set_ed(B_Edges.begin(),B_Edges.end());
-    std::vector<EdgeOrder> temp;
-    temp.assign(B_Edges.begin(),B_Edges.end());
-    while (!temp.empty()) {
-        EdgeOrder ed = *temp.begin();
-//        Set_ed.erase(ed);
-        temp.erase(std::remove(temp.begin(), temp.end(), ed), temp.end());
-        LoopFinalize* LF = new LoopFinalize();
-        loopVector.push_back(LF);
-        Edge Ored(ed.p0,ed.p1);
-        LF->addEdge(Ored);
-        Edge NextED;
-        int count =1;
-       while( GetNextEdge(Ored,NextED,Point_to_edge) ) {
-           std::cout <<"count " <<count << std::endl;
-            std::cout << "NextED "<<NextED<<std::endl;
-//            break;
-            ++count;
-            LF->addEdge(NextED);
-            EdgeOrder tempe(Ored.p0,Ored.p1);
-          //  Set_ed.erase(EdgeOrder(Ored.p0,Ored.p1));
-           temp.erase(std::remove(temp.begin(), temp.end(), tempe), temp.end());
-            if( LF->isClosed()) {
+    std::set<EdgeOrder> edge_dummy(Border_ed.begin(), Border_ed.end());
+    int count=0;
+    while(!edge_dummy.empty()) {
+
+        EdgeOrder ed = *edge_dummy.begin();
+        EdgeOrder initialEdge(ed);
+        edge_dummy.erase(initialEdge);
+        Looping* obj = new Looping;
+        loopVec.push_back(obj);
+        Edge curr(ed.p0,ed.p1);
+        Edge next;
+        obj->addEdge(curr);
+        ++count;
+        while (getNextEdge(curr,next,point_to_edge)) {
+            obj->addEdge(next);
+            curr=next;
+            EdgeOrder edtodel(next.p0,next.p1);
+            edge_dummy.erase(edtodel);
+            if(obj->hasLoopCompleted()) {
                 break;
             }
-////            if(count == 10) {
-////                break;
-////            }
-            std::cout <<"size " <<temp.size()<< std::endl;
-            Ored = NextED;
-          // break;
-       }
-        break;
-//        std::cout <<Ored<<std::endl;
-//        std::cout <<NextED<<std::endl;
-
+        }
     }
-
-
-
-
-
+    std::cout<<"Number of loops: " <<count << std::endl;
 }

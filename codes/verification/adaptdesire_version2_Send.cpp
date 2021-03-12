@@ -73,7 +73,6 @@ void DesiredEdge2Send::doRefine(int a) {
 
     if (!BE.empty()) {
         for(auto B_edges : BE) {
-            B_edges.isborder= true;
             border_edges.insert(B_edges);
         }
         hasborderEdge = true;

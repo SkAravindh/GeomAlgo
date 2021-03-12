@@ -58,7 +58,7 @@ void Mesh::storeTriangleInfo(Triangle *T) {
 
 }
 
-void Mesh::getAdjustenNeigh(const EdgeOrder &ed, std::vector<Triangle*> &tv) {
+void Mesh::getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv) {
 
     std::vector<Triangle*> temp;
     std::pair<MMET, MMET> triangle_set = mmedgeTotriangles.equal_range(ed);
@@ -74,7 +74,7 @@ void Mesh::getAdjustenNeigh(const EdgeOrder &ed, std::vector<Triangle*> &tv) {
 
 }
 
-void Mesh::getAdjustenNeigh_1(const EdgeOrder &ed,std::vector<Triangle*> &tv) {
+void Mesh::getAdjustenNeigh_1(const EdgeOrder& ed,std::vector<Triangle*> &tv) {
 
     std::vector<Triangle*> temp;
     std::pair<MMET, MMET> triangle_set = mmedgeTotriangles.equal_range(ed);
@@ -252,20 +252,20 @@ std::vector< std::pair<EdgeOrder,EdgeOrder> > Mesh::updateEdgeInfo(Triangle* To_
 
     //Update Edge to triangle multimap.
     if (*p1 != *oldVertex) {
-         ed1 = EdgeOrder(p1,oldVertex);
+         ed1 =  EdgeOrder(p1,oldVertex);
          eraseCertainEntryET(mmedgeTotriangles,ed1,To_change);
     }
     if (*p2 != *oldVertex) {
-        ed2 = EdgeOrder(p2,oldVertex);
+        ed2 =  EdgeOrder(p2,oldVertex);
         eraseCertainEntryET(mmedgeTotriangles,ed2,To_change);
     }
 
     if (*p1 != *newVertex) {
-        ed1_new = EdgeOrder(p1,newVertex);
+        ed1_new =  EdgeOrder(p1,newVertex);
         mmedgeTotriangles.insert(std::make_pair(ed1_new,To_change));
     }
     if (*p2 != *newVertex) {
-        ed2_new = EdgeOrder(p2,newVertex);
+        ed2_new =  EdgeOrder(p2,newVertex);
         mmedgeTotriangles.insert(std::make_pair(ed2_new,To_change));
     }
 
@@ -291,9 +291,9 @@ void Mesh::getNeigTrianglesbyOrder(Triangle * t,  unsigned int &&order, std::vec
     TS_it it, itt;
 
     //Required Containers.
-    std::set<Triangle *> visted;
-    std::set<Triangle *> collected_triangles;
-    std::set<Triangle *> temporary_triangles;
+    std::set<Triangle*> visted;
+    std::set<Triangle*> collected_triangles;
+    std::set<Triangle*> temporary_triangles;
     collected_triangles.insert(t);
 
     for (int i = 0; i < order; i++) {
@@ -368,26 +368,71 @@ void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::vector<Triang
     //std::cout << "collected_triangles "<<collected_triangles.size()<<" "<<"TV "<<TV.size() << std::endl;
 
 }
+
 void Mesh::getBorder_Nonmanifold_Edges(std::vector<EdgeOrder> &border, std::vector<EdgeOrder> &nonmanifold) {
 
-    MMET iter;
-    EV_it it;
-    unsigned int border_count = 0;
-    unsigned int nonmanifold_count = 0;
-    std::vector<EdgeOrder> allEdges;
-    getEdgesofTrianlges(allTriangles,allEdges);
-    for (it = allEdges.begin(); it != allEdges.end(); it++) {
-        std::pair<MMET, MMET> triangle_set = mmedgeTotriangles.equal_range(*it);
-        unsigned int distance = std::distance(triangle_set.first, triangle_set.second);
-        if (distance < 2) {
-            border.push_back(*it);
+    std::cout << "Collecting border and Non-manifold edges " << std::endl;
+
+    std::vector<EdgeOrder> outtemp;
+    std::set<EdgeOrder>alledges;
+    std::vector<Triangle *>::const_iterator it;
+    int border_count = 0;
+    int nonmanifold_count = 0;
+    for (it = allTriangles.begin(); it != allTriangles.end(); it++) {
+        for (int j = 0; j < 3; j++) {
+            Triangle *tri(*it);
+            Point *p0 = tri->getCorners(indexOrder_1(j));
+            Point *p1 = tri->getCorners(indexOrder_2(j));
+            EdgeOrder edge = EdgeOrder(p0, p1);
+            outtemp.push_back(edge);
+            alledges.insert(edge);
+        }
+    }
+
+    std::sort(outtemp.begin(), outtemp.end());
+    std::vector<EdgeOrder>::iterator iter;
+
+    for (iter = outtemp.begin(); iter != outtemp.end(); iter++) {
+        EdgeOrder EO = *iter;
+        int count = 1;
+        while (++iter != outtemp.end() && *iter == EO) {
+            ++count;
+        }
+        --iter;
+        if (count == 1) {
+            border.push_back(*iter);
             ++border_count;
-        } else if (distance > 2) {
-            nonmanifold.push_back(*it);
+        } else if (count > 2) {
+            nonmanifold.push_back(*iter);
             ++nonmanifold_count;
         }
     }
     std::cout << "Border_Edges: " << border_count << " " << "NonManifold_Edges: " << nonmanifold_count << std::endl;
+}
+
+void Mesh::establishEdgeinfo() {
+
+    std::cout << "Establishing Edge informations " << std::endl;
+
+    for(auto it = allTriangles.begin(); it != allTriangles.end(); it++) {
+        Triangle* triangle(*it);
+        for (int i=0; i<3; i++) {
+            EdgeOrder Ed = triangle->getEO(i);
+            std::pair<MMET, MMET> triangle_set = mmedgeTotriangles.equal_range(Ed);
+            unsigned int distance = std::distance(triangle_set.first, triangle_set.second);
+            EdgeOrder* pEdge = new EdgeOrder(Ed.p0,Ed.p1);
+            if(distance == 1) {
+                pEdge->status=EdgeStatus::Border;
+                triangle->setEdge(pEdge,i);
+            } else if (distance == 2) {
+                pEdge->status=EdgeStatus::Manifold;
+                triangle->setEdge(pEdge,i);
+            }else if (distance > 2) {
+                pEdge->status=EdgeStatus::Non_Manifold;
+                triangle->setEdge(pEdge,i);
+            }
+        }
+    }
 }
 
 void Mesh::standAlone(std::vector<Triangle*> &tv) {
@@ -417,3 +462,4 @@ void Mesh::printContainersInfo() {
     std::cout << "size of edge to triangle Mmap " << mmedgeTotriangles.size() << std::endl;
 
 }
+

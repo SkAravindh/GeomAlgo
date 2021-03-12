@@ -48,7 +48,7 @@ private:
     //track edges
     std::set<EdgeOrder> childEdgesInside;
     std::set<EdgeOrder> childEdgesOutside;
-    bool enablechildoutside = false;
+    bool enablechildoutside = true;
     //Iterators
     typedef std::set<Triangle*>::iterator ST_Itr;
     typedef std::set<EdgeOrder>::iterator SE_Itr;
@@ -63,7 +63,7 @@ void DesiredEdge2_1Send::doRefine(int a) {
 
     std::vector<Triangle*> allTriangles;
     pMesh->getTriangles(allTriangles);
-
+    std::cout<<"allTriangles " <<allTriangles.size()<<std::endl;
     std::vector<EdgeOrder> b_edges;
     std::vector<EdgeOrder> nonmani_edges;
 
@@ -80,13 +80,13 @@ void DesiredEdge2_1Send::doRefine(int a) {
    // std::vector<Point*> bpoints;
   //  getBorderPoints(b_edges,bpoints);
   //  writePoints("points.vtk", bpoints);
-  //  std::vector<Triangle*> Ring;
-   // writeSTL("input.stl", Ring);
-  //  pMesh->getNeigTrianglesbyOrder(allTriangles[a],12,Ring);
-  //  writeSTL("input.stl"+std::to_string(a), Ring);
+    std::vector<Triangle*> Ring;
+  //  writeSTL("input"+std::to_string(a)+".stl", Ring);
+   pMesh->getNeigTrianglesbyOrder(allTriangles[a],10,Ring);
+    writeSTL("input"+std::to_string(a)+".stl", Ring);
     std::vector<EdgeOrder> EIT;
 
-    getEdgesofTrianlges(allTriangles,EIT);
+    getEdgesofTrianlges(Ring,EIT);
 //    if(checkForBorder(EIT)) {
 //        std::cout<< "Input patch has non manifold properties: Process Terminated " << std::endl;
 //        return;
@@ -97,21 +97,23 @@ void DesiredEdge2_1Send::doRefine(int a) {
     if(enablechildoutside) {
         std::cout << "Outside edges has been enabled " << std::endl;
     }
-    for(int i=0; i<2; i++) {
+    for(int i=0; i<3; i++) {
+        int count = 0;
         std::cout<< "Iteration: " <<i <<" "<<"Edges_to_split "<<edgesToRefine.size()<< std::endl;
         for(SE_Itr itr = edgesToRefine.begin(); itr != edgesToRefine.end(); itr++) {
-            bool re = avoidDupicate(allEdges,*itr);
-            if(re) continue;
+
+           // bool re = avoidDupicate(allEdges,*itr);
+            //if(re) continue;
             SE_Itr it = visited.find(*itr);
             if(it != visited.end()) continue;
             if(border_Edges.find(*itr) != border_Edges.end()) continue;
 
-            if(nonManifold_Edges.find(*itr) != nonManifold_Edges.end()) {
+          //  if(nonManifold_Edges.find(*itr) != nonManifold_Edges.end()) {
               //  std::cout<<"non mani " << std::endl;
-                continue;
-            }
+            //    continue;
+           // }
             double current_edge_length = itr->getlength();
-            if (current_edge_length > (4.0 / 3.6) *3) {
+            if (current_edge_length > (4.0 / 3.6) *0.8) {
                 split(*itr);
             }
         }
@@ -141,6 +143,7 @@ void DesiredEdge2_1Send::split(const EdgeOrder &ed) {
 //    if(sharing_triangle.size() > 2) {
 //        return;
 //    }
+
     if (sharing_triangle.size() != 2) {
         if(sharing_triangle.size() == 1 && isExist(border_Edges,ed)) {
             visited_border_Edges.insert(ed);
@@ -168,16 +171,32 @@ void DesiredEdge2_1Send::split(const EdgeOrder &ed) {
         }
         else if (re == HasCommonLE::not_same) {
 
-            if(isExist(nonManifold_Edges,current_neigh_triangle_longED)) {
+         /*   if(isExist(nonManifold_Edges,current_neigh_triangle_longED)) {
             //    std::cout << "non mani at split  " << std::endl;
                 splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,true);
-            }
-            else if (isExist(border_Edges, current_neigh_triangle_longED)) {
-                splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,true);
+            }*/
+            if (isExist(border_Edges, current_neigh_triangle_longED)) {
+                splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,true); // mid--> fa to true
             } else {
                 splitIntoThree(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, true,true);
             }
+
+          /*  std::vector<Triangle*> adj_tri;
+            pMesh->getAdjustenNeigh_1(current_neigh_triangle_longED, adj_tri);
+            int adj_size = adj_tri.size();
+            if(adj_size > 2) {
+                splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,true);
+            }
+            else if(adj_size == 2) {
+                splitIntoThree(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, true,true);
+            } else if (false) {
+                if (adj_size == 1) {
+                    splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,true);
+                }
+            } */
         }
+
+
     }
 }
 
@@ -191,15 +210,32 @@ void DesiredEdge2_1Send::fun(const EdgeOrder &ed, std::vector<Triangle*> &sharin
         if (re == HasCommonLE::same) {
             splitIntoTwo(ed, nullptr,current_neigh_triangle_longED,current_neigh_triangle,true, false);
         } else if (re == HasCommonLE::not_same) {
-            if(isExist(nonManifold_Edges,current_neigh_triangle_longED)) {
+
+
+        /*   if(isExist(nonManifold_Edges,current_neigh_triangle_longED)) {
                 std::cout << "non mani at fun  " << std::endl;
                 splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,true);
-            }
-             else if (isExist(border_Edges, current_neigh_triangle_longED)) {
-                splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,false); //chaged true to false---> flag
-            } else {
+            }*/
+            if (isExist(border_Edges, current_neigh_triangle_longED)) {
+               splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,false); //chaged true to false---> flag
+           }
+            else {
+               splitIntoThree(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, true,false);
+           }
+
+
+          /*  std::vector<Triangle*> adj_tri;
+            pMesh->getAdjustenNeigh_1(current_neigh_triangle_longED, adj_tri);
+            int adj_size = adj_tri.size();
+            if (adj_size >2) {
+                splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,true);
+            }else if(adj_size == 2) {
                 splitIntoThree(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, true,false);
-            }
+            } else if (false) {
+                if (adj_size == 1) {
+                    splitIntoTwo(ed, nullptr, current_neigh_triangle_longED, current_neigh_triangle, false,false);
+                }
+            } */
         }
     }
 }
@@ -224,14 +260,14 @@ void DesiredEdge2_1Send::splitIntoTwo(const EdgeOrder &currLongEdge, Triangle *c
     EdgeOrder ed_3(midpoint,NeighT_peakvertex);
     EdgeOrder ed_4(LeftVertex,NeighT_peakvertex);
     EdgeOrder ed_5(RightVertex,NeighT_peakvertex);
-    if(NeighLongest_edge == ed_4 ) {
-        nonManifold_Edges.insert(ed_4);
-    //    std::cout << "added ed_4 from split into 2 " << std::endl;
-    }
-    if(NeighLongest_edge == ed_5 ) {
-        nonManifold_Edges.insert(ed_5);
-     //   std::cout << "added ed_5 from split into 2 " << std::endl;
-    }
+//    if(NeighLongest_edge == ed_4 ) {
+//        nonManifold_Edges.insert(ed_4);
+//    //    std::cout << "added ed_4 from split into 2 " << std::endl;
+//    }
+//    if(NeighLongest_edge == ed_5 ) {
+//        nonManifold_Edges.insert(ed_5);
+//     //   std::cout << "added ed_5 from split into 2 " << std::endl;
+//    }
 
 
     if(!mid) {
@@ -277,8 +313,13 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
 
     std::vector<Triangle*> adjacent_triangles;
     pMesh->getAdjustenNeigh_1(NeighLongest_edge,adjacent_triangles);
-    if(adjacent_triangles.size() >2) {
-        std::cout<< "greater two recent " << std::endl;
+    int adsize = adjacent_triangles.size();
+    if(adsize == 0) {
+        return;
+    }
+    else if(adsize >2 ) {
+   //     std::cout<< "greater two recent " << std::endl;
+        splitIntoTwo(currLongEdge, currenT, NeighLongest_edge, Neigh, false,true);
         return;
     }
     Point* NeighT_LedgeMP     =  NeighLongest_edge.getMidPoint();
@@ -309,14 +350,15 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
     EdgeOrder n_ed1(NeighT_LedgeMP,LeftVertex);
     EdgeOrder n_ed2(NeighT_LedgeMP,RightVertex);
     EdgeOrder n_ed3(NeighT_LedgeMP,NeighT_peakVertex);
-    if (NeighLongest_edge == n_ed2) {
-      //  std::cout << "added ed_2 from split into 3 " << std::endl;
-        nonManifold_Edges.insert(n_ed2);
-    }
-    if (NeighLongest_edge == n_ed1) {
-       // std::cout << "added ed_2 from split into 3 " << std::endl;
-        nonManifold_Edges.insert(n_ed1);
-    }
+    EdgeOrder n_ed4(LeftVertex,NeighT_peakVertex);
+//    if (NeighLongest_edge == n_ed2) {
+//      //  std::cout << "added ed_2 from split into 3 " << std::endl;
+//        nonManifold_Edges.insert(n_ed2);
+//    }
+//    if (NeighLongest_edge == n_ed1) {
+//       // std::cout << "added ed_2 from split into 3 " << std::endl;
+//        nonManifold_Edges.insert(n_ed1);
+//    }
     if(!mid) {
         border_Edges.insert(EdgeOrder(CurrentT_LedgeMP, currLongEdge.p0));
         border_Edges.insert(EdgeOrder(CurrentT_LedgeMP, currLongEdge.p1));
@@ -327,12 +369,14 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
         childEdgesInside.insert(n_ed1);
         childEdgesInside.insert(n_ed2);
         childEdgesInside.insert(n_ed3);
+        childEdgesInside.insert(n_ed4);
     }
     else if(isExist(childEdgesInside,NeighLongest_edge)) {
         childEdgesInside.erase(NeighLongest_edge);
         childEdgesInside.insert(n_ed1);
         childEdgesInside.insert(n_ed2);
         childEdgesInside.insert(n_ed3);
+        childEdgesInside.insert(n_ed4);
     }
     else if (enablechildoutside) {
       //  if(isExist(childEdgesOutside,NeighLongest_edge)) {
@@ -340,6 +384,7 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
             childEdgesOutside.insert(n_ed1);
             childEdgesOutside.insert(n_ed2);
             childEdgesOutside.insert(n_ed3);
+            childEdgesOutside.insert(n_ed4);
        // }
     }
 
@@ -379,15 +424,28 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
         splitIntoTwo(NeighLongest_edge,Neigh,second_NeighT_Ledge,second_direct_NeighT ,true,true);
     }
     else if (re == HasCommonLE::not_same) {
-        if(isExist(nonManifold_Edges,second_NeighT_Ledge)) {
+
+    /*   if(isExist(nonManifold_Edges,second_NeighT_Ledge)) {
       //      std::cout << "non mani at split 3 " << std::endl;
             splitIntoTwo(NeighLongest_edge, Neigh, second_NeighT_Ledge, second_direct_NeighT, false, true);
-        }
-        else if (isExist(border_Edges, second_NeighT_Ledge)) {
-            splitIntoTwo(NeighLongest_edge, Neigh, second_NeighT_Ledge, second_direct_NeighT, false, true);
+        }*/
+         if (isExist(border_Edges, second_NeighT_Ledge)) {
+            splitIntoTwo(NeighLongest_edge, Neigh, second_NeighT_Ledge, second_direct_NeighT, false, true); //chaged false to true---> flag
         } else {
             splitIntoThree(NeighLongest_edge, Neigh, second_NeighT_Ledge, second_direct_NeighT, true, true);
         }
+      /*  std::vector<Triangle*> adj_tri;
+        pMesh->getAdjustenNeigh_1(second_NeighT_Ledge, adj_tri);
+        int adj_size = adj_tri.size();
+        if (adj_size >2) {
+            splitIntoTwo(NeighLongest_edge, Neigh, second_NeighT_Ledge, second_direct_NeighT, false, true);
+        }else if(adj_size == 2) {
+            splitIntoThree(NeighLongest_edge, Neigh, second_NeighT_Ledge, second_direct_NeighT, true, true);
+        } else if (false) {
+            if (adj_size == 1) {
+                splitIntoTwo(NeighLongest_edge, Neigh, second_NeighT_Ledge, second_direct_NeighT, false, true);
+            }
+        } */
     }
 
 }
