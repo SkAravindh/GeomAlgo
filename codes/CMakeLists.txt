@@ -36,6 +36,7 @@ set (Algorithm_header
     Algorithms/LaplacianSmoothing.h
     Algorithms/AdaptiveRefinement_EdgeBased.h
     Algorithms/SelectiveRefinement.h
+    Algorithms/HoleDetection.h
     )
     
 set (Algorithm_Source
@@ -43,6 +44,7 @@ set (Algorithm_Source
     Algorithms/LaplacianSmoothing.cpp
     Algorithms/AdaptiveRefinement_EdgeBased.cpp
     Algorithms/SelectiveRefinement.cpp
+    Algorithms/HoleDetection.cpp
     Algorithms/SelectiveRefinement_Version2.cpp
     )
     
@@ -50,10 +52,18 @@ set (samples
    # verification/adaptdesire_version2.cpp
     verification/adaptdesire_version2_Send.cpp
     verification/adaptdesire_version2_1_Send.cpp
+     )
      
-    )
+set (Openmesh_Include  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/Openmesh/headers)
+set (Openmesh_Binaries ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/Openmesh/lib)
+include_directories(${Openmesh_Include})
+set (OpenMesh_lib   ${Openmesh_Binaries}/libOpenMeshTools.so
+                    ${Openmesh_Binaries}/libOpenMeshTools.so.9.0
+                    ${Openmesh_Binaries}/libOpenMeshCore.so
+                    ${Openmesh_Binaries}/libOpenMeshCore.so.9.0
+        )
     
-add_library(Algos STATIC ${samples} ${Algorithm_header} ${Algorithm_Source})
+add_library(Algos STATIC ${samples} ${Algorithm_header} ${Algorithm_Source} )
 
 add_library(Geom_Algo STATIC ${Hpp} ${Cpp} )
 
@@ -62,6 +72,7 @@ add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME}
                         Geom_Algo
                         Algos
+                        ${OpenMesh_lib}
                         )
                         
 #target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR}) ${PROJECT_BINARY_DIR}--> path to the build directory
