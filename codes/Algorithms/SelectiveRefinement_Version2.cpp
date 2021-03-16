@@ -258,18 +258,30 @@ void SelectiveRefinement_2::splitIntoTwo(const EdgeOrder &currLongEdge, Triangle
 
 void SelectiveRefinement_2::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle* currenT, const EdgeOrder &NeighLongest_edge, Triangle *Neigh,bool flag,bool mid) {
 
-    if(hasmanifold) {
-        std::vector<Triangle *> adjacent_triangles;
-        pMesh->getAdjustenNeigh_1(NeighLongest_edge, adjacent_triangles);
-        int adsize = adjacent_triangles.size();
+    Triangle* second_direct_NeighT ;
+    EdgeOrder second_NeighT_Ledge;
 
-        if (adsize == 0) {
-            return;
-        } else if (adsize > 2) {
-            splitIntoTwo(currLongEdge, currenT, NeighLongest_edge, Neigh, false, true);
-            return;
+    std::vector<Triangle *> adjacent_triangles;
+    pMesh->getAdjustenNeigh_1(NeighLongest_edge, adjacent_triangles);
+    int adsize = adjacent_triangles.size();
+    if (adsize == 0) {
+        return;
+    } else if (adsize > 2) {
+        splitIntoTwo(currLongEdge, currenT, NeighLongest_edge, Neigh, false, true);
+        return;
+    }else{
+        for(auto ele : adjacent_triangles) {
+            if (*ele == *Neigh ) continue;
+            second_direct_NeighT=ele;
         }
+        int nT_LedgeID     = second_direct_NeighT->getLongestEdgeID();
+        EdgeOrder nT_Ledge = second_direct_NeighT->getEO(nT_LedgeID);
+        second_NeighT_Ledge         = nT_Ledge;
     }
+
+
+
+    //getNeighTriandLedge(NeighLongest_edge,Neigh,second_direct_NeighT,second_NeighT_Ledge);
 
     Point* NeighT_LedgeMP     =  NeighLongest_edge.getMidPoint();
     Point* CurrentT_LedgeMP   =  currLongEdge.getMidPoint();
@@ -355,10 +367,10 @@ void SelectiveRefinement_2::splitIntoThree(const EdgeOrder &currLongEdge,  Trian
         deleteInfoFromDS(currenT);
     }
 
-    Triangle* second_direct_NeighT ;
-    EdgeOrder second_NeighT_Ledge;
-
-    getNeighTriandLedge(NeighLongest_edge,Neigh,second_direct_NeighT,second_NeighT_Ledge);
+//    Triangle* second_direct_NeighT ;
+//    EdgeOrder second_NeighT_Ledge;
+//
+//    getNeighTriandLedge(NeighLongest_edge,Neigh,second_direct_NeighT,second_NeighT_Ledge);
 
     HasCommonLE re = hassameedges(NeighLongest_edge,second_NeighT_Ledge);
 
