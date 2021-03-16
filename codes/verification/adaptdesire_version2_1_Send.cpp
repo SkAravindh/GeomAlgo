@@ -81,9 +81,9 @@ void DesiredEdge2_1Send::doRefine(int a) {
   //  getBorderPoints(b_edges,bpoints);
   //  writePoints("points.vtk", bpoints);
     std::vector<Triangle*> Ring;
-  //  writeSTL("input"+std::to_string(a)+".stl", Ring);
-   pMesh->getNeigTrianglesbyOrder(allTriangles[a],10,Ring);
     writeSTL("input"+std::to_string(a)+".stl", Ring);
+   pMesh->getNeigTrianglesbyOrder(allTriangles[a],15,Ring);
+ //   writeSTL("input"+std::to_string(a)+".stl", Ring);
     std::vector<EdgeOrder> EIT;
 
     getEdgesofTrianlges(Ring,EIT);
@@ -97,7 +97,7 @@ void DesiredEdge2_1Send::doRefine(int a) {
     if(enablechildoutside) {
         std::cout << "Outside edges has been enabled " << std::endl;
     }
-    for(int i=0; i<3; i++) {
+    for(int i=0; i<2; i++) {
         int count = 0;
         std::cout<< "Iteration: " <<i <<" "<<"Edges_to_split "<<edgesToRefine.size()<< std::endl;
         for(SE_Itr itr = edgesToRefine.begin(); itr != edgesToRefine.end(); itr++) {
@@ -113,7 +113,7 @@ void DesiredEdge2_1Send::doRefine(int a) {
             //    continue;
            // }
             double current_edge_length = itr->getlength();
-            if (current_edge_length > (4.0 / 3.6) *0.8) {
+            if (current_edge_length > (4.0 / 3.6) *0.01) {
                 split(*itr);
             }
         }
@@ -312,6 +312,9 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
 
 
     std::vector<Triangle*> adjacent_triangles;
+    Triangle* second_direct_NeighT ;
+    EdgeOrder second_NeighT_Ledge;
+
     pMesh->getAdjustenNeigh_1(NeighLongest_edge,adjacent_triangles);
     int adsize = adjacent_triangles.size();
     if(adsize == 0) {
@@ -321,7 +324,17 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
    //     std::cout<< "greater two recent " << std::endl;
         splitIntoTwo(currLongEdge, currenT, NeighLongest_edge, Neigh, false,true);
         return;
+    }else{
+        for(auto ele : adjacent_triangles) {
+            if (*ele == *Neigh ) continue;
+            second_direct_NeighT=ele;
+        }
+        int nT_LedgeID     = second_direct_NeighT->getLongestEdgeID();
+        EdgeOrder nT_Ledge = second_direct_NeighT->getEO(nT_LedgeID);
+        second_NeighT_Ledge         = nT_Ledge;
     }
+
+
     Point* NeighT_LedgeMP     =  NeighLongest_edge.getMidPoint();
     Point* CurrentT_LedgeMP   =  currLongEdge.getMidPoint();
     int NeighT_LedgeID        =  Neigh->getLongestEdgeID();
@@ -412,11 +425,11 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
     if(currenT != nullptr) {
         deleteInfoFromDS(currenT);
     }
+//    Triangle* second_direct_NeighT ;
+//    EdgeOrder second_NeighT_Ledge;
 
-    Triangle* second_direct_NeighT ;
-    EdgeOrder second_NeighT_Ledge;
 
-    getNeighTriandLedge(NeighLongest_edge,Neigh,second_direct_NeighT,second_NeighT_Ledge);
+   // getNeighTriandLedge(NeighLongest_edge,Neigh,second_direct_NeighT,second_NeighT_Ledge);
 
     HasCommonLE re = hassameedges(NeighLongest_edge,second_NeighT_Ledge);
 

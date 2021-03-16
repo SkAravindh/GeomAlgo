@@ -7,7 +7,9 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
-#include <unordered_map>
+
+#include "Algorithms/HoleDetection.h"
+
 
 //#include "verification/adaptdesire_version2.cpp"
 //#include "verification/adaptdesire_version2_Send.cpp"
@@ -20,9 +22,11 @@
 
 
 int main() {
-   //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+ //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
 
-
+    HoleDetection obj(filename);
+    obj.computeHoles();
       // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/completecar.stl";
   //  std::string filename="/home/aravindhkumar.kalimuthu/Downloads/testing_stls/patch.stl";
 
@@ -31,7 +35,7 @@ int main() {
 
 
     //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/bpillar.stl";
-    std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/BMW.stl";
+   // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/BMW.stl";
     //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/build/codes/reout1.stl";
 
 //    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/PipeTShape_1.stl";
@@ -44,13 +48,12 @@ int main() {
 
 
 
-    std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
+   // std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
 
-
-  //  DesiredEdge2_1Send obj(pMesh);
-  //  obj.doRefine(0);
- //   obj.doRefine(2000);
-    //  pMesh->writeMeshSTL("reout1.stl");
+    /*DesiredEdge2_1Send obj(pMesh);
+    obj.doRefine(0);
+    obj.doRefine(2000);
+      pMesh->writeMeshSTL("reout1.stl");*/
  //   obj.doRefine(4000);
 //    std::vector<Triangle*> alltri;
 //    std::vector<EdgeOrder> alledges;
