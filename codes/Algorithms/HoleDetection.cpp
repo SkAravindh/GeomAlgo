@@ -197,6 +197,7 @@ void HoleDetection::createLoop(std::set<HalfedgeHandle> &possible_edges_1) {
         ++count;
         MyMesh::HalfedgeHandle intihe = *he_dummy.begin();
         Looping* obj = new Looping;
+        loops.push_back(obj);
         obj->addEdge(intihe);
         he_dummy.erase(intihe);
         MyMesh::HalfedgeHandle currhe = intihe;

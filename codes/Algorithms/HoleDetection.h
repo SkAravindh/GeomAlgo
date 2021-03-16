@@ -35,12 +35,13 @@ public:
     double calculateArea(std::vector<VertexHandle> &vertex_ids);
     void removeDuplicates(std::vector<EdgeHandle> &possible_edges_1);
     bool getNextDuplicateEdge(VertexHandle &curent, EdgeHandle &Initial, VertexHandle &next_vertex, EdgeHandle &next_edge,std::multimap<VertexHandle,EdgeHandle> &vertex_to_Edge);
-    void createLoop(std::set<HalfedgeHandle> &possible_edges_1);
-    bool getNextHE(HalfedgeHandle &curr_he, HalfedgeHandle &next_he, std::multimap<VertexHandle,HalfedgeHandle> &vertex_to_edge);
+    //void createLoop(std::set<HalfedgeHandle> &possible_edges_1);
+  //  bool getNextHE(HalfedgeHandle &curr_he, HalfedgeHandle &next_he, std::multimap<VertexHandle,HalfedgeHandle> &vertex_to_edge);
 
 private:
     MyMesh mesh;
     std::set<EdgeHandle> duplicateedges;
+    std::vector<Looping*> loops;
 };
 
 class Looping {
