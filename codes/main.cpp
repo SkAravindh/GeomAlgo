@@ -8,12 +8,12 @@
 #include "Geom_Support.h"
 #include "Writedata.h"
 
-#include "Algorithms/HoleDetection.h"
+//#include "Algorithms/HoleDetection.h"
 
 
 //#include "verification/adaptdesire_version2.cpp"
 //#include "verification/adaptdesire_version2_Send.cpp"
-//#include "verification/adaptdesire_version2_1_Send.cpp"
+#include "verification/adaptdesire_version2_1_Send.cpp"
 //#include "verification/looping.cpp"
 
 
@@ -25,8 +25,7 @@ int main() {
  //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
     std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
 
-    HoleDetection obj(filename);
-    obj.computeHoles();
+
       // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/completecar.stl";
   //  std::string filename="/home/aravindhkumar.kalimuthu/Downloads/testing_stls/patch.stl";
 
