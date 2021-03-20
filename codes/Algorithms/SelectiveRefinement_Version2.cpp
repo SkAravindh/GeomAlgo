@@ -26,7 +26,7 @@ public:
     void splitIntoThree(const EdgeOrder &currLongEdge,  Triangle* currenT, const EdgeOrder &NeighLongest_edge, Triangle *Neigh,bool flag,bool mid);
     void deleteInfoFromDS(Triangle *T);
     void upDateDS(Triangle *T);
-    void getNeighTriandLedge(const EdgeOrder &ed, const Triangle *CT, Triangle* &Neigh, EdgeOrder &NeighLedge);
+   // void getNeighTriandLedge(const EdgeOrder &ed, const Triangle *CT, Triangle* &Neigh, EdgeOrder &NeighLedge);
     void checkNormalOrientation(Triangle* t);
     void flipNormal(Triangle* t);
     void defineSpliTyp(const EdgeOrder &ED, std::vector<Triangle*> &sharing_tri);
@@ -266,7 +266,7 @@ void SelectiveRefinement_2::splitIntoThree(const EdgeOrder &currLongEdge,  Trian
     int adsize = adjacent_triangles.size();
     if (adsize == 0) {
         return;
-    } else if (adsize > 2) {
+    } else if (adsize > 2 || adsize==1)  {
         splitIntoTwo(currLongEdge, currenT, NeighLongest_edge, Neigh, false, true);
         return;
     }else{
@@ -387,7 +387,7 @@ void SelectiveRefinement_2::splitIntoThree(const EdgeOrder &currLongEdge,  Trian
 
 }
 
-void SelectiveRefinement_2::getNeighTriandLedge(const EdgeOrder &ed, const Triangle *CT, Triangle* &Neigh, EdgeOrder &NeighLedge) {
+/*void SelectiveRefinement_2::getNeighTriandLedge(const EdgeOrder &ed, const Triangle *CT, Triangle* &Neigh, EdgeOrder &NeighLedge) {
 
     std::vector<Triangle*> adjacent_triangles;
     pMesh->getAdjustenNeigh_1(ed,adjacent_triangles);
@@ -409,7 +409,7 @@ void SelectiveRefinement_2::getNeighTriandLedge(const EdgeOrder &ed, const Trian
     EdgeOrder nT_Ledge = Neigh->getEO(nT_LedgeID);
     NeighLedge         = nT_Ledge;
 
-}
+}*/
 
 HasCommonLE SelectiveRefinement_2::hassameedges(const EdgeOrder &ed1,const EdgeOrder &ed2) {
 
