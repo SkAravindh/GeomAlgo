@@ -4,6 +4,14 @@
 #include "Vector_3.h"
 //#include "Geom_Support.h"
 
+enum EdgeStatus {
+    Manifold,
+    Border,
+    Non_Manifold,
+    None
+};
+
+
 typedef Vector_3<double> Vector3;
 
 class EdgeOrder {
@@ -20,11 +28,15 @@ public:
 public:
     Point *p0;
     Point *p1;
+    EdgeStatus status= EdgeStatus::None;
+public:
+
 
     friend std::ostream & operator << (std::ostream & out, const EdgeOrder &rhs) {
         out<<"OrderEdge "<<"P0 "<< *rhs.p0 <<" "<<"P1 "<< *rhs.p1 << " ";
         return out;
     }
+
 
 };
 
@@ -33,6 +45,12 @@ struct CompareEdgeOrder{
         if(*(lhs->p0) < *(rhs->p0)) return true;
         if(*(lhs->p0) > *(rhs->p0)) return false;
         return (*(lhs->p1) < *(rhs->p1));
+    }
+};
+
+struct CompareEqual{
+    bool operator() (const EdgeOrder *lhs, const EdgeOrder *rhs)const {
+        return ( (*lhs->p0 == *rhs->p0) && (*lhs->p1 == *rhs->p1) );
     }
 };
 #endif

@@ -23,6 +23,7 @@ public:
     Point* getEdgeMidPoint(int i) const;
     Point* getCentroid() const;
     EdgeOrder getEO(int i) const;
+    EdgeOrder* getEdge(int i) const;
     Edge getEd(int i) const;
     Vector3 getNormalVector() const;
     Triangle* getNeigh(int i);
@@ -30,14 +31,16 @@ public:
     bool haschild();
     int getVertexID(Point* p);
     int getTriangleID(Triangle* t);
-    int getLongestEdgeID()  ;
-    int getPeakVertexID(const EdgeOrder &c_ed);
+    int getLongestEdgeID();
+    int getShortestEdgeID();
+    int getPeakVertexID(const EdgeOrder& c_ed);
     int getChildSize();
+    void setEdge(EdgeOrder* ed, unsigned int id);
     void setNeigh(int i, Triangle* t);
     void addChild(Triangle* t);
     void clearVchild();
     void getChildren(std::vector<Triangle*> &vchild);
-    void setNewVertex(Point*p , int idx);
+    void setNewVertex(Point*p , unsigned int idx);
 
     bool operator == (const Triangle &rhs) const;
     bool operator != (const Triangle &rhs) const;
@@ -49,6 +52,7 @@ private:
 
     Point* corners[3];
     Triangle* neigb[3];
+    EdgeOrder* edges[3];
     std::vector<Triangle*> vchildren;
     Mesh *powner;
     Triangle* parentT=this;

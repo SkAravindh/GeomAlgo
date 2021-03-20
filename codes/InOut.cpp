@@ -31,6 +31,7 @@ std::shared_ptr<Mesh> InOutToMesh(std::string Filename, stl_reader::StlMesh<floa
            }
         }
     }
+ //   pmeshout->establishEdgeinfo();
 
     return pmeshout;
 }

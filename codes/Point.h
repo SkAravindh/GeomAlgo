@@ -29,12 +29,10 @@ private:
 
 };
 
-struct ComparePoint{
-
+struct ComparePoint {
     bool operator()(const Point* rhs, const Point* lhs) const {
         return *rhs < *lhs;
     }
 };
-
 
 #endif
