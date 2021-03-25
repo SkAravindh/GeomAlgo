@@ -85,7 +85,7 @@ bool brayCentric(const Triangle *t, Point *p) {
     Prj_p0+Prj_p1;
     Prj_p0+Prj_p2;
     Vector3 projection_point = Prj_p0;
-
+    //std::cout << "projection_point "<<projection_point<<std::endl;
     bool is_inside = ( (0 <= alpha) && (alpha <= 1) && (0 <= beta)  && (beta  <= 1) && (0 <= gamma) && (gamma <= 1) );
 
     return is_inside;
