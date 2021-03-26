@@ -13,8 +13,8 @@
 
 //#include "verification/adaptdesire_version2.cpp"
 //#include "verification/adaptdesire_version2_Send.cpp"
-#include "verification/adaptdesire_version2_1_Send.cpp"
-//#include "verification/looping.cpp"
+//#include "verification/adaptdesire_version2_1_Send.cpp"
+#include "Algorithms/HoleDetection.h"
 
 
 
@@ -23,19 +23,12 @@
 
 int main() {
  //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
+    //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
+    std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/unorderedmap/cmake-build-debug/masterMesh_HoleCreated.stl";
 
-    std::shared_ptr<Mesh> mesh(new Mesh);
-     Point* p0 = mesh->createVertex(5,0,1);
-     Point* p1 = mesh->createVertex(0,5,1);
-     Point* p2 = mesh->createVertex(0,0,1);
-     Point *p= new Point(2,2,2);
-     Triangle* tri = new Triangle(p0,p1,p2,&*mesh);
-     bool result = brayCentric(tri,p);
-     std::cout<< getOrthogonalProjectionVector(tri,p) << std::endl;
-     if (result) {
-         std::cout << "inside "<<" "<<getOrthogonalProjectionVector(tri,p) << std::endl;
-     }
+    HoleDetection obj(filename);
+    obj.computeHoles();
+
 
       // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/completecar.stl";
   //  std::string filename="/home/aravindhkumar.kalimuthu/Downloads/testing_stls/patch.stl";

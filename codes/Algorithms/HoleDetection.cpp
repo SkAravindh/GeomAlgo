@@ -69,19 +69,31 @@ void HoleDetection::computeHoles() {
             possible_edges.push_back(*edge_iter);
         }
     }
-    int count = 0;
+    
+    std::map<VertexHandle, bool> vertex_to_bool;
     std::vector<EdgeHandle> possible_edges_1;
-    for (auto iter = possible_edges.begin(); iter != possible_edges.end(); iter++) {
-        EdgeHandle Edge_ID(*iter);
-        VertexHandle to = mesh.to_vertex_handle(mesh.halfedge_handle(*iter, 0));
-        VertexHandle from = mesh.from_vertex_handle(mesh.halfedge_handle(*iter, 0));
-        double re = computeGaussianCurvature(to);
-        double re1 = computeGaussianCurvature(from);
-        if (re < 0 && re1 < 0) {
-            possible_edges_1.push_back(*iter);
-            ++count;
+    
+    for(MyMesh::VertexIter it = mesh.vertices_begin(); it != mesh.vertices_end(); it++) {
+        double re = computeGaussianCurvature(*it);
+        if(re <0) {
+            vertex_to_bool[*it] = true;
+        }
+        else {
+            vertex_to_bool[*it] = false;
         }
     }
+    
+    for (auto iter = possible_edges.begin(); iter != possible_edges.end(); iter++) {
+        
+        VertexHandle to    = mesh.to_vertex_handle(mesh.halfedge_handle(*iter,0));
+        VertexHandle from  = mesh.from_vertex_handle(mesh.halfedge_handle(*iter,0));
+        bool v1 = vertex_to_bool[to];
+        bool v2 = vertex_to_bool[from];
+        if(v1&&v2) {
+            possible_edges_1.push_back(*iter);
+        }
+    }
+
     removeDuplicates(possible_edges_1);
 
     std::vector<point> allpoints;
@@ -92,7 +104,7 @@ void HoleDetection::computeHoles() {
         allpoints.push_back(p1);
         allpoints.push_back(p2);
     }
-    writePoints("feature_final.vtk",allpoints);
+    writePoints("feature_vertices.vtk",allpoints);
 }
 
 void HoleDetection::removeDuplicates(std::vector<EdgeHandle> &possible_edges_1) {
@@ -124,8 +136,8 @@ void HoleDetection::removeDuplicates(std::vector<EdgeHandle> &possible_edges_1) 
         if(stopcriteria == 0) {
             break;
         }
-        std::set<VertexHandle> dummy_vertex(vertexwith_oneedge.begin(), vertexwith_oneedge.end());
 
+        std::set<VertexHandle> dummy_vertex(vertexwith_oneedge.begin(), vertexwith_oneedge.end());
         while (!dummy_vertex.empty()) {
 
             VertexHandle Initial_v1 = *dummy_vertex.begin();
@@ -162,7 +174,6 @@ void HoleDetection::removeDuplicates(std::vector<EdgeHandle> &possible_edges_1) 
             }
         }
         duplicateedges.clear();
-
     }
 
 }
