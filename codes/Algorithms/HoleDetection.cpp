@@ -97,61 +97,72 @@ void HoleDetection::computeHoles() {
 
 void HoleDetection::removeDuplicates(std::vector<EdgeHandle> &possible_edges_1) {
 
-    std::multimap<VertexHandle,EdgeHandle> vertex_to_Edge;
-    std::set<VertexHandle> allvertex;
-    for(auto it = possible_edges_1.begin(); it != possible_edges_1.end(); it++) {
-        VertexHandle to   = mesh.to_vertex_handle(mesh.halfedge_handle(*it,0));
-        VertexHandle from = mesh.from_vertex_handle(mesh.halfedge_handle(*it,0));
-        allvertex.insert(to);
-        allvertex.insert(from);
-        vertex_to_Edge.insert(std::make_pair(to,*it));
-        vertex_to_Edge.insert(std::make_pair(from,*it));
-    }
-
-    typedef std::multimap<VertexHandle,EdgeHandle>::iterator MMIT;
-    std::set<VertexHandle> vertexwith_oneedge;
-    for(auto it = allvertex.begin(); it != allvertex.end(); it++) {
-        std::pair<MMIT,MMIT> sharingedges = vertex_to_Edge.equal_range(*it);
-        int size = std::distance(sharingedges.first,sharingedges.second);
-        if(size == 1 ) {
-            vertexwith_oneedge.insert(*it);
+    bool stop = true;
+    while(stop) {
+        std::multimap<VertexHandle, EdgeHandle> vertex_to_Edge;
+        std::set<VertexHandle> allvertex;
+        for (auto it = possible_edges_1.begin(); it != possible_edges_1.end(); it++) {
+            VertexHandle to = mesh.to_vertex_handle(mesh.halfedge_handle(*it, 0));
+            VertexHandle from = mesh.from_vertex_handle(mesh.halfedge_handle(*it, 0));
+            allvertex.insert(to);
+            allvertex.insert(from);
+            vertex_to_Edge.insert(std::make_pair(to, *it));
+            vertex_to_Edge.insert(std::make_pair(from, *it));
         }
-    }
-    std::set<VertexHandle> dummy_vertex(vertexwith_oneedge.begin(),vertexwith_oneedge.end());
 
-    while(!dummy_vertex.empty()) {
-
-        VertexHandle Initial_v1 = *dummy_vertex.begin();
-        EdgeHandle Initial_edge;
-        VertexHandle Initial_v2;
-        dummy_vertex.erase(Initial_v1);
-        std::pair<MMIT,MMIT> edge = vertex_to_Edge.equal_range(Initial_v1);
-        int dis = std::distance(edge.first,edge.second);
-        if(dis != 1) continue;
-        for(auto iter = edge.first; iter != edge.second; iter++) {
-            Initial_edge = iter->second;
-        }
-        getNextVertexHandle(mesh, Initial_edge, Initial_v1,Initial_v2);
-        duplicateedges.insert(Initial_edge);
-        VertexHandle currentvertex = Initial_v2;
-        EdgeHandle currentedge = Initial_edge;
-        VertexHandle nextvertex;
-        EdgeHandle nextedge;
-        while (getNextDuplicateEdge(currentvertex, currentedge, nextvertex,nextedge,vertex_to_Edge)) {
-            dummy_vertex.erase(nextvertex);
-            currentvertex = nextvertex;
-            currentedge = nextedge;
-            duplicateedges.insert(nextedge);
-            if(nextedge == Initial_edge) {
-                break;
+        int stopcriteria = 0;
+        typedef std::multimap<VertexHandle, EdgeHandle>::iterator MMIT;
+        std::set<VertexHandle> vertexwith_oneedge;
+        for (auto it = allvertex.begin(); it != allvertex.end(); it++) {
+            std::pair<MMIT, MMIT> sharingedges = vertex_to_Edge.equal_range(*it);
+            int size = std::distance(sharingedges.first, sharingedges.second);
+            if (size == 1) {
+                vertexwith_oneedge.insert(*it);
+                ++stopcriteria;
             }
         }
-    }
-    for(auto ele : duplicateedges) {
-        std::vector<EdgeHandle>::iterator position = std::find(possible_edges_1.begin(), possible_edges_1.end(), ele);
-        if (position != possible_edges_1.end()) {
-            possible_edges_1.erase(position);
+        if(stopcriteria == 0) {
+            break;
         }
+        std::set<VertexHandle> dummy_vertex(vertexwith_oneedge.begin(), vertexwith_oneedge.end());
+
+        while (!dummy_vertex.empty()) {
+
+            VertexHandle Initial_v1 = *dummy_vertex.begin();
+            EdgeHandle Initial_edge;
+            VertexHandle Initial_v2;
+            dummy_vertex.erase(Initial_v1);
+            std::pair<MMIT, MMIT> edge = vertex_to_Edge.equal_range(Initial_v1);
+            int dis = std::distance(edge.first, edge.second);
+            if (dis != 1) continue;
+            for (auto iter = edge.first; iter != edge.second; iter++) {
+                Initial_edge = iter->second;
+            }
+            getNextVertexHandle(mesh, Initial_edge, Initial_v1, Initial_v2);
+            duplicateedges.insert(Initial_edge);
+            VertexHandle currentvertex = Initial_v2;
+            EdgeHandle currentedge = Initial_edge;
+            VertexHandle nextvertex;
+            EdgeHandle nextedge;
+            while (getNextDuplicateEdge(currentvertex, currentedge, nextvertex, nextedge, vertex_to_Edge)) {
+                dummy_vertex.erase(nextvertex);
+                currentvertex = nextvertex;
+                currentedge = nextedge;
+                duplicateedges.insert(nextedge);
+                if (nextedge == Initial_edge) {
+                    break;
+                }
+            }
+        }
+        for (auto ele : duplicateedges) {
+            std::vector<EdgeHandle>::iterator position = std::find(possible_edges_1.begin(), possible_edges_1.end(),
+                                                                   ele);
+            if (position != possible_edges_1.end()) {
+                possible_edges_1.erase(position);
+            }
+        }
+        duplicateedges.clear();
+
     }
 
 }

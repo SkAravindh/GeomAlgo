@@ -54,7 +54,8 @@ bool MTRayTriangleIntersection(vector3 rayOrigin, vector3 rayVector, Triangle *T
     }
 }
 
-bool RayTriangleIntersection(vector3 rayOrigin, vector3 rayVector, Triangle *T, vector3 & Intersecting_Point ){
+bool RayTriangleIntersection(vector3 rayOrigin, vector3 rayVector, Triangle *T, vector3 & Intersecting_Point ) {
+
     Ray camera;
     Plane_3 plane;
     camera.startpoint   = rayOrigin;
@@ -80,7 +81,7 @@ bool RayTriangleIntersection(vector3 rayOrigin, vector3 rayVector, Triangle *T, 
     const float EPSILON = 0.00001;
     double n_dot_d = dot(plane.normal, camera.rayDirection);
     // check for denominator zero.
-    if(abs(n_dot_d) < 0.00001){
+    if(abs(n_dot_d) < 0.00001) {
         return false; // which means ray parallel to plane.
     }
 
@@ -125,7 +126,7 @@ bool RayTriangleIntersection(vector3 rayOrigin, vector3 rayVector, Triangle *T, 
 
 }
 
-bool TriangleTriangleIntersection(Triangle *T1,Triangle *T2){
+bool TriangleTriangleIntersection(Triangle *T1,Triangle *T2) {
 
     const float EPSILON = 0.000001;
 
