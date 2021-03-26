@@ -140,13 +140,16 @@ void Mesh::getTriangles(std::vector<Triangle*> &TV) {
 void Mesh::getVertices(std::vector<Point*> &vp) {
 
     std::set<Point*> allpoints;
+   // std::vector<Point*> vecpoint;
     TV_it it;
     for(it = allTriangles.begin(); it != allTriangles.end(); it++) {
         for(int i=0; i<3; i++) {
             Point* p = (*it)->getCorners(i);
             allpoints.insert(p);
+       //     vecpoint.push_back(p);
         }
     }
+ //   std::cout<< "vecpoint " <<vecpoint.size() << std::endl;
     vp.assign(allpoints.begin(),allpoints.end());
 }
 

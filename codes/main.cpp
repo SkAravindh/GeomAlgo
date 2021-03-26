@@ -14,7 +14,7 @@
 //#include "verification/adaptdesire_version2.cpp"
 //#include "verification/adaptdesire_version2_Send.cpp"
 //#include "verification/adaptdesire_version2_1_Send.cpp"
-#include "Algorithms/HoleDetection.h"
+
 
 
 
@@ -22,12 +22,11 @@
 
 
 int main() {
- //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-    //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
-    std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/unorderedmap/cmake-build-debug/masterMesh_HoleCreated.stl";
+//   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
+    //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/unorderedmap/cmake-build-debug/masterMesh_HoleCreated.stl";
 
-    HoleDetection obj(filename);
-    obj.computeHoles();
+ //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Cube_3d_printing_sample.stl";
 
 
       // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/completecar.stl";
@@ -48,11 +47,21 @@ int main() {
      //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/reout.stl";
 
 
+//    storevertex obj;
+//    std::shared_ptr<Mesh> mesh(new Mesh);
+//     Point* p0 = mesh->createVertex(0,0,0);
+//     Point* p1 = mesh->createVertex(10,0,0);
+//     Point* p2 = mesh->createVertex(0,10,0);
+//    obj.add(p0,1);
+//    obj.add(p1,2);
+//    obj.add(p2,3);
+//
 
-
-
-   // std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
-
+    std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
+    std::vector<Point*> allpoint;
+    pMesh->getVertices(allpoint);
+    std::cout<< "allpoint " <<allpoint.size() << std::endl;
+    writeVTK("test.vtk", pMesh);
     /*DesiredEdge2_1Send obj(pMesh);
     obj.doRefine(0);
     obj.doRefine(2000);
