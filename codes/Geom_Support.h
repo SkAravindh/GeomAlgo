@@ -15,7 +15,7 @@ double getShortestDisPointToPlane( const Triangle *t, const Point *p) ;
 Vector3 getOrthogonalProjectionVector( const Triangle *t, const Point *p);
 int indexOrder_1(int n);
 int indexOrder_2(int n);
-bool brayCentric(const Triangle *t, Point *p);
+bool brayCentric(const Triangle *t, const Point *p, Vector3* projected_point);
 bool checkForHalfEdge(const Triangle *t1, const Triangle *t2);
 bool checkCommonVertex(const Triangle *t1, const Triangle *t2);
 void getedgesByOrder(const std::vector<Triangle* > &TV, const int &i, std::vector<EdgeOrder> &out);
@@ -29,6 +29,8 @@ bool getCommonEdge(Triangle *t1, Triangle *t2,EdgeOrder &oe );
 int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no, std::vector<int> &IDV );
 double getAngleBtwVectors(const Vector3 &v1, const Vector3 &v2);
 double getDistance(const Point* p0, const Point* p1);
+double getMinimumDistance(const Triangle* t, const Point* p);
+double segmentPointDistance(Vector3 v1 , Vector3 v2, Vector3 p);
 
 
 
