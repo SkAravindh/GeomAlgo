@@ -57,7 +57,7 @@ int indexOrder_2(int n) {
     return index[n];
 }
 
-bool brayCentric(const Triangle *t, Point *p) {
+bool brayCentric(const Triangle *t, const Point *p, Vector3* projected_point) {
 
     Point *p0 = t->getCorners(0);
     Point *p1 = t->getCorners(1);
@@ -84,8 +84,9 @@ bool brayCentric(const Triangle *t, Point *p) {
     Vector3 Prj_p2 = gamma*vertex2;
     Prj_p0+Prj_p1;
     Prj_p0+Prj_p2;
-    Vector3 projection_point = Prj_p0;
-    //std::cout << "projection_point "<<projection_point<<std::endl;
+    Vector3 projectedPoint = Prj_p0;
+    *projected_point = Prj_p0;
+    std::cout << "projectedPoint "<<projectedPoint<<std::endl;
     bool is_inside = ( (0 <= alpha) && (alpha <= 1) && (0 <= beta)  && (beta  <= 1) && (0 <= gamma) && (gamma <= 1) );
 
     return is_inside;
@@ -299,4 +300,55 @@ double getAngleBtwVectors(const Vector3 &v1, const Vector3 &v2) {
    // double degree = (angle * 180) / pi;   //converting radian to degree.
    // std::cout << "angle " << angle << std::endl;
     return angle; //return by radians
+}
+
+double getMinimumDistance(const Triangle* t, const Point* p) {
+
+    Vector3* prj_point = new Vector3 ();
+    if(brayCentric(t,p,prj_point)) {
+        Point* p0 = new Point(prj_point->x(),prj_point->y(),prj_point->z());
+        double dis = getDistance(p0,p);
+        return dis;
+    }
+    Vector3 point = Vector3(p->x(), p->y(), p->z());
+    double allDistance [3];
+    for(int i=0; i<3; i++) {
+        Point *p1 = t->getCorners(indexOrder_1(i));
+        Point *p2 = t->getCorners(indexOrder_2(i));
+        Vector3 v1 = Vector3(p1->x(), p1->y(), p1->z());
+        Vector3 v2 = Vector3(p2->x(), p2->y(), p2->z());
+        double distance = segmentPointDistance(v1, v2, point);
+      //  std::cout<<"i is "<<i<<"distance is " << distance << std::endl;
+        allDistance[i] =distance;
+    }
+    double dummy = DBL_MAX;
+    for(int i=0; i<3; i++){
+        if(allDistance[i] < dummy ) {
+            dummy = allDistance[i];
+        }
+    }
+    return dummy;
+}
+
+double segmentPointDistance(Vector3 start, Vector3 end, Vector3 p) {
+
+    Point* start_p1 = new Point(start.x(),start.y(),start.z());
+    Point* end_p2 = new Point(end.x(),end.y(),end.z());
+    Point* input_point = new Point(p.x(),p.y(),p.z());
+    Point* prj_point_dummy= nullptr;
+    Vector3 edge_v1v2 = end-start;
+    Vector3 edge_v1p  = p-start;
+    double distance = getDistance(start_p1,end_p2);
+    double is_on_segment = dot(edge_v1v2, edge_v1p)/(distance*distance);
+
+    if(is_on_segment < 0 ) {
+        prj_point_dummy= new Point(start.x(),start.y(),start.z());
+    }else if(is_on_segment > 0) {
+        prj_point_dummy= new Point(end.x(),end.y(),end.z());
+    }
+    else {
+       Vector3 prj_point = (start + is_on_segment*(edge_v1v2));
+        prj_point_dummy  = new Point(prj_point.x(),prj_point.y(),prj_point.z());
+    }
+    return getDistance(prj_point_dummy,input_point);
 }
