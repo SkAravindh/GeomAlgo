@@ -56,6 +56,7 @@ void Mesh::storeTriangleInfo(Triangle *T) {
     mmedgeTotriangles.insert(std::make_pair(T->getEO(1),T));
     mmedgeTotriangles.insert(std::make_pair(T->getEO(2),T));
 
+    T->isAlive = true;
 }
 
 void Mesh::getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv) {
@@ -444,7 +445,14 @@ void Mesh::standAlone(std::vector<Triangle*> &tv) {
 }
 
 void Mesh::writeMeshSTL(std::string filename) {
-    writeSTL(filename,allTriangles);
+    std::vector<Triangle*> outTri;
+    for(Triangle* T:allTriangles) {
+        if(T->isAlive) {
+            outTri.push_back(T);
+        }
+    }
+    std::cout<<"outTri " <<outTri.size()<< std::endl;
+    writeSTL(filename,outTri);
 }
 
 void Mesh::clear() {
