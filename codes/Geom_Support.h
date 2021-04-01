@@ -30,7 +30,7 @@ int getNonCommonPointsIDs(Triangle *t1, Triangle *t2, int Triangle_no, std::vect
 double getAngleBtwVectors(const Vector3 &v1, const Vector3 &v2);
 double getDistance(const Point* p0, const Point* p1);
 double getMinimumDistance(const Triangle* t, const Point* p);
-double segmentPointDistance(Vector3 v1 , Vector3 v2, Vector3 p);
+double segmentPointDistance(const Point *start, const Point* end, const Point* p);
 
 
 

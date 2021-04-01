@@ -58,7 +58,7 @@ int main() {
     Point *p= new Point(16,12,0);
      Triangle* tri = new Triangle(p0,p1,p2,&*mesh);
      Vector3* a = new Vector3();
-     getMinimumDistance(tri,p);
+    std::cout << getMinimumDistance(tri,p) << std::endl;
    /*  bool result = brayCentric(tri,p,a);
      std::cout<<"ortho " <<getOrthogonalProjectionVector(tri,p) << std::endl;
      if(result) {
