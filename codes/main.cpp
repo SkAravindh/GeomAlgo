@@ -13,7 +13,7 @@
 
 //#include "verification/adaptdesire_version2.cpp"
 //#include "verification/adaptdesire_version2_Send.cpp"
-//#include "verification/adaptdesire_version2_1_Send.cpp"
+#include "verification/adaptdesire_version2_1_Send.cpp"
 
 
 
@@ -22,15 +22,16 @@
 
 
 int main() {
-//   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+   //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
     //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
     //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/unorderedmap/cmake-build-debug/masterMesh_HoleCreated.stl";
-    std::string filename = "/home/aravindhkumar.kalimuthu/Codes/TetMesher/TetMesher_Ubuntu18.04_x86_64/Volute_2mm.stl";
+//    std::string filename = "/home/aravindhkumar.kalimuthu/Codes/TetMesher/TetMesher_Ubuntu18.04_x86_64/Volute_2mm.stl";
 
     //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Cube_3d_printing_sample.stl";
+    std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/BMW_vibration.stl";
 
 
-      // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/completecar.stl";
+    // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/completecar.stl";
   //  std::string filename="/home/aravindhkumar.kalimuthu/Downloads/testing_stls/patch.stl";
 
   //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/single_cube_holes_stl.stl";
@@ -46,30 +47,13 @@ int main() {
 
 
      //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/reout.stl";
-  //  std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
-        std::shared_ptr<Mesh> mesh(new Mesh);
-    /* Point* p0 = mesh->createVertex(2,4,2);
-     Point* p1 = mesh->createVertex(14,8,3);
-     Point* p2 = mesh->createVertex(7,14,3);
-     Point *p= new Point(10,10,2);*/
-    Point* p0 = mesh->createVertex(4,4,0);
-    Point* p1 = mesh->createVertex(16,8,0);
-    Point* p2 = mesh->createVertex(10,14,0);
-    Point *p= new Point(16,12,0);
-     Triangle* tri = new Triangle(p0,p1,p2,&*mesh);
-     Vector3* a = new Vector3();
-    std::cout << getMinimumDistance(tri,p) << std::endl;
-   /*  bool result = brayCentric(tri,p,a);
-     std::cout<<"ortho " <<getOrthogonalProjectionVector(tri,p) << std::endl;
-     if(result) {
-         std::cout<< "true " <<" "<<" "<< *a << std::endl;
+    std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
 
-     }*/
-   Vector3 v1(2,4,2);
-    Vector3 v2(14,8,3);
-    Vector3 vp(6,3,3);
-   // segmentPointDistance(v1,v2,vp);
+    DesiredEdge2_1Send obj(pMesh);
+       obj.doRefine(0);
 
+         pMesh->writeMeshSTL("reout1_new.stl");
+         pMesh->printContainersInfo();
 
    //std::cout<< "dis " <<   getMinimumDistance(tri,p) << std::endl;
     /* std::set<int> triID;
