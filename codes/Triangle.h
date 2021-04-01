@@ -47,7 +47,8 @@ public:
     bool operator < (const Triangle &rhs) const;
     friend std::ostream & operator<<(std::ostream &out, const Triangle &rhs);
 
-
+public:
+    bool isAlive ;
 private:
 
     Point* corners[3];

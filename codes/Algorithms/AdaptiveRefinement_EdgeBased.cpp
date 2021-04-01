@@ -195,7 +195,7 @@ void AdaptRefineED::deleteInfoFromDS(Triangle *T) {
 
     pMesh->delCertainEntryPT(T);
     pMesh->delCertainEntryET(T);
-    pMesh->delCertainTriInalltriangles(T);
+     T->isAlive = false;
     upDateDS(T);
     parents.insert(T);
 
@@ -206,9 +206,7 @@ void AdaptRefineED::upDateDS(Triangle *T) {
     std::vector<Triangle*> TV;
     T->getChildren(TV);
 
-    for (auto ele : TV) {
-     //   pMesh->establishNeighofTriangle(ele);
-    }
+
     pMesh->fillTriangleContainers(TV,alltri);
 
 }

@@ -48,7 +48,7 @@ private:
     //track edges
     std::set<EdgeOrder> childEdgesInside;
     std::set<EdgeOrder> childEdgesOutside;
-    bool enablechildoutside = true;
+    bool enablechildoutside = false;
     //Iterators
     typedef std::set<Triangle*>::iterator ST_Itr;
     typedef std::set<EdgeOrder>::iterator SE_Itr;
@@ -81,12 +81,12 @@ void DesiredEdge2_1Send::doRefine(int a) {
   //  getBorderPoints(b_edges,bpoints);
   //  writePoints("points.vtk", bpoints);
     std::vector<Triangle*> Ring;
-    writeSTL("input"+std::to_string(a)+".stl", Ring);
-   pMesh->getNeigTrianglesbyOrder(allTriangles[a],15,Ring);
+   // writeSTL("input"+std::to_string(a)+".stl", Ring);
+ //  pMesh->getNeigTrianglesbyOrder(allTriangles[a],15,Ring);
  //   writeSTL("input"+std::to_string(a)+".stl", Ring);
     std::vector<EdgeOrder> EIT;
 
-    getEdgesofTrianlges(Ring,EIT);
+    getEdgesofTrianlges(allTriangles,EIT);
 //    if(checkForBorder(EIT)) {
 //        std::cout<< "Input patch has non manifold properties: Process Terminated " << std::endl;
 //        return;
@@ -113,7 +113,7 @@ void DesiredEdge2_1Send::doRefine(int a) {
             //    continue;
            // }
             double current_edge_length = itr->getlength();
-            if (current_edge_length > (4.0 / 3.6) *0.01) {
+            if (current_edge_length > (4.0 / 3.6) *3) {
                 split(*itr);
             }
         }
@@ -320,7 +320,7 @@ void DesiredEdge2_1Send::splitIntoThree(const EdgeOrder &currLongEdge,  Triangle
     if(adsize == 0) {
         return;
     }
-    else if(adsize >2 ) {
+    else if(adsize >2 || adsize==1 ) {
    //     std::cout<< "greater two recent " << std::endl;
         splitIntoTwo(currLongEdge, currenT, NeighLongest_edge, Neigh, false,true);
         return;
@@ -528,13 +528,14 @@ void DesiredEdge2_1Send::deleteInfoFromDS(Triangle *T) {
 
     pMesh->delCertainEntryPT(T);
     pMesh->delCertainEntryET(T);
-    pMesh->delCertainTriInalltriangles(T);
+//    pMesh->delCertainTriInalltriangles(T);
 
     upDateDS(T);
 }
 
 void DesiredEdge2_1Send::upDateDS(Triangle *T) {
 
+    T->isAlive = false;
     std::vector<Triangle*> TV;
     T->getChildren(TV);
     pMesh->fillTriangleContainers(TV,alltri);
