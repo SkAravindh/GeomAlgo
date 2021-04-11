@@ -32,6 +32,7 @@ public:
     int getVertexID(Point* p);
     int getTriangleID(Triangle* t);
     int getLongestEdgeID();
+    EdgeOrder* getEO_pointer(int i);
     int getShortestEdgeID();
     int getPeakVertexID(const EdgeOrder& c_ed);
     int getChildSize();

@@ -7,6 +7,7 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
+#include "LoopEdges.cpp"
 
 //#include "Algorithms/HoleDetection.h"
 
@@ -17,25 +18,23 @@
 
 
 
-
-
-
-
 int main() {
-   //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+  // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+   // std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/Case3.stl";
+    std::string filename ="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/input_Geometry.stl";
     //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
     //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/unorderedmap/cmake-build-debug/masterMesh_HoleCreated.stl";
-//    std::string filename = "/home/aravindhkumar.kalimuthu/Codes/TetMesher/TetMesher_Ubuntu18.04_x86_64/Volute_2mm.stl";
+  //  std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/Volute_2mm.stl";
 
     //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Cube_3d_printing_sample.stl";
-    std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/BMW_vibration.stl";
+  //  std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/BMW_vibration.stl";
 
 
     // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/completecar.stl";
   //  std::string filename="/home/aravindhkumar.kalimuthu/Downloads/testing_stls/patch.stl";
 
   //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/single_cube_holes_stl.stl";
-  //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunnywithseveralholes.stl";
+ //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunnywithseveralholes.stl";
 
 
     //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/bpillar.stl";
@@ -49,36 +48,118 @@ int main() {
      //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/reout.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
 
-    DesiredEdge2_1Send obj(pMesh);
+
+
+
+
+std::vector<Point*> allp;
+pMesh->getVertices(allp);
+std::vector<Point*> nonmniverti;
+std::cout<<"calculation non mani verti and no of points "<<allp.size() << std::endl;
+int count=0;
+int count_nonmani=0;
+for(auto p : allp) {
+    std::cout<<"point id "<<count<< std::endl;
+    ++count;
+//    std::vector<Triangle*> ring;
+//    pMesh->getRingNeigbyOrder(p,1,ring);
+//    std::vector<EdgeOrder> edges;
+//    getedgesByOrder(ring,-1,edges);
+//    if(ring.size()==1) continue;
+//    InitilizeLoop lo;
+//    lo.createLoop(edges);
+//    if(lo.loopCount() != 1){
+//        nonmniverti.push_back(p);
+//    }
+bool re=   pMesh->isNon_Manifold_Vertices(p);
+    if(re){
+        ++count_nonmani;
+    }
+//    if(nonmniverti.size() > 5) {
+//        break;
+//    }
+}
+//pMesh->isNon_Manifold_Vertices(nullptr);
+//for(auto nonp: nonmniverti){
+//    std::cout<<"nonp " <<*nonp<<std::endl;
+//}
+std::cout<<"nonmniverti "<<nonmniverti.size()<<" "<<count_nonmani<<std::endl;
+//    std::vector<Triangle*> ring1;
+//    pMesh->getRingNeigbyOrder(nonmniverti[0],1,ring1);
+//    writeSTL("ringadd.stl", ring1);
+//    writePoints("points.vtk",nonmniverti);
+/*std::cout<< *alltri[10987] << std::endl;
+    std::vector<Triangle*> ring;
+    pMesh->getRingNeigbyOrder(alltri[10987]->getCorners(0),3,ring);
+if(*alltri[10987]->getCorners(0) == *alltri[10987]->getCorners(0)) {
+    std::cout<<"true " << std::endl;
+}
+std::vector<EdgeOrder> edges;
+    getedgesByOrder(ring,-1,edges);
+    std::vector<Point*> bpoints;
+    getBorderPoints(edges,bpoints);
+    InitilizeLoop lo;
+    lo.createLoop(edges);*/
+    //writePoints("bpoints.vtk",bpoints);
+ //   writeSTL("ring2.stl", ring);
+  //  pMesh->writeMeshSTL("ring.stl");
+   /* Point* p1 = new  Point(-39.75, 19.62, -54.0657);
+    Point* p2 = new  Point(-40, 19.62, -53.25);
+    Point* p3 = new  Point(-39.5, 19.62, -53.25);
+    Point* p4 = new  Point(39.75, 19.62, -54.0657);
+    Point* p5 = new  Point(39.5, 19.62, -53.25);
+    Point* p6 = new  Point(40, 19.62, -53.25);
+    Point* p7 = new  Point(6.10352e-05, 19.62, -53.9792);
+    Point* p8 = new  Point(-0.25, 19.62, -53.25);
+    Point* p9 = new  Point(0.25, 19.62, -53.25);
+    Point* p10 = new  Point(-39.9607, 18.87, -53.125);
+    Point* p11 = new  Point(-0, 18.8961, -53.2122);
+    Point* p12 = new  Point(39.7499, 18.7931, -53.2068);
+    Triangle* tri1 = mesh->createTriangle(p1,p2,p3, nullptr);
+    Triangle* tri2 = mesh->createTriangle(p4,p5,p6, nullptr);
+    Triangle* tri3 = mesh->createTriangle(p7,p8,p9, nullptr);
+    Triangle* tri4 = mesh->createTriangle(p10,p2,p3, nullptr);
+    Triangle* tri5 = mesh->createTriangle(p11,p9,p8, nullptr);
+    Triangle* tri6 = mesh->createTriangle(p12,p6,p5, nullptr);
+    std::vector<Triangle*> alltri = {tri1,tri2,tri3,tri4,tri5,tri6};
+    writeSTL("fsbad_neigh.stl", alltri);*/
+
+// Five neigh
+  /*  Point* p1 = new  Point(-39.5, 19.62, -53.25);
+    Point* p2 = new  Point(-40, 19.62, -52.907);
+    Point* p3 = new  Point(-39.5, 19.62, -52.907);
+
+    Point* p4 = new  Point(-39.75, 19.62, -54.0657);
+    Point* p5 = new  Point(-40, 19.62, -53.25);
+    Point* p6 = new  Point(-39.5, 19.62, -53.25);
+
+    Point* p7 = new  Point(-39.9607, 18.87, -53.125);
+    Point* p8 = new  Point(-40, 19.62, -53.25);
+    Point* p9 = new  Point(-39.5, 19.62, -53.25);
+
+    Point* p10 = new  Point(-39.7498, 18.8932, -53.2119);
+    Point* p11 = new  Point(-39.5, 19.62, -53.25);
+    Point* p12 = new  Point(-40, 19.62, -53.25);
+
+    Point* p13 = new  Point(-40, 19.62, -53.25);
+    Point* p14 = new  Point(-39.9802, 19.245, -52.8875);
+    Point* p15 = new  Point(-40, 19.62, -52.907);
+    Triangle* tri1 = mesh->createTriangle(p1,p2,p3, nullptr);
+    Triangle* tri2 = mesh->createTriangle(p4,p5,p6, nullptr);
+    Triangle* tri3 = mesh->createTriangle(p7,p8,p9, nullptr);
+    Triangle* tri4 = mesh->createTriangle(p10,p11,p12, nullptr);
+    Triangle* tri5 = mesh->createTriangle(p13,p14,p15, nullptr);
+    Triangle* tri6 = mesh->createTriangle(p1,p5,p15, nullptr);
+    std::cout<<tri6->getNormalVector()<<std::endl;*/
+   // std::vector<Triangle*> alltri = {tri1,tri2,tri3,tri4,tri5};
+ //   writeSTL("first_5neigh.stl", alltri);
+   // writePoints("points.vtk",ps);
+ /*   DesiredEdge2_1Send obj(pMesh);
        obj.doRefine(0);
 
-         pMesh->writeMeshSTL("reout1_new.stl");
-         pMesh->printContainersInfo();
+         pMesh->writeMeshSTL("reout_case3.stl");
+         pMesh->printContainersInfo();*/
 
-   //std::cout<< "dis " <<   getMinimumDistance(tri,p) << std::endl;
-    /* std::set<int> triID;
-     triID.insert(37985);
-    triID.insert(37996);
-    triID.insert(38003);
-    triID.insert(38034);
-    triID.insert(38064);
-    triID.insert(179239);
-    triID.insert(179240);
-    triID.insert(179246);
-    triID.insert(179247);
-    triID.insert(179251);
-    s
-    pMesh->printContainersInfo();
-
-    std::vector<Triangle*> alltri;
-    pMesh->getTriangles(alltri);
-    std::vector<Triangle*> tri_to_del;
-    for(int i=0; i<alltri.size(); i++ ) {
-        if(triID.find(i) != triID.end() ) {
-           tri_to_del.push_back(alltri[i]);
-        }
-    }
-    writeSTL("bad.stl",tri_to_del); */
     /*DesiredEdge2_1Send obj(pMesh);
     obj.doRefine(0);
     obj.doRefine(2000);
