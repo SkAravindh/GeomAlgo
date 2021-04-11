@@ -52,6 +52,7 @@ set (samples
    # verification/adaptdesire_version2.cpp
     verification/adaptdesire_version2_Send.cpp
     verification/adaptdesire_version2_1_Send.cpp
+   # verification/adaptive_optimize.cpp
      )
      
 set (Openmesh_Include  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/Openmesh/headers)

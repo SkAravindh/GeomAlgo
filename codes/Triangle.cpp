@@ -158,6 +158,10 @@ int Triangle::getLongestEdgeID()   {
     return idx;
 }
 
+EdgeOrder* Triangle::getEO_pointer(int i) {
+    return edges[i];
+}
+
 int Triangle::getShortestEdgeID()   {
 
     double dis = DBL_MAX;
