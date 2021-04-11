@@ -442,7 +442,7 @@ void Mesh::establishEdgeinfo() {
     }
 }
 
-bool Mesh::isNon_Manifold_Vertices(Point *input_vertex ) {
+bool Mesh::isNon_Manifold_Vertex(Point *input_vertex ) {
 
         std::vector<Triangle*> one_ring;
         std::vector<EdgeOrder> B_Edges;

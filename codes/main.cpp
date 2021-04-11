@@ -71,7 +71,7 @@ for(auto p : allp) {
 //    if(lo.loopCount() != 1){
 //        nonmniverti.push_back(p);
 //    }
-bool re=   pMesh->isNon_Manifold_Vertices(p);
+bool re=   pMesh->isNon_Manifold_Vertex(p);
     if(re){
         ++count_nonmani;
     }
