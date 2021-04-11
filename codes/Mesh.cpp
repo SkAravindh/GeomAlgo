@@ -1,5 +1,5 @@
 #include "Mesh.h"
-
+#include "LoopEdges.cpp"
 
 Mesh::Mesh() {
 
@@ -133,8 +133,10 @@ void Mesh::getTriangles(std::vector<Triangle*> &TV) {
 
     TV_it it;
     for(it=allTriangles.begin(); it!=allTriangles.end(); it++) {
-        Triangle * tri(*it);
-        TV.push_back(tri);
+        Triangle *tri(*it);
+        if (tri->isAlive) {
+            TV.push_back(tri);
+        }
     }
 }
 
@@ -144,6 +146,7 @@ void Mesh::getVertices(std::vector<Point*> &vp) {
    // std::vector<Point*> vecpoint;
     TV_it it;
     for(it = allTriangles.begin(); it != allTriangles.end(); it++) {
+        if(!(*it)->isAlive) continue;
         for(int i=0; i<3; i++) {
             Point* p = (*it)->getCorners(i);
             allpoints.insert(p);
@@ -439,6 +442,23 @@ void Mesh::establishEdgeinfo() {
     }
 }
 
+bool Mesh::isNon_Manifold_Vertices(Point *input_vertex ) {
+
+        std::vector<Triangle*> one_ring;
+        std::vector<EdgeOrder> B_Edges;
+        getRingNeigbyOrder(input_vertex,1,one_ring);
+        getedgesByOrder(one_ring,-1,B_Edges);
+        InitilizeLoop obj;
+        obj.createLoop(B_Edges);
+        if (obj.loopCount() != 1) {
+            std::cout<<"exist " << std::endl;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 void Mesh::standAlone(std::vector<Triangle*> &tv) {
     //std::cout << *allTriangles[0]->getCorners(0) << std::endl;
     getRingNeigbyOrder(allTriangles[0]->getCorners(0), 1, tv);
@@ -446,12 +466,7 @@ void Mesh::standAlone(std::vector<Triangle*> &tv) {
 
 void Mesh::writeMeshSTL(std::string filename) {
     std::vector<Triangle*> outTri;
-    for(Triangle* T:allTriangles) {
-        if(T->isAlive) {
-            outTri.push_back(T);
-        }
-    }
-    std::cout<<"outTri " <<outTri.size()<< std::endl;
+    this->getTriangles(outTri);
     writeSTL(filename,outTri);
 }
 

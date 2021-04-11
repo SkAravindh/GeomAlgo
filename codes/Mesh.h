@@ -14,7 +14,10 @@
 #include <set>
 
 
+
+
 class Triangle; //fwd
+
 
 enum VecContainerName{
     alltri,
@@ -53,6 +56,7 @@ public:
     void getBorder_Nonmanifold_Edges(std::vector<EdgeOrder> &border, std::vector<EdgeOrder> &nonmanifold);
     void establishEdgeinfo();
     void writeMeshSTL(std::string filename);
+    bool isNon_Manifold_Vertices(Point* input_vertex);
 
 private:
     std::string ModelName;
