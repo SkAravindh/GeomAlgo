@@ -12,7 +12,7 @@
 #include "EdgeOrder.h"
 #include "Writedata.h"
 #include <set>
-
+#include "Edge.h"
 
 
 
@@ -56,7 +56,7 @@ public:
     void getBorder_Nonmanifold_Edges(std::vector<EdgeOrder> &border, std::vector<EdgeOrder> &nonmanifold);
     void establishEdgeinfo();
     void writeMeshSTL(std::string filename);
-    bool isNon_Manifold_Vertex(Point* input_vertex);
+    bool isNon_Manifold_Vertex(Point* input_vertex, std::vector<Triangle*> *ring_triangle);
 
 private:
     std::string ModelName;
@@ -68,9 +68,12 @@ protected:
     int Number_OF_Vertices=0;
     std::multimap<Point*, Triangle*,ComparePoint> mmpointTotriangles;
     std::multimap<EdgeOrder, Triangle*> mmedgeTotriangles;
+    std::map<Edge, int> Edge_to_id;
     //std::map<EdgeOrder, std::vector<Triangle*>> map_edgeTotriangles; //using multimap map bcoz easy to acess data but not efficient
     std::vector<Triangle*> allTriangles;
     std::vector<Triangle*> externalUse;
+public:
+    std::vector<Edge> allEdges;
 
 protected:
     //Iterators
