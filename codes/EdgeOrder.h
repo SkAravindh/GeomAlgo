@@ -48,9 +48,4 @@ struct CompareEdgeOrder{
     }
 };
 
-struct CompareEqual{
-    bool operator() (const EdgeOrder *lhs, const EdgeOrder *rhs)const {
-        return ( (*lhs->p0 == *rhs->p0) && (*lhs->p1 == *rhs->p1) );
-    }
-};
 #endif

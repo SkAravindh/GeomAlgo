@@ -9,25 +9,22 @@
 #include "Writedata.h"
 #include "LoopEdges.cpp"
 
-//#include "Algorithms/HoleDetection.h"
-
-
-//#include "verification/adaptdesire_version2.cpp"
 //#include "verification/adaptdesire_version2_Send.cpp"
 #include "verification/adaptdesire_version2_1_Send.cpp"
-
+#include "verification/fixnonmanifold.cpp"
 
 
 int main() {
-  // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-   // std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/Case3.stl";
-    std::string filename ="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/input_Geometry.stl";
-    //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
+   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+  //  std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/Case3.stl";
+   // std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/case3simplified.stl";
+   // std::string filename ="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/input_Geometry.stl";
+   // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
     //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/unorderedmap/cmake-build-debug/masterMesh_HoleCreated.stl";
   //  std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/Volute_2mm.stl";
 
     //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Cube_3d_printing_sample.stl";
-  //  std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/BMW_vibration.stl";
+    //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/testmodels/BMW_vibration.stl";
 
 
     // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/completecar.stl";
@@ -37,7 +34,7 @@ int main() {
  //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunnywithseveralholes.stl";
 
 
-    //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/bpillar.stl";
+  //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/bpillar.stl";
    // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/BMW.stl";
     //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/build/codes/reout1.stl";
 
@@ -48,42 +45,57 @@ int main() {
      //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/reout.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
 
+    std::set<Triangle*> triset;
+    std::vector<Triangle*> vectri;
+    std::vector<EdgeOrder>ed;
 
-
-
-
-std::vector<Point*> allp;
-pMesh->getVertices(allp);
-std::vector<Point*> nonmniverti;
-std::cout<<"calculation non mani verti and no of points "<<allp.size() << std::endl;
-int count=0;
-int count_nonmani=0;
-for(auto p : allp) {
-    std::cout<<"point id "<<count<< std::endl;
-    ++count;
-//    std::vector<Triangle*> ring;
-//    pMesh->getRingNeigbyOrder(p,1,ring);
-//    std::vector<EdgeOrder> edges;
-//    getedgesByOrder(ring,-1,edges);
-//    if(ring.size()==1) continue;
-//    InitilizeLoop lo;
-//    lo.createLoop(edges);
-//    if(lo.loopCount() != 1){
-//        nonmniverti.push_back(p);
-//    }
-bool re=   pMesh->isNon_Manifold_Vertex(p);
-    if(re){
-        ++count_nonmani;
+    pMesh->getTriangles(vectri);
+    getEdgesofTrianlges(vectri,ed);
+    std::cout<<"alledged " <<ed.size()<<" " <<"alled "<<pMesh->allEdges.size()<<std::endl;
+    int count=0;
+    for(auto ele : vectri) {
+        if(triset.insert(ele).second) {
+            //std::cout<<"hi " <<std::endl;
+            ++count;
+        }
     }
-//    if(nonmniverti.size() > 5) {
-//        break;
-//    }
-}
-//pMesh->isNon_Manifold_Vertices(nullptr);
-//for(auto nonp: nonmniverti){
-//    std::cout<<"nonp " <<*nonp<<std::endl;
-//}
-std::cout<<"nonmniverti "<<nonmniverti.size()<<" "<<count_nonmani<<std::endl;
+
+    std::set<int> data;
+    data.insert(10);
+    data.insert(20);
+    std::vector<int> vecdata={10,20,30,40,50,60,70,80,92};
+    //pMesh->getTriangles(vectri);
+    int count2=0;
+    for(auto ele : vecdata) {
+        if(data.insert(ele).second) {
+            //std::cout<<"hi " <<std::endl;
+            ++count2;
+         }
+    }
+std::cout<<"vectri " <<vectri.size()<<" "<<"count2"<<" "<<count2<<" "<<"size "<<" "<<data.size()<< std::endl;
+
+    //Fixnonmani obj(pMesh);
+    //obj.fixTriangle();
+    //pMesh->writeMeshSTL("nonmani_tri.stl");
+
+   /* std::vector<Point*> allpoint;
+    pMesh->getVertices(allpoint);
+    int count = 0;
+    int pc=0;
+    std::vector<Point*> sing;
+    for(auto ele : allpoint){
+        std::vector<Triangle*> ring;
+        std::cout<<++pc<<std::endl;
+        if(!ele->isAlive) continue;
+       bool re = pMesh->isNon_Manifold_Vertex(ele, &ring);
+        if(re){
+            ++count;
+            sing.push_back(ele);
+        //    writeSTL(std::to_string(count)+".stl",ring);
+        }
+    }
+    std::cout<<"non manifold vertices "<<"total point " <<allpoint.size()<<" " <<"non_mani count "<<count<< std::endl;
+    writePoints("singulat.vtk",sing);*/
 //    std::vector<Triangle*> ring1;
 //    pMesh->getRingNeigbyOrder(nonmniverti[0],1,ring1);
 //    writeSTL("ringadd.stl", ring1);

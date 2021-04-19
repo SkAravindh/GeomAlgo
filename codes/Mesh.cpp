@@ -26,6 +26,7 @@ Point* Mesh::createVertex(Point &P) {
         this->allvertices.insert(std::make_pair(*pobj,pobj));
         vAllvertices.push_back(pobj);
         ++Number_OF_Vertices;
+        pobj->isAlive = true;
         return pobj;
     }
 }
@@ -57,6 +58,21 @@ void Mesh::storeTriangleInfo(Triangle *T) {
     mmedgeTotriangles.insert(std::make_pair(T->getEO(2),T));
 
     T->isAlive = true;
+    for(int i=0; i<3; i++) {
+        Edge ed = T->getEd(i);
+        Point* p0 = ed.p0;
+        Point* p1 = ed.p1;
+        Edge opp = Edge(p1,p0);
+        int size_ = allEdges.size();
+        if(Edge_to_id.find(ed) == Edge_to_id.end()) {
+            if(Edge_to_id.find(opp) == Edge_to_id.end()) {
+                Edge_to_id.insert(std::make_pair(ed,size_));
+                allEdges.push_back(ed);
+            }
+        }
+
+    }
+
 }
 
 void Mesh::getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv) {
@@ -240,6 +256,7 @@ void Mesh::delCertainEntryPT(Triangle* t) {
             continue;
         }
         else {
+            p0->isAlive= false;
             eraseCertainEntryPT(mmpointTotriangles,p0,t);
         }
     }
@@ -442,16 +459,19 @@ void Mesh::establishEdgeinfo() {
     }
 }
 
-bool Mesh::isNon_Manifold_Vertex(Point *input_vertex ) {
+bool Mesh::isNon_Manifold_Vertex(Point *input_vertex, std::vector<Triangle*> *ring_triangle ) {
 
         std::vector<Triangle*> one_ring;
         std::vector<EdgeOrder> B_Edges;
         getRingNeigbyOrder(input_vertex,1,one_ring);
         getedgesByOrder(one_ring,-1,B_Edges);
+        if(ring_triangle != nullptr) {
+            (*ring_triangle).assign(one_ring.begin(),one_ring.end());
+        }
         InitilizeLoop obj;
         obj.createLoop(B_Edges);
         if (obj.loopCount() != 1) {
-            std::cout<<"exist " << std::endl;
+          //  std::cout<<"exist " << std::endl;
             return true;
         }
         else {

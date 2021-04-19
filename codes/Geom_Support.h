@@ -19,7 +19,6 @@ bool brayCentric(const Triangle *t, const Point *p, Vector3* projected_point);
 bool checkForHalfEdge(const Triangle *t1, const Triangle *t2);
 bool checkCommonVertex(const Triangle *t1, const Triangle *t2);
 void getedgesByOrder(const std::vector<Triangle* > &TV, const int &i, std::vector<EdgeOrder> &out);
-void getedgesByOrder_1(const std::vector<Triangle* > &TV, const int &i, std::vector<EdgeOrder> &out);
 void getBorderPoints(const std::vector<EdgeOrder> &BE, std::vector<Point*> &VP);
 void getEdgesofTrianlges( const std::vector<Triangle* > &TV, std::vector<EdgeOrder> &BE);
 void eraseCertainTriangle(std::vector<Triangle* > &TV, Triangle *t);
