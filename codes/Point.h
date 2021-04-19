@@ -24,6 +24,8 @@ public:
         return s;
     }
 
+public:
+    bool isAlive;
 private:
     double coordinates[3];
 
