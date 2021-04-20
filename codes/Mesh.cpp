@@ -451,16 +451,16 @@ bool Mesh::is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonm
         }
         --iter;
         if (count == 1) {
-            if(border != nullptr) {
-                ismanifold = false;
+            if(border != nullptr){
                 (*border).push_back(*iter);
             }
+            ismanifold = false;
             ++border_count;
         } else if (count > 2) {
             if(nonmanifold != nullptr) {
-                ismanifold = false;
                 (*nonmanifold).push_back(*iter);
             }
+            ismanifold = false;
             ++nonmanifold_count;
         }
     }
