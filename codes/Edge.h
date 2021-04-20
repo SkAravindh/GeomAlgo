@@ -15,8 +15,13 @@ class Edge {
             out<<"OrderEdge "<<"P0 "<< *rhs.p0 <<" "<<"P1 "<< *rhs.p1 << " ";
             return out;
         }
+        void increase_count(){
+            ++count;
 
+        }
 
+public:
+    int count=0;
     public:
         Point* p0;
         Point* p1;

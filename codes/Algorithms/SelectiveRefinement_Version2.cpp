@@ -76,7 +76,7 @@ void SelectiveRefinement_2::run() {
 
     std::vector<EdgeOrder> b_edges;
     std::vector<EdgeOrder> nonmani_edges;
-    pMesh->getBorder_Nonmanifold_Edges(b_edges,nonmani_edges);
+    pMesh->is_Solid(&b_edges,&nonmani_edges);
     _Copy(b_edges.begin(),b_edges.end(),border_Edges);
     _Copy(nonmani_edges.begin(),nonmani_edges.end(),nonManifold_Edges);
     if(!nonManifold_Edges.empty()) {

@@ -13,6 +13,7 @@
 #include "Writedata.h"
 #include <set>
 #include "Edge.h"
+#include "Bbox_3.h"
 
 
 
@@ -33,6 +34,10 @@ public:
     Point* createVertex(  double x,   double y,   double z);
     Point* createVertex(Point &P);
     Triangle* createTriangle(Point *P0, Point *P1, Point *P2, Triangle* parent);
+    bool is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonmanifold);
+    bool isNon_Manifold_Vertex(Point* input_vertex, std::vector<Triangle*> *ring_triangle);
+    std::vector< std::pair<EdgeOrder,EdgeOrder> > updateEdgeInfo(Triangle* To_change, Point* oldVertex, Point* newVertex); //used during edge collapse operation.
+    double computeVolume();
     void storeTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
     void getVertices(std::vector<Point*> &vp);
@@ -49,14 +54,11 @@ public:
     void delCertainEntryPT(Triangle* t);
     void delCertainEntryET(Triangle* t);
     void establishNeighcompleteMesh();
+    void establishEdgeinfo();
     void establishNeighofTriangle(Triangle *t);
     void getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv);
     void getAdjustenNeigh_1(const EdgeOrder& ed,std::vector<Triangle*> &tv);
-    std::vector< std::pair<EdgeOrder,EdgeOrder> > updateEdgeInfo(Triangle* To_change, Point* oldVertex, Point* newVertex); //used during edge collapse operation.
-    void getBorder_Nonmanifold_Edges(std::vector<EdgeOrder> &border, std::vector<EdgeOrder> &nonmanifold);
-    void establishEdgeinfo();
     void writeMeshSTL(std::string filename);
-    bool isNon_Manifold_Vertex(Point* input_vertex, std::vector<Triangle*> *ring_triangle);
 
 private:
     std::string ModelName;
@@ -68,12 +70,10 @@ protected:
     int Number_OF_Vertices=0;
     std::multimap<Point*, Triangle*,ComparePoint> mmpointTotriangles;
     std::multimap<EdgeOrder, Triangle*> mmedgeTotriangles;
-    std::map<Edge, int> Edge_to_id;
+
     //std::map<EdgeOrder, std::vector<Triangle*>> map_edgeTotriangles; //using multimap map bcoz easy to acess data but not efficient
     std::vector<Triangle*> allTriangles;
     std::vector<Triangle*> externalUse;
-public:
-    std::vector<Edge> allEdges;
 
 protected:
     //Iterators
