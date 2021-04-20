@@ -69,7 +69,7 @@ void DesiredEdge2_1Send::doRefine(int a) {
     std::vector<EdgeOrder> nonmani_edges;
 
    // getedgesByOrder(allTriangles,-1,b_edges);
-    pMesh->getBorder_Nonmanifold_Edges(b_edges,nonmani_edges);
+    pMesh->is_Solid(&b_edges,&nonmani_edges);
     _Copy(b_edges.begin(),b_edges.end(),border_Edges);
     _Copy(nonmani_edges.begin(),nonmani_edges.end(),nonManifold_Edges);
 //     for(auto ele : nonManifold_Edges ) {

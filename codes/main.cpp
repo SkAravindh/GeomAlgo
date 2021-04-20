@@ -16,7 +16,9 @@
 
 int main() {
    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-  //  std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/Case3.stl";
+ //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/morefiles_STL/Torus.stl";
+
+    //  std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/Case3.stl";
    // std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/case3simplified.stl";
    // std::string filename ="/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/input_Geometry.stl";
    // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/Bracket.stl";
@@ -30,7 +32,7 @@ int main() {
     // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/completecar.stl";
   //  std::string filename="/home/aravindhkumar.kalimuthu/Downloads/testing_stls/patch.stl";
 
-  //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/single_cube_holes_stl.stl";
+    //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/single_cube_holes_stl.stl";
  //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunnywithseveralholes.stl";
 
 
@@ -51,29 +53,31 @@ int main() {
 
     pMesh->getTriangles(vectri);
     getEdgesofTrianlges(vectri,ed);
-    std::cout<<"alledged " <<ed.size()<<" " <<"alled "<<pMesh->allEdges.size()<<std::endl;
-    int count=0;
-    for(auto ele : vectri) {
-        if(triset.insert(ele).second) {
-            //std::cout<<"hi " <<std::endl;
-            ++count;
-        }
-    }
-
-    std::set<int> data;
-    data.insert(10);
-    data.insert(20);
-    std::vector<int> vecdata={10,20,30,40,50,60,70,80,92};
-    //pMesh->getTriangles(vectri);
-    int count2=0;
-    for(auto ele : vecdata) {
-        if(data.insert(ele).second) {
-            //std::cout<<"hi " <<std::endl;
-            ++count2;
-         }
-    }
-std::cout<<"vectri " <<vectri.size()<<" "<<"count2"<<" "<<count2<<" "<<"size "<<" "<<data.size()<< std::endl;
-
+    std::map<int, int> mapint;
+    std::cout<<"alledged " <<ed.size()<<std::endl;
+    std::set<Point> ids;
+    Point p2 = Point(-40, 19.62, -53.25);
+    Point p3 = Point(-39.5, 19.62, -53.25);
+    Point p33 = Point(-10, 10, -10);
+    Point p4 =  Point(39.75, 19.62, -54.0657);
+    Point p5 =  Point(39.5, 19.62, -53.25);
+    typedef std::set<Point>::iterator it;
+    std::pair<it,bool> po = ids.insert(p2);
+    std::pair<it,bool> p1 = ids.insert(p2);
+    std::cout<<*po.first<<" "<<*ids.end()<<std::endl;
+  /*if(*p1.first == *ids.end()){
+      std::cout<<"false " <<std::endl;
+  }*/
+   pMesh->computeVolume();
+//std::vector<double> start{10,20,30,40,50};
+//std::vector<double> end{10,10,10,10,10};
+//std::vector<double> c;
+//    std::transform(start.begin(),start.end(),end.begin(), std::back_inserter(c),[](double x1,double x2) {return (x1-x2);
+//    });
+//for(auto ele: c) {
+//    std::cout<< "c "<<ele<<std::endl;
+//}
+//pMesh->computeVolume();
     //Fixnonmani obj(pMesh);
     //obj.fixTriangle();
     //pMesh->writeMeshSTL("nonmani_tri.stl");
