@@ -58,21 +58,6 @@ void Mesh::storeTriangleInfo(Triangle *T) {
     mmedgeTotriangles.insert(std::make_pair(T->getEO(2),T));
 
     T->isAlive = true;
-    for(int i=0; i<3; i++) {
-        Edge ed = T->getEd(i);
-        Point* p0 = ed.p0;
-        Point* p1 = ed.p1;
-        Edge opp = Edge(p1,p0);
-        int size_ = allEdges.size();
-        if(Edge_to_id.find(ed) == Edge_to_id.end()) {
-            if(Edge_to_id.find(opp) == Edge_to_id.end()) {
-                Edge_to_id.insert(std::make_pair(ed,size_));
-                allEdges.push_back(ed);
-            }
-        }
-
-    }
-
 }
 
 void Mesh::getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv) {
@@ -118,7 +103,7 @@ void Mesh::establishNeighcompleteMesh() {
     }
 }
 
-void Mesh::establishNeighofTriangle(Triangle* t) {
+void Mesh::establishNeighofTriangle( Triangle* t) {
 
     Triangle* currentT(t);
     for(int i=0; i<3; i++) {
@@ -393,10 +378,52 @@ void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::vector<Triang
 
 }
 
-void Mesh::getBorder_Nonmanifold_Edges(std::vector<EdgeOrder> &border, std::vector<EdgeOrder> &nonmanifold) {
+double Mesh::computeVolume() {
+
+    if(!is_Solid(nullptr, nullptr)) {
+        return 0;
+    }
+
+    std::vector<Point*> vertices;
+    std::map<Point*, Vector3,ComparePoint> point_to_vector3;
+    getVertices(vertices);
+    Bbox_3 BB;
+    for(Point* ele : vertices) {
+        BB.add_coordinates(ele->x(),ele->y(),ele->z());
+    }
+
+    Vector3 min(BB.xmin(),BB.ymin(),BB.zmin());
+    Vector3 max(BB.xmax(),BB.ymax(),BB.zmax());
+    Vector3 refPoint = (min+max)/2;
+    for(Point* p : vertices) {
+        Vector3 dummy(p->x(),p->y(),p->z());
+        dummy-refPoint;
+        point_to_vector3.insert(std::make_pair(p,dummy));
+    }
+
+    double total=0;
+    for(Triangle* t : allTriangles) {
+
+        if(!t->isAlive) continue;
+        Vector3 a = point_to_vector3[t->getCorners(0)];
+        Vector3 b = point_to_vector3[t->getCorners(1)];
+        Vector3 c = point_to_vector3[t->getCorners(2)];
+        double tetVolume =  abs(dot(cross_product(a,b),c)/6.0);
+        if(dot(a,t->getNormalVector()) > 0) {
+            total = total+tetVolume;
+        }
+        else{
+            total = total-tetVolume;
+        }
+    }
+    std::cout<<"total "<<total<<std::endl;
+    return total;
+}
+
+bool Mesh::is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonmanifold) {
 
     std::cout << "Collecting border and Non-manifold edges " << std::endl;
-
+    bool ismanifold = true;
     std::vector<EdgeOrder> outtemp;
     std::set<EdgeOrder>alledges;
     std::vector<Triangle *>::const_iterator it;
@@ -424,14 +451,23 @@ void Mesh::getBorder_Nonmanifold_Edges(std::vector<EdgeOrder> &border, std::vect
         }
         --iter;
         if (count == 1) {
-            border.push_back(*iter);
+            if(border != nullptr) {
+                ismanifold = false;
+                (*border).push_back(*iter);
+            }
             ++border_count;
         } else if (count > 2) {
-            nonmanifold.push_back(*iter);
+            if(nonmanifold != nullptr) {
+                ismanifold = false;
+                (*nonmanifold).push_back(*iter);
+            }
             ++nonmanifold_count;
         }
     }
-    std::cout << "Border_Edges: " << border_count << " " << "NonManifold_Edges: " << nonmanifold_count << std::endl;
+    if(!ismanifold) {
+        std::cout << "Border_Edges: " << border_count << " " << "NonManifold_Edges: " << nonmanifold_count << std::endl;
+    }
+    return ismanifold;
 }
 
 void Mesh::establishEdgeinfo() {
