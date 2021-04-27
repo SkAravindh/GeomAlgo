@@ -36,7 +36,7 @@ void writeSTL(const std::string& filename, std::vector<Triangle* > &patch) {
     file.open(filename,std::ios_base::app);
     file <<"solid " << std::endl;
     for(int i=0; i<patch.size(); i++){
-        file <<" facet normal "<<patch.at(i)->getNormalVector().x()<<" "<<patch.at(i)->getNormalVector().y()<<" "<<patch.at(i)->getNormalVector().z()<<std::endl;
+        file <<" facet normal "<<patch.at(i)->getNormalVector().x()<<std::scientific<<" "<<patch.at(i)->getNormalVector().y()<<std::scientific<<" "<<patch.at(i)->getNormalVector().z()<<std::scientific<<std::endl;
         file <<"  outer loop "<< std::endl;
         file <<"    vertex "<<patch[i]->getCorners(0)->x()<<" "<<patch[i]->getCorners(0)->y()<<" "<<patch[i]->getCorners(0)->z()<<std::endl;
         file <<"    vertex "<<patch[i]->getCorners(1)->x()<<" "<<patch[i]->getCorners(1)->y()<<" "<<patch[i]->getCorners(1)->z()<<std::endl;
