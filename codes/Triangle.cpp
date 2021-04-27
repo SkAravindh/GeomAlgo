@@ -79,6 +79,12 @@ Point* Triangle::getCentroid() const {
 
 }
 
+double Triangle::getArea() const {
+
+    Vector3 normal = this->getNormalVector();
+    return (normal.lenght())/2;
+}
+
 void Triangle::setNeigh(int i, Triangle *t) {
     neigb[i]=t;
 }
