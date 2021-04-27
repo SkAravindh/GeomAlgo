@@ -35,6 +35,8 @@ Triangle* Mesh::createTriangle(Point *P0, Point *P1, Point *P2,Triangle* parent)
 
     Triangle *newT = new Triangle(P0, P1, P2,this);
     if(parent == nullptr) {
+        int size_ = allTriangles.size();
+        newT->ID = size_;
         allTriangles.push_back(newT);
     }
     else {
@@ -164,6 +166,8 @@ void Mesh::fillTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN
     switch (VN) {
         case alltri:
             for(auto ele : tv) {
+                int size_ = allTriangles.size();
+                ele->ID=size_;
                 allTriangles.push_back(ele);
             }
             break;
@@ -244,6 +248,20 @@ void Mesh::delCertainEntryPT(Triangle* t) {
             p0->isAlive= false;
             eraseCertainEntryPT(mmpointTotriangles,p0,t);
         }
+    }
+}
+
+Vector3 Mesh::getCentroid(CentroidType ct) {
+
+    switch (ct) {
+        case CentroidType::vertex_based:
+            return centroidVertex();
+        case CentroidType::area_based:
+            return centroidSurface();
+        case CentroidType::volume_based:
+            return centroidVolume();
+        default:
+            break;
     }
 }
 
@@ -416,8 +434,94 @@ double Mesh::computeVolume() {
             total = total-tetVolume;
         }
     }
-    std::cout<<"total "<<total<<std::endl;
+   // std::cout<<"total "<<total<<std::endl;
     return total;
+}
+
+Vector3 Mesh::centroidVertex() {
+
+    std::vector<Point*> vertices;
+    this->getVertices(vertices);
+    Vector3 centeroid_vertex(0,0,0);
+    for(Point* p : vertices) {
+        Vector3 temp (p->x(),p->y(),p->z());
+        centeroid_vertex+temp;
+    }
+    centeroid_vertex/vertices.size();
+    return centeroid_vertex;
+}
+
+Vector3 Mesh::centroidSurface() {
+
+    std::vector<Triangle*> triangles;
+    this->getTriangles(triangles);
+    Vector3 centeroid_surface(0,0,0);
+    double total_area = 0;
+
+    for(Triangle* t : triangles) {
+        Point* mid = t->getCentroid();
+        Vector3 dummy(mid->x(),mid->y(),mid->z());
+        double current_area = t->getArea();
+        dummy*current_area;
+        centeroid_surface+dummy;
+        total_area=total_area+current_area;
+    }
+
+    centeroid_surface/total_area;
+    return centeroid_surface;
+}
+
+Vector3 Mesh::centroidVolume() {
+
+    std::vector<Point*> vertices;
+    std::map<Point*, Vector3,ComparePoint> point_to_vector3;
+    getVertices(vertices);
+    Bbox_3 BB;
+    for(Point* ele : vertices) {
+        BB.add_coordinates(ele->x(),ele->y(),ele->z());
+    }
+
+    Vector3 min(BB.xmin(),BB.ymin(),BB.zmin());
+    Vector3 max(BB.xmax(),BB.ymax(),BB.zmax());
+    Vector3 refPoint = (min+max)/2;
+    for(Point* p : vertices) {
+        Vector3 dummy(p->x(),p->y(),p->z());
+        dummy-refPoint;
+        point_to_vector3.insert(std::make_pair(p,dummy));
+    }
+
+    std::map<int,std::pair<double, Vector3>> triID_to_centre_volume_pair;
+    for(Triangle* t : allTriangles) {
+
+        if(!t->isAlive) continue;
+        Vector3 a = point_to_vector3[t->getCorners(0)];
+        Vector3 b = point_to_vector3[t->getCorners(1)];
+        Vector3 c = point_to_vector3[t->getCorners(2)];
+        double tetVolume =  abs(dot(cross_product(a,b),c)/6.0);
+        if(dot(a,t->getNormalVector()) < 0) {
+            tetVolume *= -1;
+        }
+        Vector3 v0(t->getCorners(0)->x(),t->getCorners(0)->y(),t->getCorners(0)->z());
+        Vector3 v1(t->getCorners(1)->x(),t->getCorners(1)->y(),t->getCorners(1)->z());
+        Vector3 v2(t->getCorners(2)->x(),t->getCorners(2)->y(),t->getCorners(2)->z());
+        (v0+v1+v2+refPoint)/4.0;
+        triID_to_centre_volume_pair.insert(std::make_pair(t->ID,std::make_pair(tetVolume,v0)));
+    }
+
+    Vector3 centroid_volume(0,0,0);
+    double totalvolume = 0;
+
+    for(auto it = triID_to_centre_volume_pair.begin(); it != triID_to_centre_volume_pair.end(); it++) {
+
+        double current_volume     = it->second.first;
+        totalvolume = totalvolume+current_volume;
+        Vector3 tet_centroid = it->second.second;
+        tet_centroid*current_volume;
+        centroid_volume+tet_centroid;
+    }
+
+    centroid_volume/totalvolume;
+    return centroid_volume;
 }
 
 bool Mesh::is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonmanifold) {
