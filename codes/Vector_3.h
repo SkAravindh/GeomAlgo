@@ -2,10 +2,10 @@
 #define VECTOR_3_H
 #include <iostream>
 #include<math.h>
- 
+
 
 template<typename T> 
-class Vector_3{
+class Vector_3 {
 public:
 Vector_3();
 Vector_3(T x, T y, T z );
@@ -19,14 +19,10 @@ Vector_3(T x, T y, T z );
  T lenght() const;
  T squared_length() const;
  inline Vector_3<T> make_unit_vector();
-  
 
-
-
-inline const Vector_3<T> & operator +() const {
-     
- return *this;
-}
+ inline const Vector_3<T> & operator +() const {
+    return *this;
+ }
 
 inline  Vector_3<T> & operator -() const {
     e[0] = 0-e[0];
@@ -48,8 +44,7 @@ inline Vector_3<T>& operator *= (const Vector_3<T> & rhs);
 inline Vector_3<T>& operator /= (const Vector_3<T> & rhs);
 inline Vector_3<T>& operator *= (double t);
 inline Vector_3<T>& operator /= (double t);
-
- 
+inline Vector_3<T>& operator/(double t);
 
 private:
 T e[3];
@@ -123,6 +118,15 @@ Vector_3<T>& Vector_3<T>::operator = (const Vector_3<T> &rhs) {
     e[0] = rhs.e[0];
     e[1] = rhs.e[1];
     e[2] = rhs.e[2];
+    return *this;
+}
+
+template<typename  T>
+Vector_3<T>& Vector_3<T>::operator/(double t) {
+
+    e[0] = e[0]/t;
+    e[1] = e[1]/t;
+    e[2] = e[2]/t;
     return *this;
 }
 

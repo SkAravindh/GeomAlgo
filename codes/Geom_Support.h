@@ -30,6 +30,7 @@ double getAngleBtwVectors(const Vector3 &v1, const Vector3 &v2);
 double getDistance(const Point* p0, const Point* p1);
 double getMinimumDistance(const Triangle* t, const Point* p);
 double segmentPointDistance(const Point *start, const Point* end, const Point* p);
+double get_Area(const Triangle* t);
 
 
 

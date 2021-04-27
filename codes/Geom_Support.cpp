@@ -350,3 +350,18 @@ double segmentPointDistance(const Point *start, const Point* end, const Point* p
     }
     return getDistance(prj_point_dummy,p);
 }
+
+double get_Area(const Triangle* t) {
+
+    Point* p0  = t->getCorners(0);
+    Point* p1  = t->getCorners(1);
+    Point* p2  = t->getCorners(2);
+
+    double D1 = getDistance(p0,p1);
+    double D2 = getDistance(p1,p2);
+    double D3 = getDistance(p2,p0);
+    double s= (D1+D2+D3)/2;
+    double triangle_area = std::sqrt(s*(s-D1)*(s-D2)*(s-D3));
+   // std::cout<<"triangle_area "<<triangle_area<<std::endl;
+    return triangle_area;
+}

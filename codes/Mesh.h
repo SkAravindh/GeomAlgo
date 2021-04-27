@@ -25,19 +25,26 @@ enum VecContainerName{
     external
 };
 
+enum class CentroidType {
+    vertex_based, area_based, volume_based
+};
 
-class Mesh{
+class Mesh {
 public:
     Mesh();
     ~Mesh(){};
     Mesh(std::string Filename, size_t Poolsize);
     Point* createVertex(  double x,   double y,   double z);
     Point* createVertex(Point &P);
+    Vector3 getCentroid(CentroidType ct=CentroidType::vertex_based);
     Triangle* createTriangle(Point *P0, Point *P1, Point *P2, Triangle* parent);
+    std::vector< std::pair<EdgeOrder,EdgeOrder> > updateEdgeInfo(Triangle* To_change, Point* oldVertex, Point* newVertex); //used during edge collapse operation.
+    Vector3 centroidVertex();
+    Vector3 centroidSurface();
+    Vector3 centroidVolume();
+    double computeVolume();
     bool is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonmanifold);
     bool isNon_Manifold_Vertex(Point* input_vertex, std::vector<Triangle*> *ring_triangle);
-    std::vector< std::pair<EdgeOrder,EdgeOrder> > updateEdgeInfo(Triangle* To_change, Point* oldVertex, Point* newVertex); //used during edge collapse operation.
-    double computeVolume();
     void storeTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
     void getVertices(std::vector<Point*> &vp);
@@ -59,6 +66,7 @@ public:
     void getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv);
     void getAdjustenNeigh_1(const EdgeOrder& ed,std::vector<Triangle*> &tv);
     void writeMeshSTL(std::string filename);
+
 
 private:
     std::string ModelName;

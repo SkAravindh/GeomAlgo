@@ -13,10 +13,29 @@
 #include "verification/adaptdesire_version2_1_Send.cpp"
 #include "verification/fixnonmanifold.cpp"
 
+std::string getFileName(const std::string& s) {
+
+    char sep = '/';
+
+#ifdef _WIN32
+    sep = '\\';
+#endif
+
+    size_t i = s.rfind(sep, s.length());
+    if (i != std::string::npos) {
+        return(s.substr(i+1, s.length() - i));
+    }
+
+    return("");
+}
 
 int main() {
-   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+  // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
  //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/morefiles_STL/Torus.stl";
+    std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/car_box_changed.stl";
+    //std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/case.stl";
+
+
 
     //  std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/Case3.stl";
    // std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/case3simplified.stl";
@@ -47,37 +66,48 @@ int main() {
      //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/reout.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
 
-    std::set<Triangle*> triset;
-    std::vector<Triangle*> vectri;
-    std::vector<EdgeOrder>ed;
+    std::vector<Triangle*> allttri;
+    std::cout<<pMesh->getCentroid()<<std::endl;
+    std::cout<<pMesh->getCentroid(CentroidType::area_based)<<std::endl;
+    std::cout<<pMesh->getCentroid(CentroidType::volume_based)<<std::endl;
+    //std::cout<<pMesh->getCentroid(CentroidType::vertex_based)<<std::endl;
+  //  std::cout<<pMesh->getCentroid(CentroidType::area_based)<<std::endl;
+  /* std::vector<Point*> allpoints;
+    pMesh->getVertices(allpoints);
+    std::cout<<"allpoints "<<allpoints.size()<<std::endl;
+    std::map<Point*,Point*,ComparePoint> old_to_new;*/
+   /*for(auto ele:allpoints) {
+        double x = ele->x()/1000.0;
+        double y = ele->y()/1000.0;
+        double z = ele->z()/1000.0;
+        Point* dummy= new Point(x,y,z);
+        old_to_new.insert(std::make_pair(ele,dummy));
+    }*/
 
-    pMesh->getTriangles(vectri);
-    getEdgesofTrianlges(vectri,ed);
-    std::map<int, int> mapint;
-    std::cout<<"alledged " <<ed.size()<<std::endl;
-    std::set<Point> ids;
-    Point p2 = Point(-40, 19.62, -53.25);
-    Point p3 = Point(-39.5, 19.62, -53.25);
-    Point p33 = Point(-10, 10, -10);
-    Point p4 =  Point(39.75, 19.62, -54.0657);
-    Point p5 =  Point(39.5, 19.62, -53.25);
-    typedef std::set<Point>::iterator it;
-    std::pair<it,bool> po = ids.insert(p2);
-    std::pair<it,bool> p1 = ids.insert(p2);
-    std::cout<<*po.first<<" "<<*ids.end()<<std::endl;
-  /*if(*p1.first == *ids.end()){
-      std::cout<<"false " <<std::endl;
-  }*/
-   pMesh->computeVolume();
-//std::vector<double> start{10,20,30,40,50};
-//std::vector<double> end{10,10,10,10,10};
-//std::vector<double> c;
-//    std::transform(start.begin(),start.end(),end.begin(), std::back_inserter(c),[](double x1,double x2) {return (x1-x2);
-//    });
-//for(auto ele: c) {
-//    std::cout<< "c "<<ele<<std::endl;
-//}
-//pMesh->computeVolume();
+   /*  for(auto ele:allpoints) {
+         double x_ = ele->x();
+         double y_ = ele->y();
+         double z_ = ele->z();
+         Vector3 dummyvec(x_,y_,z_);
+         Vector3 transl( 0,0,0 );
+         dummyvec+transl;
+         dummyvec*1.05;
+         Point* dummy= new Point(dummyvec.x(),dummyvec.y(),dummyvec.z());
+         old_to_new.insert(std::make_pair(ele,dummy));
+     }
+    std::vector<Triangle*> alltri;
+    pMesh->getTriangles(alltri);
+    std::cout<<"alltri "<<alltri.size()<<std::endl;
+    for(auto t : alltri) {
+        for(int i=0; i<3; i++) {
+           Point* replace =  t->getCorners(i);
+           Point* newpoint = old_to_new[replace];
+           t->setNewVertex(newpoint,i);
+        }
+    }
+
+    std::cout<<"file writting has started " <<std::endl;
+    pMesh->writeMeshSTL("case_0_1.05.stl");*/
     //Fixnonmani obj(pMesh);
     //obj.fixTriangle();
     //pMesh->writeMeshSTL("nonmani_tri.stl");

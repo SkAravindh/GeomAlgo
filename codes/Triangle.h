@@ -26,6 +26,7 @@ public:
     EdgeOrder* getEdge(int i) const;
     Edge getEd(int i) const;
     Vector3 getNormalVector() const;
+    double getArea() const;
     Triangle* getNeigh(int i);
     Triangle* getParent();
     bool haschild();
@@ -50,6 +51,7 @@ public:
 
 public:
     bool isAlive ;
+    int ID;
 private:
 
     Point* corners[3];
