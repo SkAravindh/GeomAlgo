@@ -66,6 +66,7 @@ public:
     void getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv);
     void getAdjustenNeigh_1(const EdgeOrder& ed,std::vector<Triangle*> &tv);
     void writeMeshSTL(std::string filename);
+    void translateMesh(const Point* p);
 
 
 private:

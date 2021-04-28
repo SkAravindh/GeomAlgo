@@ -618,6 +618,31 @@ bool Mesh::isNon_Manifold_Vertex(Point *input_vertex, std::vector<Triangle*> *ri
         }
 }
 
+void Mesh::translateMesh(const Point *p) {
+
+    std::vector<Point*> allpoints;
+    this->getVertices(allpoints);
+    Vector3 translate_vector = to_Vector3(p);
+    std::map<Point*,Point*,ComparePoint> old_to_new_point;
+
+    for(Point* old : allpoints) {
+        Vector3 dummy = to_Vector3(old);
+        dummy+translate_vector;
+        Point* newpoint = to_Point(dummy);
+        old_to_new_point.insert(std::make_pair(old,newpoint));
+    }
+    std::vector<Triangle*> alltriangle;
+    this->getTriangles(alltriangle);
+
+    for(auto t : alltriangle) {
+        for(int i=0; i<3; i++) {
+            Point* replace =  t->getCorners(i);
+            Point* newpoint = old_to_new_point[replace];
+            t->setNewVertex(newpoint,i);
+        }
+    }
+}
+
 void Mesh::standAlone(std::vector<Triangle*> &tv) {
     //std::cout << *allTriangles[0]->getCorners(0) << std::endl;
     getRingNeigbyOrder(allTriangles[0]->getCorners(0), 1, tv);
