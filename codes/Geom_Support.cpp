@@ -365,3 +365,13 @@ double get_Area(const Triangle* t) {
    // std::cout<<"triangle_area "<<triangle_area<<std::endl;
     return triangle_area;
 }
+
+Point* to_Point(const Vector3 &v) {
+    Point* p = new Point(v.x(),v.y(),v.z());
+    return p;
+}
+
+Vector3 to_Vector3(const Point* p) {
+    Vector3 vec(p->x(),p->y(),p->z());
+    return vec;
+}
