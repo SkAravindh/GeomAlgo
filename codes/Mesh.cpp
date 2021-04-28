@@ -9,13 +9,13 @@ Mesh::Mesh(std::string Filename, size_t Poolsize) : ModelName(Filename), Poolsiz
 
 }
 
-Point* Mesh::createVertex(  double x,   double y,   double z) {
+Point* Mesh::createVertex(const double x, const double y, const double z) {
     Point P(x,y,z);
     Point * Pptr = createVertex(P);
     return Pptr;
 }
 
-Point* Mesh::createVertex(Point &P) {
+Point* Mesh::createVertex(const Point &P) {
 
     std::map<Point, Point*>::iterator it=allvertices.find(P);
     if(it != this->allvertices.end()){
@@ -31,7 +31,7 @@ Point* Mesh::createVertex(Point &P) {
     }
 }
 
-Triangle* Mesh::createTriangle(Point *P0, Point *P1, Point *P2,Triangle* parent) {
+Triangle* Mesh::createTriangle( Point *P0, Point *P1, Point *P2, Triangle* parent) {
 
     Triangle *newT = new Triangle(P0, P1, P2,this);
     if(parent == nullptr) {
@@ -250,7 +250,7 @@ void Mesh::delCertainEntryPT(Triangle* t) {
     }
 }
 
-Vector3 Mesh::getCentroid(CentroidType ct) {
+Vector3 Mesh::getCentroid(const CentroidType ct) {
 
     switch (ct) {
         case CentroidType::vertex_based:
@@ -395,7 +395,7 @@ void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::vector<Triang
 
 }
 
-double Mesh::computeVolume() {
+double Mesh::computeVolume()  {
 
     if(!is_Solid(nullptr, nullptr)) {
         return 0;
@@ -403,7 +403,7 @@ double Mesh::computeVolume() {
 
     std::vector<Point*> vertices;
     std::map<Point*, Vector3,ComparePoint> point_to_vector3;
-    getVertices(vertices);
+    this->getVertices(vertices);
     Bbox_3 BB;
     for(Point* ele : vertices) {
         BB.add_coordinates(ele->x(),ele->y(),ele->z());
@@ -437,7 +437,7 @@ double Mesh::computeVolume() {
     return total;
 }
 
-Vector3 Mesh::centroidVertex() {
+Vector3 Mesh::centroidVertex()   {
 
     std::vector<Point*> vertices;
     this->getVertices(vertices);
@@ -450,7 +450,7 @@ Vector3 Mesh::centroidVertex() {
     return centeroid_vertex;
 }
 
-Vector3 Mesh::centroidSurface() {
+Vector3 Mesh::centroidSurface()   {
 
     std::vector<Triangle*> triangles;
     this->getTriangles(triangles);
@@ -470,7 +470,7 @@ Vector3 Mesh::centroidSurface() {
     return centeroid_surface;
 }
 
-Vector3 Mesh::centroidVolume() {
+Vector3 Mesh::centroidVolume()   {
 
     std::vector<Point*> vertices;
     std::map<Point*, Vector3,ComparePoint> point_to_vector3;
@@ -523,7 +523,7 @@ Vector3 Mesh::centroidVolume() {
     return centroid_volume;
 }
 
-bool Mesh::is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonmanifold) {
+bool Mesh::is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonmanifold)   {
 
     std::cout << "Collecting border and Non-manifold edges " << std::endl;
     bool ismanifold = true;
