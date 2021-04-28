@@ -32,8 +32,8 @@ std::string getFileName(const std::string& s) {
 int main() {
   // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
  //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/morefiles_STL/Torus.stl";
-    std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/car_box_changed.stl";
-    //std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/case.stl";
+   // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/car_box_changed.stl";
+    std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/case.stl";
 
 
 
@@ -66,11 +66,15 @@ int main() {
      //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/reout.stl";
     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
 
-    std::vector<Triangle*> allttri;
+   /* std::vector<Triangle*> allttri;
     std::cout<<pMesh->getCentroid()<<std::endl;
     std::cout<<pMesh->getCentroid(CentroidType::area_based)<<std::endl;
     std::cout<<pMesh->getCentroid(CentroidType::volume_based)<<std::endl;
 
+    pMesh->translateMesh(tr);*/
+    Point* tr = new Point(0.5,0.9,0.9);
+    pMesh->translateMesh(tr);
+  //  pMesh->writeMeshSTL("case_scaled_z.stl");
     //std::cout<<pMesh->getCentroid(CentroidType::vertex_based)<<std::endl;
   //  std::cout<<pMesh->getCentroid(CentroidType::area_based)<<std::endl;
   /* std::vector<Point*> allpoints;
