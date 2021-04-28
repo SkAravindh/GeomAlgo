@@ -395,7 +395,18 @@ void Mesh::getRingNeigbyOrder(Point *p, unsigned int &&order, std::vector<Triang
 
 }
 
-double Mesh::computeVolume()  {
+double Mesh::getMesh_SurfaceArea() {
+
+    double total_area =0;
+    std::vector<Triangle*> alltriangle;
+    for(Triangle* t : alltriangle) {
+        double area = t->getArea();
+        total_area = total_area+area;
+    }
+    return total_area;
+}
+
+double Mesh::getMesh_Volume()  {
 
     if(!is_Solid(nullptr, nullptr)) {
         return 0;
@@ -629,6 +640,10 @@ void Mesh::translateMesh(const Point *p) {
         Vector3 dummy = to_Vector3(old);
         dummy+translate_vector;
         Point* newpoint = to_Point(dummy);
+      /*  double x_ = old->x()*1;
+        double y_ = old->y()*1;
+        double z_ = old->z()*0.9;
+        Point* newpoint = new Point(x_,y_,z_);*/
         old_to_new_point.insert(std::make_pair(old,newpoint));
     }
     std::vector<Triangle*> alltriangle;
@@ -651,7 +666,7 @@ void Mesh::standAlone(std::vector<Triangle*> &tv) {
 void Mesh::writeMeshSTL(std::string filename) {
     std::vector<Triangle*> outTri;
     this->getTriangles(outTri);
-    writeSTL(filename,outTri);
+    writeSTL(filename+".stl",outTri);
 }
 
 void Mesh::clear() {
