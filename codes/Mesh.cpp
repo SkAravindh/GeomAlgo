@@ -399,6 +399,7 @@ double Mesh::getMesh_SurfaceArea() {
 
     double total_area =0;
     std::vector<Triangle*> alltriangle;
+    this->getTriangles(alltriangle);
     for(Triangle* t : alltriangle) {
         double area = t->getArea();
         total_area = total_area+area;
