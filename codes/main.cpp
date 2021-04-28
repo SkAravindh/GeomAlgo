@@ -70,6 +70,7 @@ int main() {
     std::cout<<pMesh->getCentroid()<<std::endl;
     std::cout<<pMesh->getCentroid(CentroidType::area_based)<<std::endl;
     std::cout<<pMesh->getCentroid(CentroidType::volume_based)<<std::endl;
+
     //std::cout<<pMesh->getCentroid(CentroidType::vertex_based)<<std::endl;
   //  std::cout<<pMesh->getCentroid(CentroidType::area_based)<<std::endl;
   /* std::vector<Point*> allpoints;
