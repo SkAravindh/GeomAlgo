@@ -36,13 +36,14 @@ public:
     Mesh(std::string Filename, size_t Poolsize);
     Point* createVertex( const double x, const double y, const double z);
     Point* createVertex(const Point &P);
-    Vector3 getCentroid(const CentroidType ct=CentroidType::vertex_based);
     Triangle* createTriangle(Point *P0, Point *P1, Point *P2, Triangle* parent);
     std::vector< std::pair<EdgeOrder,EdgeOrder> > updateEdgeInfo(Triangle* To_change, Point* oldVertex, Point* newVertex); //used during edge collapse operation.
+    Vector3 getCentroid(const CentroidType ct=CentroidType::vertex_based);
     Vector3 centroidVertex();
     Vector3 centroidSurface();
     Vector3 centroidVolume();
-    double computeVolume() ;
+    double getMesh_Volume();
+    double getMesh_SurfaceArea();
     bool is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonmanifold);
     bool isNon_Manifold_Vertex(Point* input_vertex, std::vector<Triangle*> *ring_triangle);
     void storeTriangleInfo(Triangle* T);
@@ -65,8 +66,9 @@ public:
     void establishNeighofTriangle(Triangle *t);
     void getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv);
     void getAdjustenNeigh_1(const EdgeOrder& ed,std::vector<Triangle*> &tv);
-    void writeMeshSTL(std::string filename);
     void translateMesh(const Point* p);
+    void writeMeshSTL(std::string filename);
+
 
 
 private:
