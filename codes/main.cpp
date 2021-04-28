@@ -73,7 +73,8 @@ int main() {
 
     pMesh->translateMesh(tr);*/
     Point* tr = new Point(0.5,0.9,0.9);
-    pMesh->translateMesh(tr);
+//    pMesh->translateMesh(tr);
+  std::cout<< pMesh->getMesh_SurfaceArea() <<  std::endl;
   //  pMesh->writeMeshSTL("case_scaled_z.stl");
     //std::cout<<pMesh->getCentroid(CentroidType::vertex_based)<<std::endl;
   //  std::cout<<pMesh->getCentroid(CentroidType::area_based)<<std::endl;
