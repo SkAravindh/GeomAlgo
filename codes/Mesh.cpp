@@ -245,7 +245,6 @@ void Mesh::delCertainEntryPT(Triangle* t) {
             continue;
         }
         else {
-            p0->isAlive= false;
             eraseCertainEntryPT(mmpointTotriangles,p0,t);
         }
     }
@@ -514,8 +513,8 @@ Vector3 Mesh::centroidVolume() {
     for(auto it = triID_to_centre_volume_pair.begin(); it != triID_to_centre_volume_pair.end(); it++) {
 
         double current_volume     = it->second.first;
-        totalvolume = totalvolume+current_volume;
-        Vector3 tet_centroid = it->second.second;
+        totalvolume               = totalvolume+current_volume;
+        Vector3 tet_centroid      = it->second.second;
         tet_centroid*current_volume;
         centroid_volume+tet_centroid;
     }
@@ -531,7 +530,7 @@ bool Mesh::is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonm
     std::vector<EdgeOrder> outtemp;
     std::set<EdgeOrder>alledges;
     std::vector<Triangle *>::const_iterator it;
-    int border_count = 0;
+    int border_count      = 0;
     int nonmanifold_count = 0;
     for (it = allTriangles.begin(); it != allTriangles.end(); it++) {
         for (int j = 0; j < 3; j++) {
@@ -617,7 +616,7 @@ bool Mesh::isNon_Manifold_Vertex(Point *input_vertex, std::vector<Triangle*> *ri
         else {
             return false;
         }
-    }
+}
 
 void Mesh::standAlone(std::vector<Triangle*> &tv) {
     //std::cout << *allTriangles[0]->getCorners(0) << std::endl;
