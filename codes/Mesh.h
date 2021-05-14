@@ -14,6 +14,7 @@
 #include <set>
 #include "Edge.h"
 #include "Bbox_3.h"
+#include "Rtree.h"
 
 
 
@@ -42,6 +43,7 @@ public:
     Vector3 centroidVertex();
     Vector3 centroidSurface();
     Vector3 centroidVolume();
+    Bbox_3 faceBounds(const Triangle* t);
     double getMesh_Volume();
     double getMesh_SurfaceArea();
     bool is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonmanifold);
@@ -67,8 +69,9 @@ public:
     void getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv);
     void getAdjustenNeigh_1(const EdgeOrder& ed,std::vector<Triangle*> &tv);
     void translateMesh(const Point* p);
+    void computeRtree();
     void writeMeshSTL(std::string filename);
-
+    void computeclosest();
 
 
 private:
@@ -85,7 +88,8 @@ protected:
     //std::map<EdgeOrder, std::vector<Triangle*>> map_edgeTotriangles; //using multimap map bcoz easy to acess data but not efficient
     std::vector<Triangle*> allTriangles;
     std::vector<Triangle*> externalUse;
-
+    Rtree3d mFaceTree;
+    Rtree3d mVertexTree;
 protected:
     //Iterators
     typedef std::vector<Triangle*>::iterator TV_it;
