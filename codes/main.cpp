@@ -10,7 +10,7 @@
 #include "LoopEdges.cpp"
 
 //#include "verification/adaptdesire_version2_Send.cpp"
-#include "verification/adaptdesire_version2_1_Send.cpp"
+/*#include "verification/adaptdesire_version2_1_Send.cpp"
 #include "verification/fixnonmanifold.cpp"
 
 std::string getFileName(const std::string& s) {
@@ -27,15 +27,13 @@ std::string getFileName(const std::string& s) {
     }
 
     return("");
-}
+}*/
 
 int main() {
-  // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
- //   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/morefiles_STL/Torus.stl";
-   // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/car_box_changed.stl";
-    std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/case.stl";
-
-
+   std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+   // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/morefiles_STL/Torus.stl";
+   // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/283.stl";
+  //  std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/failing_model.stl";
 
     //  std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/Case3.stl";
    // std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/case3simplified.stl";
@@ -64,17 +62,34 @@ int main() {
 
 
      //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/reout.stl";
-    std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
 
-   /* std::vector<Triangle*> allttri;
+     std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
+     pMesh->computeRtree();
+     pMesh->computeclosest();
+  //  writePoints("po.vtk",po);
+  /*  for(auto ele : ring_2) {
+        std::vector<Triangle*> tri;
+        tri.push_back(ele);
+        writeSTL(std::to_string(count)+".stl",tri);
+        ++count;
+    }*/
+   // writeSTL("degenerated.stl",ring);
+
+ /*  std::cout << pMesh->is_Solid(nullptr, nullptr) << std::endl;
+   std::vector<Point*> allpoints;
+   pMesh->getVertices(allpoints);
+   for(auto ele : allpoints) {
+       if(pMesh->isNon_Manifold_Vertex(ele, nullptr)) {
+           std::cout<< "hi "<<std::endl;
+       }
+   }*/
+    /* std::vector<Triangle*> allttri;
     std::cout<<pMesh->getCentroid()<<std::endl;
     std::cout<<pMesh->getCentroid(CentroidType::area_based)<<std::endl;
     std::cout<<pMesh->getCentroid(CentroidType::volume_based)<<std::endl;
 
     pMesh->translateMesh(tr);*/
-    Point* tr = new Point(0.5,0.9,0.9);
-//    pMesh->translateMesh(tr);
-  std::cout<< pMesh->getMesh_SurfaceArea() <<  std::endl;
+
   //  pMesh->writeMeshSTL("case_scaled_z.stl");
     //std::cout<<pMesh->getCentroid(CentroidType::vertex_based)<<std::endl;
   //  std::cout<<pMesh->getCentroid(CentroidType::area_based)<<std::endl;
