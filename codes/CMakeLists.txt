@@ -19,6 +19,7 @@ set (Hpp
     Writedata.h
     Edge.h
     Macros.h
+    Rtree.h
     )
     
 set (Cpp
@@ -59,7 +60,11 @@ set (samples
     verification/fixnonmanifold.cpp
    # verification/adaptive_optimize.cpp
      )
+
      
+FIND_PACKAGE(Boost 1.65 REQUIRED)
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+
 set (Openmesh_Include  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/Openmesh/headers)
 set (Openmesh_Binaries ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/Openmesh/lib)
 include_directories(${Openmesh_Include})
@@ -79,6 +84,7 @@ target_link_libraries(${PROJECT_NAME}
                         Geom_Algo
                         Algos
                         ${OpenMesh_lib}
+                        ${Boost_LIBRARIES}
                         )
                         
 #target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR}) ${PROJECT_BINARY_DIR}--> path to the build directory
