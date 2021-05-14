@@ -659,6 +659,45 @@ void Mesh::translateMesh(const Point *p) {
     }
 }
 
+void Mesh::computeRtree() {
+
+    mFaceTree.clear();
+    std::vector<Triangle*> alltriangles;
+    this->getTriangles(alltriangles);
+    for(int i = 0; i<alltriangles.size(); i++) {
+        mFaceTree.insert(faceBounds(alltriangles.at(i)),i);
+    }
+
+    mVertexTree.clear();
+    for(int i=0; i< vAllvertices.size(); i++) {
+        if(!vAllvertices.at(i)->isAlive) continue;
+        Bbox_3 B;
+        B.add_coordinates(vAllvertices.at(i)->x(),vAllvertices.at(i)->y(),vAllvertices.at(i)->z());
+        mVertexTree.insert(B,i);
+    }
+}
+
+Bbox_3 Mesh::faceBounds(const Triangle *t) {
+    Bbox_3 B;
+    for(int i=0; i<3; i++) {
+        Point* p = t->getCorners(i);
+        B.add_coordinates(p->x(),p->y(),p->z());
+    }
+    return B;
+}
+
+void Mesh::computeclosest() {
+
+    size_t near = SIZE_MAX;
+    std::vector<Triangle*> alltriangles;
+    this->getTriangles(alltriangles);
+    std::cout<< *vAllvertices.at(0)<<std::endl;
+    Point* p_obj = new Point(-106.5618, 132.492, 5.43268 );
+    mVertexTree.queryNearest(p_obj,1,&near);
+    std::cout<<"near "<<near<<std::endl;
+    std::cout<< *vAllvertices.at(near)<<std::endl;
+}
+
 void Mesh::standAlone(std::vector<Triangle*> &tv) {
     //std::cout << *allTriangles[0]->getCorners(0) << std::endl;
     getRingNeigbyOrder(allTriangles[0]->getCorners(0), 1, tv);
