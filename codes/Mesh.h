@@ -7,11 +7,12 @@
 #include <memory>
 #include <cmath>
 #include <cfloat>
+#include <set>
+#include <random>
 #include "Point.h"
 #include "Triangle.h"
 #include "EdgeOrder.h"
 #include "Writedata.h"
-#include <set>
 #include "Edge.h"
 #include "Bbox_3.h"
 #include "Rtree.h"
@@ -71,7 +72,7 @@ public:
     void translateMesh(const Point* p);
     void computeRtree();
     void writeMeshSTL(std::string filename);
-    void computeclosest();
+    //void computeclosest();
 
 
 private:
