@@ -15,16 +15,31 @@ Bbox_3::Bbox_3(double x_min, double y_min,double z_min, double x_max, double y_m
 
 void Bbox_3::add_coordinates(double x, double y, double z) {
 
-    if(x < x_min){ x_min=x;}
-    if(y < y_min) {y_min=y;}
-    if(z < z_min) {z_min=z;}
-    if(x > x_max) {x_max=x;}
-    if(y > y_max) {y_max=y;}
-    if(z > z_max) {z_max=z;}
+    if(x < x_min) { x_min = x;}
+    if(y < y_min) { y_min = y;}
+    if(z < z_min) { z_min = z;}
+    if(x > x_max) { x_max = x;}
+    if(y > y_max) { y_max = y;}
+    if(z > z_max) { z_max = z;}
 
 }
 
+void Bbox_3::add_coordinates(double x, double y, double z, size_t id, Point* p) {
 
+    if(x < x_min) { x_min = x; ids[0]=id; allpts[0]=p;}
+    if(y < y_min) { y_min = y; ids[1]=id; allpts[1]=p;}
+    if(z < z_min) { z_min = z; ids[2]=id; allpts[2]=p;}
+    if(x > x_max) { x_max = x; ids[3]=id; allpts[3]=p;}
+    if(y > y_max) { y_max = y; ids[4]=id; allpts[4]=p;}
+    if(z > z_max) { z_max = z; ids[5]=id; allpts[5]=p;}
+}
+
+void Bbox_3::getPointIDS(size_t *bounds, Point* coords[]) {
+    for(int i=0; i<6; i++) {
+        bounds[i] = ids[i];
+        coords[i] = allpts[i];
+    }
+}
 double Bbox_3::xmin() const {
     return x_min;
 }
