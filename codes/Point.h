@@ -26,6 +26,7 @@ public:
 
 public:
     bool isAlive;
+    size_t ID;
 private:
     double coordinates[3];
 

@@ -686,7 +686,7 @@ Bbox_3 Mesh::faceBounds(const Triangle *t) {
     return B;
 }
 
-void Mesh::computeclosest() {
+/*void Mesh::computeclosest() {
 
     size_t near = SIZE_MAX;
     std::vector<Triangle*> alltriangles;
@@ -696,7 +696,7 @@ void Mesh::computeclosest() {
     mVertexTree.queryNearest(p_obj,1,&near);
     std::cout<<"near "<<near<<std::endl;
     std::cout<< *vAllvertices.at(near)<<std::endl;
-}
+}*/
 
 void Mesh::standAlone(std::vector<Triangle*> &tv) {
     //std::cout << *allTriangles[0]->getCorners(0) << std::endl;
