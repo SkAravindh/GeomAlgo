@@ -42,6 +42,7 @@ set (Algorithm_header
     Algorithms/AdaptiveRefinement_EdgeBased.h
     Algorithms/SelectiveRefinement.h
     Algorithms/HoleDetection.h
+    #Algorithms/ConvexHull_3D.cpp
     )
     
 set (Algorithm_Source
@@ -51,6 +52,7 @@ set (Algorithm_Source
     Algorithms/SelectiveRefinement.cpp
     Algorithms/HoleDetection.cpp
     Algorithms/SelectiveRefinement_Version2.cpp
+   # Algorithms/ConvexHull_3D.cpp
     )
     
 set (samples
@@ -58,6 +60,7 @@ set (samples
     verification/adaptdesire_version2_Send.cpp
     verification/adaptdesire_version2_1_Send.cpp
     verification/fixnonmanifold.cpp
+    verification/FluidDomain.cpp
    # verification/adaptive_optimize.cpp
      )
 
