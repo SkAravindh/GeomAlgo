@@ -45,6 +45,7 @@ inline Vector_3<T>& operator /= (const Vector_3<T> & rhs);
 inline Vector_3<T>& operator *= (double t);
 inline Vector_3<T>& operator /= (double t);
 inline Vector_3<T>& operator/(double t);
+bool is_valid();
 
 private:
 T e[3];
@@ -276,7 +277,17 @@ template<typename T>
   return Vector_3<T>(rhs.x()/t, rhs.y()/t, rhs.z()/t);
  }
 
+template<typename T>
+bool Vector_3<T>::is_valid() {
 
+  /*  if ( ( e[0] == 0 && e[1] == 0 && e[2] == 0 ) ) {
+        return false;
+    }
+    else {
+        return true;
+    }*/
+    return !( ( e[0] == 0 && e[1] == 0 && e[2] == 0 ) );
+}
 
 
 #endif

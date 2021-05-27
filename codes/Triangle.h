@@ -37,13 +37,15 @@ public:
     int getShortestEdgeID();
     int getPeakVertexID(const EdgeOrder& c_ed);
     int getChildSize();
+    bool has_Degenerated();
+    bool has_contained(Point* p);
     void setEdge(EdgeOrder* ed, unsigned int id);
     void setNeigh(int i, Triangle* t);
     void addChild(Triangle* t);
     void clearVchild();
     void getChildren(std::vector<Triangle*> &vchild);
     void setNewVertex(Point*p , unsigned int idx);
-
+    void flip();
     bool operator == (const Triangle &rhs) const;
     bool operator != (const Triangle &rhs) const;
     bool operator < (const Triangle &rhs) const;

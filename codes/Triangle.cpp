@@ -114,6 +114,22 @@ void Triangle::clearVchild()  {
     vchildren.clear();
 }
 
+bool Triangle::has_Degenerated() {
+    return (*getCorners(0) == *getCorners(1) && *getCorners(1) == *getCorners(2) && *getCorners(2) == *getCorners(0) ); 
+}
+
+bool Triangle::has_contained(Point *p) {
+    return ( (*getCorners(0) == *p) || (*getCorners(1) == *p) || (*getCorners(2) == *p) );
+}
+
+void Triangle::flip() {
+
+   Point* p0 = this->getCorners(0);
+   Point* p1 = this->getCorners(1);
+   this->setNewVertex(p0,1);
+   this->setNewVertex(p1,0);
+}
+
 int Triangle::getVertexID(Point *p) {
 
     for(int i =0; i<3; i++) {
