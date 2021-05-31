@@ -65,7 +65,7 @@ public:
     void delCertainEntryPT(Triangle* t);
     void delCertainEntryET(Triangle* t);
     void establishNeighcompleteMesh();
-    void establishEdgeinfo();
+    //void establishEdgeinfo();
     void establishNeighofTriangle(Triangle *t);
     void getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv);
     void getAdjustenNeigh_1(const EdgeOrder& ed,std::vector<Triangle*> &tv);
