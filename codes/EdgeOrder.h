@@ -29,6 +29,7 @@ public:
     Point *p0;
     Point *p1;
     EdgeStatus status= EdgeStatus::None;
+    bool feature_edge = false;
 public:
 
 

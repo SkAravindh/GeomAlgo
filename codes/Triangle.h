@@ -12,8 +12,6 @@ typedef Vector_3<double> Vector3;
 class Mesh; //fwd
 
 
-
-
 class Triangle {
 public:
     Triangle();
@@ -23,7 +21,6 @@ public:
     Point* getEdgeMidPoint(int i) const;
     Point* getCentroid() const;
     EdgeOrder getEO(int i) const;
-    EdgeOrder* getEdge(int i) const;
     Edge getEd(int i) const;
     Vector3 getNormalVector() const;
     double getArea() const;
@@ -33,13 +30,14 @@ public:
     int getVertexID(Point* p);
     int getTriangleID(Triangle* t);
     int getLongestEdgeID();
-    EdgeOrder* getEO_pointer(int i);
+    EdgeOrder& getfE(int i);
     int getShortestEdgeID();
     int getPeakVertexID(const EdgeOrder& c_ed);
     int getChildSize();
     bool has_Degenerated();
     bool has_contained(Point* p);
-    void setEdge(EdgeOrder* ed, unsigned int id);
+    void setEdge(EdgeOrder &ed, unsigned int id);
+    void setEdge_pointer(EdgeOrder *ed, unsigned int id);
     void setNeigh(int i, Triangle* t);
     void addChild(Triangle* t);
     void clearVchild();
@@ -54,11 +52,15 @@ public:
 public:
     bool isAlive ;
     int ID;
+public:
+    bool is_set=false;
+    bool is_inside=false;
 private:
 
     Point* corners[3];
     Triangle* neigb[3];
     EdgeOrder* edges[3];
+    EdgeOrder fEdges[3];
     std::vector<Triangle*> vchildren;
     Mesh *powner;
     Triangle* parentT=this;
