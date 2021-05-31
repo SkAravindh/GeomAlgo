@@ -585,7 +585,7 @@ bool Mesh::is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonm
     return ismanifold;
 }
 
-void Mesh::establishEdgeinfo() {
+/*void Mesh::establishEdgeinfo() {
 
     std::cout << "Establishing Edge informations " << std::endl;
 
@@ -608,7 +608,7 @@ void Mesh::establishEdgeinfo() {
             }
         }
     }
-}
+}*/
 
 bool Mesh::isNon_Manifold_Vertex(Point *input_vertex, std::vector<Triangle*> *ring_triangle ) {
 

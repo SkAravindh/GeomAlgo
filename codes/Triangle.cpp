@@ -1,13 +1,10 @@
 #include "Triangle.h"
 
 Triangle::Triangle() {
+
     corners[0] = nullptr;
     corners[1] = nullptr;
     corners[2] = nullptr;
-
-    edges[0] = nullptr;
-    edges[1] = nullptr;
-    edges[2] = nullptr;
 }
 
 Triangle::Triangle(Point* P0, Point* P1, Point* P2, Mesh* mobj): powner(mobj) {
@@ -27,10 +24,6 @@ void Triangle::Initilize(Point *P0, Point *P1, Point *P2) {
 
 Point* Triangle::getCorners(int i) const {
     return corners[i];
-}
-
-EdgeOrder* Triangle::getEdge(int i) const {
-    return edges[i];
 }
 
 EdgeOrder Triangle::getEO(int i) const {
@@ -149,7 +142,11 @@ void Triangle::setNewVertex(Point *p, unsigned int idx) {
     corners[idx] = p;
 }
 
-void Triangle::setEdge(EdgeOrder *ed, unsigned int id) {
+void Triangle::setEdge(EdgeOrder &ed, unsigned int id) {
+    fEdges[id] = ed;
+}
+
+void Triangle::setEdge_pointer(EdgeOrder *ed, unsigned int id) {
     edges[id] = ed;
 }
 
@@ -180,8 +177,8 @@ int Triangle::getLongestEdgeID()   {
     return idx;
 }
 
-EdgeOrder* Triangle::getEO_pointer(int i) {
-    return edges[i];
+EdgeOrder& Triangle::getfE(int i) {
+    return fEdges[i];
 }
 
 int Triangle::getShortestEdgeID()   {

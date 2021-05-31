@@ -323,7 +323,7 @@ void DesiredEdge2_1Send::markborder(Triangle* t, EdgeOrder* ed1, EdgeOrder* ed2,
         for(int i=0; i<3; i++){
            EdgeOrder temped = tri->getEO(i);
            EdgeOrder* poitered = new EdgeOrder(temped.p0,temped.p1);
-           tri->setEdge(poitered,i);
+           tri->setEdge_pointer(poitered,i);
            if(flag) {
                if (temped == *ed1 || temped == *ed2) {
                    poitered->status = EdgeStatus::Border;
