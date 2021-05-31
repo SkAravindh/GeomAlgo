@@ -7,12 +7,10 @@
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
-//#include "LoopEdges.cpp"
-//#include "Algorithms/ConvexHull_3D.h"
+//#include "verification/FluidDomain.cpp"
 //#include "verification/adaptdesire_version2_Send.cpp"
 /*#include "verification/adaptdesire_version2_1_Send.cpp"
-#include "verification/fixnonmanifold.cpp"
-#
+
 std::string getFileName(const std::string& s) {
 
     char sep = '/';
@@ -32,11 +30,19 @@ std::string getFileName(const std::string& s) {
 
 int main() {
 
- //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+  // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
    // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/morefiles_STL/Torus.stl";
    // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/283.stl";
   //  std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/failing_model.stl";
-    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/Fluid_volume/Pipe_actual.stl";
+  //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/Fluid_volume/Pipe_actual.stl";
+    std::string filename= "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/Injektor_actual_geometry_R.stl";
+   // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/Pipe_Remesh.stl";
+   // std::string filename="/home/aravindhkumar.kalimuthu/Downloads/testing_stls/Fluid_volume/Griffschale_actual_geometry.stl";
+
+
+
+
+
 
     //  std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/Case3.stl";
    // std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/case3simplified.stl";
@@ -67,7 +73,16 @@ int main() {
      //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/reout.stl";
 
      std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
-    pMesh->printContainersInfo();
+ 
+
+    //Fluid_Domain obj(pMesh);
+    //obj.identify_holes();
+    //obj.fun();
+   // obj.establish_connectivity();
+   // pMesh->writeMeshSTL("insidetri");
+//    if(pMesh->is_Solid(nullptr, nullptr)) {
+//        std::cout<<"it is solid " <<std::endl;
+//    }
 
     /*std::random_device rd;
     std::random_device rd_1;
