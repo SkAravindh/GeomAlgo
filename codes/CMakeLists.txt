@@ -58,11 +58,11 @@ set (Algorithm_Source
     )
     
 set (samples
-   # verification/adaptdesire_version2.cpp
-    verification/adaptdesire_version2_Send.cpp
-    verification/adaptdesire_version2_1_Send.cpp
-    #verification/fixnonmanifold.cpp
-   # verification/FluidDomain.cpp
+   # old_files/adaptdesire_version2.cpp
+    old_files/adaptdesire_version2_Send.cpp
+    old_files/adaptdesire_version2_1_Send.cpp
+    old_files/fixnonmanifold.cpp
+   # old_files/FluidDomain.cpp
      )
 
      
