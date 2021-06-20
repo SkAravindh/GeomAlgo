@@ -10,7 +10,8 @@ Mesh::Mesh(std::string Filename, size_t Poolsize) : ModelName(Filename), Poolsiz
 }
 
 Point* Mesh::createVertex(const double x, const double y, const double z) {
-    Point P(x,y,z);
+
+    Point P(x,y,z,this);
     Point * Pptr = createVertex(P);
     return Pptr;
 }
@@ -22,8 +23,10 @@ Point* Mesh::createVertex(const Point &P) {
         return it->second;
     }
     else{
-        Point * pobj = new Point(P.x(),P.y(),P.z());
+        unsigned int size_ = vAllvertices.size();
+        Point * pobj = new Point(P.x(),P.y(),P.z(),this);
         this->allvertices.insert(std::make_pair(*pobj,pobj));
+        pobj->ID = size_;
         vAllvertices.push_back(pobj);
         ++Number_OF_Vertices;
         pobj->isAlive = true;
@@ -143,21 +146,34 @@ void Mesh::getTriangles(std::vector<Triangle*> &TV) {
     }
 }
 
+void Mesh::getVerticesAll(std::vector<Point*> &vp) {
+    for(Point* pts : vAllvertices) {
+        if(!(pts->isAlive)) continue;
+        vp.push_back(pts);
+    }
+}
+
+void Mesh::getQuads(std::vector<Quad*> &quad) {
+
+    for(int i=0; i<allQuads.size(); i++) {
+        quad.push_back(allQuads.at(i));
+    }
+}
+
 void Mesh::getVertices(std::vector<Point*> &vp) {
 
-    std::set<Point*> allpoints;
-   // std::vector<Point*> vecpoint;
-    TV_it it;
-    for(it = allTriangles.begin(); it != allTriangles.end(); it++) {
+    std::map<Point,Point*> point_to_point;
+    for(auto it = allTriangles.begin(); it != allTriangles.end(); it++) {
         if(!(*it)->isAlive) continue;
         for(int i=0; i<3; i++) {
             Point* p = (*it)->getCorners(i);
-            allpoints.insert(p);
-       //     vecpoint.push_back(p);
+            if(point_to_point.find(*p) == point_to_point.end()) {
+                point_to_point.insert({*p,p});
+                vp.push_back(p);
+            }
         }
     }
- //   std::cout<< "vecpoint " <<vecpoint.size() << std::endl;
-    vp.assign(allpoints.begin(),allpoints.end());
+
 }
 
 void Mesh::fillTriangleContainers(std::vector<Triangle*> &tv,VecContainerName VN ) {
@@ -262,6 +278,19 @@ Vector3 Mesh::getCentroid(const CentroidType ct) {
         default:
             break;
     }
+}
+
+Vector3 Mesh::getVertexNormal(Point* p) {
+
+    std::vector<Triangle*> ring;
+    getRingNeigbyOrder(p,1,ring);
+    Vector3 nnv(0,0,0);
+    for(Triangle* t : ring) {
+        Vector3 temp = t->getNormalVector().make_unit_vector();
+        nnv = nnv + temp;
+    }
+    nnv/ring.size();
+    return nnv;
 }
 
 //used during edge collapse operation.
@@ -686,6 +715,45 @@ Bbox_3 Mesh::faceBounds(const Triangle *t) {
     return B;
 }
 
+Quad* Mesh::addQuad(Point* ID_0, Point* ID_1, Point* ID_2, Point* ID_3) {
+    Quad* obj = new Quad(ID_0, ID_1, ID_2, ID_3,this);
+    unsigned int size_ = allQuads.size();
+    obj->ID = size_;
+    allQuads.push_back(obj);
+    return obj;
+}
+
+void Mesh::createQuadFromTriangle() {
+
+    std::vector<Triangle*> all_triangle;
+    getTriangles(all_triangle);
+    for(Triangle* T : all_triangle) {
+        if(T->is_set) continue;
+        int Longest_Edge = T->getLongestEdgeID();
+        EdgeOrder LE = T->getEO(Longest_Edge);
+        std::vector<Triangle*> NeighTri;
+        this->getAdjustenNeigh_1(LE,NeighTri);
+        Triangle* opposite = nullptr;
+        for(auto NeighT : NeighTri) {
+            if(*NeighT == *T) continue;
+            opposite = NeighT;
+            opposite->is_set = true;
+        }
+        Point* v0 = T->getCorners(Longest_Edge);
+        Point* v1 = T->getCorners(indexOrder_1(Longest_Edge));
+        Point* v2 = T->getCorners(indexOrder_2(Longest_Edge));
+        int opposite_corner_id = opposite->getThirdCorner(v1,v2);
+        Point* v3 = opposite->getCorners(opposite_corner_id);
+        Quad* obj =   addQuad(v0,v1,v3,v2);
+      //  std::cout<<v0->ID<<" " <<v1->ID<<" " <<v3->ID<<" " <<v2->ID<<std::endl;
+//        for(int i=0; i<4; i++) {
+//            std::cout << obj->getCoordID(i) << " ";
+//        }
+       // std::cout<<std::endl;
+    }
+
+    std::cout<<"quad creation is done " << std::endl;
+}
 /*void Mesh::computeclosest() {
 
     size_t near = SIZE_MAX;
@@ -708,6 +776,8 @@ void Mesh::writeMeshSTL(std::string filename) {
     this->getTriangles(outTri);
     writeSTL(filename+".stl",outTri);
 }
+
+
 
 void Mesh::clear() {
 

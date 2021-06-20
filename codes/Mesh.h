@@ -16,10 +16,11 @@
 #include "Edge.h"
 #include "Bbox_3.h"
 #include "Rtree.h"
-
-
+#include "Quad.h"
 
 class Triangle; //fwd
+class Point; //fwd
+class Quad; //fwd
 
 
 enum VecContainerName{
@@ -30,6 +31,8 @@ enum VecContainerName{
 enum class CentroidType {
     vertex_based, area_based, volume_based
 };
+
+
 
 class Mesh {
 public:
@@ -44,6 +47,7 @@ public:
     Vector3 centroidVertex();
     Vector3 centroidSurface();
     Vector3 centroidVolume();
+    Vector3 getVertexNormal(Point* p);
     Bbox_3 faceBounds(const Triangle* t);
     double getMesh_Volume();
     double getMesh_SurfaceArea();
@@ -51,7 +55,9 @@ public:
     bool isNon_Manifold_Vertex(Point* input_vertex, std::vector<Triangle*> *ring_triangle);
     void storeTriangleInfo(Triangle* T);
     void getTriangles(std::vector<Triangle*> &TV);
-    void getVertices(std::vector<Point*> &vp) ;
+    void getVertices(std::vector<Point*> &vp);
+    void getVerticesAll(std::vector<Point*> &vp);
+    void getQuads(std::vector<Quad*> &quad);
     void standAlone(std::vector<Triangle*> &tv);
     void printContainersInfo();
     void clear();
@@ -71,6 +77,8 @@ public:
     void getAdjustenNeigh_1(const EdgeOrder& ed,std::vector<Triangle*> &tv);
     void translateMesh(const Point* p);
     void computeRtree();
+    void createQuadFromTriangle();
+    Quad* addQuad(Point* ID_0, Point* ID_1, Point* ID_2, Point* ID_3);
     void writeMeshSTL(std::string filename);
     //void computeclosest();
 
@@ -79,7 +87,7 @@ private:
     std::string ModelName;
     size_t Poolsize;
 
-protected:
+private:
     std::map<Point, Point*> allvertices;
     std::vector<Point*> vAllvertices;
     int Number_OF_Vertices=0;
@@ -89,8 +97,10 @@ protected:
     //std::map<EdgeOrder, std::vector<Triangle*>> map_edgeTotriangles; //using multimap map bcoz easy to acess data but not efficient
     std::vector<Triangle*> allTriangles;
     std::vector<Triangle*> externalUse;
+    std::vector<Quad*> allQuads;
     Rtree3d mFaceTree;
     Rtree3d mVertexTree;
+
 protected:
     //Iterators
     typedef std::vector<Triangle*>::iterator TV_it;
@@ -100,6 +110,8 @@ protected:
     typedef std::set<Point*>::iterator PS_it;
     typedef std::multimap<Point*, Triangle*,ComparePoint>::iterator MMPT;
     typedef std::multimap<EdgeOrder, Triangle*>::iterator MMET;
+
+
 
 
 };
