@@ -744,16 +744,11 @@ void Mesh::createQuadFromTriangle() {
         Point* v2 = T->getCorners(indexOrder_2(Longest_Edge));
         int opposite_corner_id = opposite->getThirdCorner(v1,v2);
         Point* v3 = opposite->getCorners(opposite_corner_id);
-        Quad* obj =   addQuad(v0,v1,v3,v2);
-      //  std::cout<<v0->ID<<" " <<v1->ID<<" " <<v3->ID<<" " <<v2->ID<<std::endl;
-//        for(int i=0; i<4; i++) {
-//            std::cout << obj->getCoordID(i) << " ";
-//        }
-       // std::cout<<std::endl;
+        addQuad(v0,v1,v3,v2);
     }
-
     std::cout<<"quad creation is done " << std::endl;
 }
+
 /*void Mesh::computeclosest() {
 
     size_t near = SIZE_MAX;
