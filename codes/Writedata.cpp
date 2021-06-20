@@ -36,8 +36,8 @@ void writeSTL(const std::string& filename, std::vector<Triangle* > &patch) {
     file.open(filename,std::ios_base::app);
     file <<"solid " << std::endl;
     for(int i=0; i<patch.size(); i++){
-        //file <<" facet normal "<<patch.at(i)->getNormalVector().x()<<std::scientific<<" "<<patch.at(i)->getNormalVector().y()<<std::scientific<<" "<<patch.at(i)->getNormalVector().z()<<std::scientific<<std::endl;
-        file <<" facet normal "<<patch.at(i)->getNormalVector().x()<<" "<<patch.at(i)->getNormalVector().y()<<" "<<patch.at(i)->getNormalVector().z()<<std::endl;
+        file <<" facet normal "<<patch.at(i)->getNormalVector().x()<<std::scientific<<" "<<patch.at(i)->getNormalVector().y()<<std::scientific<<" "<<patch.at(i)->getNormalVector().z()<<std::scientific<<std::endl;
+        //file <<" facet normal "<<patch.at(i)->getNormalVector().x()<<" "<<patch.at(i)->getNormalVector().y()<<" "<<patch.at(i)->getNormalVector().z()<<std::endl;
         file <<"  outer loop "<< std::endl;
         file <<"    vertex "<<patch[i]->getCorners(0)->x()<<" "<<patch[i]->getCorners(0)->y()<<" "<<patch[i]->getCorners(0)->z()<<std::endl;
         file <<"    vertex "<<patch[i]->getCorners(1)->x()<<" "<<patch[i]->getCorners(1)->y()<<" "<<patch[i]->getCorners(1)->z()<<std::endl;
@@ -84,5 +84,39 @@ void writeVTK(const std::string& filename, std::shared_ptr<Mesh> &mesh) {
         Vector3 nnv = (*it)->getNormalVector();
         vtk_file << nnv[0] << " " << nnv[1] << " " << nnv[2] << std::endl;
     }
+    vtk_file.close();
+}
+
+void writequad(const std::string& filename, std::shared_ptr<Mesh> &mesh) {
+
+    std::vector<Point*> allpoints;
+    std::vector<Quad*> quads;
+    mesh->getVerticesAll(allpoints);
+    mesh->getQuads(quads);
+    std::ofstream vtk_file;
+    vtk_file.open(filename);
+    vtk_file << "# vtk DataFile Version 2.0" << std::endl;
+    vtk_file << "Quad_Data" << std::endl;
+    vtk_file << "ASCII" << std::endl;
+    vtk_file << "DATASET UNSTRUCTURED_GRID" << std::endl;
+    vtk_file << "POINTS " << allpoints.size() << " Float64" << std::endl;
+    for(Point* pts : allpoints) {
+        vtk_file << pts->x() << " " << pts->y() << " " << pts->z() << std::endl;
+    }
+    vtk_file << "CELLS " << quads.size() << " " << 5 * quads.size() << std::endl;
+    for(Quad* element : quads) {
+        vtk_file<< "4 " ;
+        for(int i=0; i<4; i++) {
+            vtk_file << element->getCoordID(i)->ID<< " ";
+        }
+        vtk_file << std::endl;
+    }
+    vtk_file << std::endl;
+
+    vtk_file << "CELL_TYPES " << quads.size() << std::endl;
+    for(int i=0; i<quads.size(); i++){
+        vtk_file << "9 " <<std::endl;
+    }
+
     vtk_file.close();
 }
