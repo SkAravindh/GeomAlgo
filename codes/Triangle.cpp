@@ -50,7 +50,7 @@ Point* Triangle::getEdgeMidPoint(int i) const {
     Vector3 v0(p0->x(),p0->y(),p0->z());
     Vector3 v1(p1->x(),p1->y(),p1->z());
     Vector3 sum = v0+v1;
-    Point* mid = new Point(sum.x()/2,sum.y()/2,sum.z()/2);
+    Point* mid = new Point(sum.x()/2,sum.y()/2,sum.z()/2,nullptr);
     return mid;
 }
 
@@ -67,7 +67,7 @@ Point* Triangle::getCentroid() const {
     v0+v1;
     v0+v2;
 
-    Point* centeroid = new Point(v0.x()/3, v0.y()/3, v0.z()/3);
+    Point* centeroid = new Point(v0.x()/3, v0.y()/3, v0.z()/3, nullptr);
     return centeroid;
 
 }
@@ -193,6 +193,23 @@ int Triangle::getShortestEdgeID()   {
             idx = i;
             //    std::cout << ed << "distance " << current_dis << " " << "id " << idx << std::endl;
         }
+    }
+    return idx;
+}
+
+unsigned int Triangle::getThirdCorner(Point *v1, Point *v2) {
+
+    int found=0;
+    unsigned int idx = -1;
+    for(int i=0; i<3; i++) {
+        Point* p = this->getCorners(i);
+        if(*p==*v1 || *p==*v2) continue;
+        found = found+1;
+        idx=i;
+    }
+    if(found !=1 || idx ==-1){
+        std::cout<<"found count is not one " << std::endl;
+        throw "found count is not one";
     }
     return idx;
 }
