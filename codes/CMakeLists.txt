@@ -45,7 +45,7 @@ set (Algorithm_header
     Algorithms/ExtractIntTriangle.h
     #Algorithms/ConvexHull_3D.cpp
     )
-    
+        
 set (Algorithm_Source
     Algorithms/MidpointSubdivision.cpp
     Algorithms/LaplacianSmoothing.cpp
@@ -56,6 +56,7 @@ set (Algorithm_Source
     Algorithms/ExtractIntTriangle.cpp
    # Algorithms/ConvexHull_3D.cpp
     )
+    
     
 set (samples
    # old_files/adaptdesire_version2.cpp
@@ -78,7 +79,7 @@ set (OpenMesh_lib   ${Openmesh_Binaries}/libOpenMeshTools.so
                     ${Openmesh_Binaries}/libOpenMeshCore.so.9.0
         )
     
-add_library(Algos STATIC ${samples} ${Algorithm_header} ${Algorithm_Source} )
+add_library(Algos STATIC ${samples} ${Algorithm_header} ${Algorithm_Source}  )
 
 add_library(Geom_Algo STATIC ${Hpp} ${Cpp} )
 
