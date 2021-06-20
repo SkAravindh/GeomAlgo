@@ -35,7 +35,7 @@ public:
     }
 
     static Point* fromboost(const BoostPoint &a) {
-       Point* obj = new Point(bg::get<0>(a), bg::get<1>(a), bg::get<2>(a));
+       Point* obj = new Point(bg::get<0>(a), bg::get<1>(a), bg::get<2>(a), nullptr);
        return obj;
     }
 
