@@ -2,15 +2,20 @@
 #define POINT_H
 #include <iostream>
 #include <tuple>
+#include <memory>
+#include "Vector_3.h"
 
+class Mesh; //fwd
+typedef Vector_3<double> Vector3;
 
 class Point{
 public:
     Point();
-    Point(double x, double y, double z);
+    Point(double x, double y, double z, Mesh* mesh);
     double x() const;
     double y() const;
     double z() const;
+    Vector3 vertexNormal();
     bool operator < (const Point &rhs) const;
     bool operator > (const Point &rhs) const;
     bool operator == (const Point &rhs) const;
@@ -26,10 +31,10 @@ public:
 
 public:
     bool isAlive;
-    size_t ID;
+    unsigned int ID;
 private:
     double coordinates[3];
-
+    Mesh* powner;
 };
 
 struct ComparePoint {

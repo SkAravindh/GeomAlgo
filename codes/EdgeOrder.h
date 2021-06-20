@@ -1,7 +1,7 @@
 #ifndef EDGEORDER_H
 #define EDGEORDER_H
 #include "Point.h"
-#include "Vector_3.h"
+//#include "Vector_3.h"
 //#include "Geom_Support.h"
 
 enum EdgeStatus {
@@ -11,8 +11,7 @@ enum EdgeStatus {
     None
 };
 
-
-typedef Vector_3<double> Vector3;
+//typedef Vector_3<double> Vector3;
 
 class EdgeOrder {
 public:

@@ -418,3 +418,32 @@ bool TriangleBoxIntersection(Triangle *T, Bbox_3 &box) {
 
     return true;
 }
+
+bool lineSegmentIntersection(Vector3 &a, Vector3 &b, Vector3 &c, Vector3 &d) {
+
+    bool is_intersects = false;
+    Vector3 r = b-a;
+    Vector3 s = d-c;
+    Vector3 q = a-c;
+
+    double dot_qs = dot(q,s);
+    double dot_sr = dot(s,r);
+    double dot_qr = dot(q,r);
+    double dot_ss = dot(s,s);
+    double dot_rr = dot(r,r);
+
+    double nurmer = ( dot_qs * dot_sr ) - ( dot_qr * dot_ss );
+    double denorm = ( dot_rr * dot_ss ) - ( dot_sr * dot_sr );
+
+    double t  = nurmer/denorm;
+    double u  = ( dot_qs + (t*dot_sr) )/ dot_ss;
+
+    Vector3 p0 = a + t*r; //intersecting point.
+    Vector3 p1 = c + u*s; //intersecting point.
+    Vector3 g  = p1-p0;
+  //  std::cout << t<<" "<<u<<" "<<g<<std::endl;
+    if( (0 <= t && t <=1) && (0 <= u && u <=1) && g.lenght() <= 0.001) {
+        is_intersects = true;
+    }
+    return is_intersects;
+}

@@ -43,6 +43,6 @@ private:
 void writePoints(const std::string& filename,std::vector<Point*> &bp);
 void writeSTL(const std::string& filename , std::vector<Triangle*> &a);
 void writeVTK(const std::string& filename, std::shared_ptr<Mesh> &mesh);
-
+void writequad(const std::string& filename, std::shared_ptr<Mesh> &mesh);
 
 #endif

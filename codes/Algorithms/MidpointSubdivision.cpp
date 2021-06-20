@@ -67,7 +67,8 @@ namespace EdgeMidPoint {
 
         pMesh->getTriangleContainers(TV, external);
         for (auto ele : TV) {
-            pMesh->delCertainTriInalltriangles(ele);
+            //pMesh->delCertainTriInalltriangles(ele);
+            ele->isAlive = false;
         }
 
         for (int i = 0; i < TV.size(); i++) {
@@ -149,7 +150,8 @@ namespace FaceMidPoint {
         for (auto ele : datastructT) {
             pMesh->delCertainEntryPT(ele);
             pMesh->delCertainEntryET(ele);
-            pMesh->delCertainTriInalltriangles(ele);
+           // pMesh->delCertainTriInalltriangles(ele);
+           ele->isAlive = false;
         }
 
         std::cout << "final triangle " << TV.size() << std::endl;

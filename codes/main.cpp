@@ -30,17 +30,16 @@ std::string getFileName(const std::string& s) {
 
 int main() {
 
-  // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-   // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/morefiles_STL/Torus.stl";
+  //std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
+    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/Cube_Remesh.stl";
+
+    // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/morefiles_STL/Torus.stl";
    // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/283.stl";
   //  std::string filename ="/home/aravindhkumar.kalimuthu/Downloads/failing_model.stl";
   //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/Fluid_volume/Pipe_actual.stl";
-    std::string filename= "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/Injektor_actual_geometry_R.stl";
-   // std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/Pipe_Remesh.stl";
+    //std::string filename= "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/Injektor_actual_geometry_R.stl";
+  //  std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/Pipe_Remesh.stl";
    // std::string filename="/home/aravindhkumar.kalimuthu/Downloads/testing_stls/Fluid_volume/Griffschale_actual_geometry.stl";
-
-
-
 
 
 
@@ -73,16 +72,39 @@ int main() {
      //std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/reout.stl";
 
      std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
+    pMesh->createQuadFromTriangle();
+    writequad("quad.vtk",pMesh);
+     std::vector<Point*> allpoints;
+
  
 
-    //Fluid_Domain obj(pMesh);
-    //obj.identify_holes();
-    //obj.fun();
-   // obj.establish_connectivity();
-   // pMesh->writeMeshSTL("insidetri");
-//    if(pMesh->is_Solid(nullptr, nullptr)) {
-//        std::cout<<"it is solid " <<std::endl;
-//    }
+   // writequad("quad.vtk", pMesh);
+  /*   Point* p = alltri[0]->getCorners(0);
+     Vector3 un = 1.2*(alltri[0]->getNormalVector().make_unit_vector());
+     Vector3 sum = un + to_Vector3(p);
+    std::cout<<"normal " <<1.2*(alltri[0]->getNormalVector().make_unit_vector())<<" "<<"sum "<<sum <<std::endl;
+     std::cout<<"p "<<*p<<std::endl;
+     std::vector<Triangle*> onering;
+     pMesh->getRingNeigbyOrder(p,1,onering);
+     Vector3 nnv;
+     for(auto ele : onering) {
+         Triangle* tri = ele;
+        Vector3 nnv1 = tri->getNormalVector().make_unit_vector();
+        nnv = nnv + nnv1;
+     }
+     std::cout<<"nnv " << nnv<<" "<<"size "<<onering.size() <<std::endl;
+     nnv/onering.size();
+    std::cout<<"nnv_normalized " << nnv<<std::endl;
+     Vector3 scaled_nnv = Vector3(nnv.x(),nnv.y(),1.2*(nnv.z()));
+     std::cout<<"nnv_scaled " << scaled_nnv << std::endl;
+     Vector3 p_vec = to_Vector3(p);
+     std::cout<<"sum " <<p_vec + scaled_nnv << std::endl;
+     */
+
+    // std::cout<<"nnv " << 5*(nnv)<<std::endl;
+   /* std::vector<Point*> allpoints;
+    pMesh->getVertices(allpoints);
+
 
     /*std::random_device rd;
     std::random_device rd_1;
@@ -172,26 +194,6 @@ int main() {
 
 
 
-//edgedesired
-//    DesiredEdge obj(pMesh);
-//    obj.do_refine();
-//    pMesh->writeMeshSTL("finall1.stl");
-
-//        std::vector<Triangle*> alltv;
-//        pMesh->getTriangles(alltv);
-//    SelectiveRefine obj(pMesh);
-//    obj.loadParameter(2);
-//    obj.createPatch(alltv[0], nullptr,10);
-//    obj.doRefine();
-//    obj.createPatch(alltv[3000], nullptr,10);
-//    obj.doRefine();
-//    obj.createPatch(alltv[4000], nullptr,10);
-//    obj.doRefine();
-//    obj.createPatch(alltv[450], nullptr,10);
-//    obj.doRefine();
-//    pMesh->writeMeshSTL("out.stl");
-
-
 
   // Refine obj(pMesh);
    //obj.doRefine(0);
@@ -223,27 +225,6 @@ int main() {
 
  
 
-
-//    Mesh* pMesh = new Mesh();
-//
-//    Point* p0 = pMesh->createVertex(-4,3,0);
-//    Point* p1 = pMesh->createVertex(4,3,0);
-//    Point* p2 = pMesh->createVertex(-3,-5,4);
-//    Triangle* tri = new Triangle(p0,p1,p2,&*pMesh);
-//
-//    Point* v0 = pMesh->createVertex(2, 2, 1);
-//    Point* v1 = pMesh->createVertex(5, 2, 1);
-//    Point* v2 = pMesh->createVertex(3, 6, 1);
-//    Triangle* tri1 = new Triangle(v0,v1,v2,&*pMesh);
-//    std::cout << tri1->getNormalVector() << std::endl;
-//
-//
-//    Point* u0 = pMesh->createVertex(3, 2, 6);
-//    Point* u1 = pMesh->createVertex(11, 2, 5);
-//    Point* u2 = pMesh->createVertex(13, 10, 5);
-//    Triangle* tri2 = new Triangle(u0,u1,u2,&*pMesh);
-//    std::cout << tri2->getNormalVector() << std::endl;
-  //bool result = TriangleTriangleIntersection(tri1,tri2);
 
 
 

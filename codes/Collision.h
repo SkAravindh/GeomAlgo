@@ -20,6 +20,9 @@ struct Plane_3{
     vector3 normal;
     vector3 p;
 };
+
+
+
 bool MTRayTriangleIntersection(vector3 rayOrigin, vector3 rayVector, Triangle *T, vector3 & Intersecting_Point );
 bool RayTriangleIntersection(vector3 rayOrigin, vector3 rayVector, Triangle *T, vector3 & Intersecting_Point );
 
@@ -35,4 +38,6 @@ bool PerformanceTest(vector3 axis, std::vector<vector3> vertex, std::vector<doub
 void GetMinMax(double po,double p1,double p2, double &pmin, double &pmax);
 void GetMinMax(double &xmin, double &ymin, double &zmin, double &xmax, double &ymax, double &zmax, std::vector<vector3> Vertex_RE);
 
+//Line Segment INtersection. Based on following tutorial------> https://www.youtube.com/watch?v=ELQG5OvmAE8
+bool lineSegmentIntersection(Vector3 &a, Vector3 &b, Vector3 &c, Vector3 &d);
 #endif

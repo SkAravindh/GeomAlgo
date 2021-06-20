@@ -306,7 +306,7 @@ double getMinimumDistance(const Triangle* t, const Point* p) {
 
     Vector3* prj_point = new Vector3 ();
     if(brayCentric(t,p,prj_point)) {
-        Point* p0 = new Point(prj_point->x(),prj_point->y(),prj_point->z());
+        Point* p0 = new Point(prj_point->x(),prj_point->y(),prj_point->z(), nullptr);
         double dis = getDistance(p0,p);
         return dis;
     }
@@ -340,13 +340,13 @@ double segmentPointDistance(const Point *start, const Point* end, const Point* p
     double is_on_segment = dot(edge_v1v2, edge_v1p)/(distance*distance);
 
     if(is_on_segment < 0 ) {
-        prj_point_dummy= new Point(start_p1.x(),start_p1.y(),start_p1.z());
+        prj_point_dummy= new Point(start_p1.x(),start_p1.y(),start_p1.z(), nullptr);
     }else if(is_on_segment > 0) {
-        prj_point_dummy= new Point(end_p2.x(),end_p2.y(),end_p2.z());
+        prj_point_dummy= new Point(end_p2.x(),end_p2.y(),end_p2.z(), nullptr);
     }
     else {
        Vector3 prj_point = (start_p1 + is_on_segment*(edge_v1v2));
-        prj_point_dummy  = new Point(prj_point.x(),prj_point.y(),prj_point.z());
+        prj_point_dummy  = new Point(prj_point.x(),prj_point.y(),prj_point.z(), nullptr);
     }
     return getDistance(prj_point_dummy,p);
 }
@@ -367,7 +367,7 @@ double get_Area(const Triangle* t) {
 }
 
 Point* to_Point(const Vector3 &v) {
-    Point* p = new Point(v.x(),v.y(),v.z());
+    Point* p = new Point(v.x(),v.y(),v.z(), nullptr);
     return p;
 }
 

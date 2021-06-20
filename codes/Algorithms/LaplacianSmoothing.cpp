@@ -99,7 +99,7 @@ void LaplacianSmooth::computeNewVertex(std::map<Point*, double,ComparePoint> &ve
        p_vec*it->second;
        sum+p_vec;
     }
-    Point* newpoint = new Point (sum.x()/weightsum,sum.y()/weightsum ,sum.z()/weightsum );
+    Point* newpoint = new Point (sum.x()/weightsum,sum.y()/weightsum ,sum.z()/weightsum,nullptr);
     oldVertex_to_newVertex.insert(std::make_pair(origin,newpoint));
 }
 

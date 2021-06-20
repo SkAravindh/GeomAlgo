@@ -1,10 +1,10 @@
 #include "Point.h"
-
+#include "Mesh.h"
 Point::Point() {
 
 }
 
-Point::Point(double x, double y, double z)  {
+Point::Point(double x, double y, double z,Mesh* mesh): powner(mesh){
 
     coordinates[0]=x;
     coordinates[1]=y;
@@ -21,6 +21,10 @@ double Point::y() const {
 
 double Point::z() const {
     return coordinates[2];
+}
+
+Vector3 Point::vertexNormal() {
+    return powner->getVertexNormal(this);
 }
 
 Point& Point::operator=(const Point &rhs)  {

@@ -20,22 +20,23 @@ public:
     Point* getCorners(int i) const;
     Point* getEdgeMidPoint(int i) const;
     Point* getCentroid() const;
-    EdgeOrder getEO(int i) const;
-    Edge getEd(int i) const;
-    Vector3 getNormalVector() const;
-    double getArea() const;
     Triangle* getNeigh(int i);
     Triangle* getParent();
-    bool haschild();
-    int getVertexID(Point* p);
-    int getTriangleID(Triangle* t);
-    int getLongestEdgeID();
+    Edge getEd(int i) const;
+    EdgeOrder getEO(int i) const;
     EdgeOrder& getfE(int i);
+    Vector3 getNormalVector() const;
+    bool haschild();
+    bool has_Degenerated();
+    bool has_contained(Point* p);
     int getShortestEdgeID();
     int getPeakVertexID(const EdgeOrder& c_ed);
     int getChildSize();
-    bool has_Degenerated();
-    bool has_contained(Point* p);
+    int getVertexID(Point* p);
+    int getTriangleID(Triangle* t);
+    int getLongestEdgeID();
+    unsigned int getThirdCorner(Point* v1, Point* v2);
+    double getArea() const;
     void setEdge(EdgeOrder &ed, unsigned int id);
     void setEdge_pointer(EdgeOrder *ed, unsigned int id);
     void setNeigh(int i, Triangle* t);
@@ -52,11 +53,12 @@ public:
 public:
     bool isAlive ;
     int ID;
-public:
-    bool is_set=false;
-    bool is_inside=false;
-private:
 
+public:
+    bool is_set    = false;
+    bool is_inside = false;
+
+private:
     Point* corners[3];
     Triangle* neigb[3];
     EdgeOrder* edges[3];
