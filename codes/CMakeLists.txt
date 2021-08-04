@@ -34,6 +34,7 @@ set (Cpp
     Edge.cpp
     Writedata.cpp
     LoopEdges.cpp
+    compare.cpp
     )
     
 set (Algorithm_header

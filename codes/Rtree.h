@@ -52,9 +52,9 @@ public:
     }
 
     template <typename SizeIter>
-    void queryBoxIntersects(const Bbox_3 &b, SizeIter inserter) {
+    void queryBoxIntersects(const Bbox_3 &b, SizeIter inserter) const {
         query(bgi::intersects(toboost(b)), inserter);
-    }
+    };
 
     template<typename prediacate_type, typename sizeiter>
     void query(prediacate_type pred, sizeiter inserter) const {

@@ -95,8 +95,14 @@ void ExtractIntTri::establishConnectivity() {
     }
 //    std::cout<<"b "<<b<<" "<<"c "<<c<<std::endl;
     std::vector<Triangle*> triout;
+    try {
     unsigned int  Initial_tri_ID = findInitialTriangle();
     extractInteriorTriangles(Initial_tri_ID);
+    }
+    catch (const char* msg) {
+        std::cout<< msg << std::endl;
+        EXIT_FAILURE;
+    }
 }
 
 unsigned int ExtractIntTri::findInitialTriangle() {
@@ -146,7 +152,6 @@ unsigned int ExtractIntTri::findInitialTriangle() {
         pair.clear();
     }
     if(!found) {
-        std::cout<<" Fail to find an initial triangle "<<std::endl;
         throw "Fail to find an initial triangle";
     }
 }
