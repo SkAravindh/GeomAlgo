@@ -37,20 +37,25 @@ enum class CentroidType {
 class Mesh {
 public:
     Mesh();
-    ~Mesh(){};
+    ~Mesh();
     Mesh(std::string Filename, size_t Poolsize);
     Point* createVertex( const double x, const double y, const double z);
     Point* createVertex(const Point &P);
     Triangle* createTriangle(Point *P0, Point *P1, Point *P2, Triangle* parent);
+    Quad* addQuad(Point* ID_0, Point* ID_1, Point* ID_2, Point* ID_3);
     std::vector< std::pair<EdgeOrder,EdgeOrder> > updateEdgeInfo(Triangle* To_change, Point* oldVertex, Point* newVertex); //used during edge collapse operation.
+    const Rtree3d& getVertexTree() const ;
+    const Rtree3d& getFaceTree() const ;
     Vector3 getCentroid(const CentroidType ct=CentroidType::vertex_based);
     Vector3 centroidVertex();
     Vector3 centroidSurface();
     Vector3 centroidVolume();
     Vector3 getVertexNormal(Point* p);
     Bbox_3 faceBounds(const Triangle* t);
+    Bbox_3 getBBOX();
     double getMesh_Volume();
     double getMesh_SurfaceArea();
+    size_t computeclosest(Point* p);
     bool is_Solid(std::vector<EdgeOrder>* border, std::vector<EdgeOrder>* nonmanifold);
     bool isNon_Manifold_Vertex(Point* input_vertex, std::vector<Triangle*> *ring_triangle);
     void storeTriangleInfo(Triangle* T);
@@ -76,11 +81,10 @@ public:
     void getAdjustenNeigh(const EdgeOrder& ed, std::vector<Triangle*> &tv);
     void getAdjustenNeigh_1(const EdgeOrder& ed,std::vector<Triangle*> &tv);
     void translateMesh(const Point* p);
-    void computeRtree();
     void createQuadFromTriangle();
-    Quad* addQuad(Point* ID_0, Point* ID_1, Point* ID_2, Point* ID_3);
+    void computeRtree();
     void writeMeshSTL(std::string filename);
-    //void computeclosest();
+
 
 
 private:

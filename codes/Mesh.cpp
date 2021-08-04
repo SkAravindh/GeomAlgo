@@ -9,6 +9,23 @@ Mesh::Mesh(std::string Filename, size_t Poolsize) : ModelName(Filename), Poolsiz
 
 }
 
+Mesh::~Mesh() {
+
+    
+    std::cout<< "Destructor called " << std::endl;
+    for(auto ele : vAllvertices) {
+        delete ele;
+    }
+
+    for(auto ele : allTriangles) {
+        delete ele;
+    }
+
+    for(auto ele : allQuads) {
+        delete ele;
+    }
+}
+
 Point* Mesh::createVertex(const double x, const double y, const double z) {
 
     Point P(x,y,z,this);
@@ -663,17 +680,19 @@ void Mesh::translateMesh(const Point *p) {
 
     std::vector<Point*> allpoints;
     this->getVertices(allpoints);
-    Vector3 translate_vector = to_Vector3(p);
+    if(p != nullptr) {
+        Vector3 translate_vector = to_Vector3(p);
+    }
     std::map<Point*,Point*,ComparePoint> old_to_new_point;
 
     for(Point* old : allpoints) {
-        Vector3 dummy = to_Vector3(old);
-        dummy+translate_vector;
-        Point* newpoint = to_Point(dummy);
-      /*  double x_ = old->x()*1;
-        double y_ = old->y()*1;
-        double z_ = old->z()*0.9;
-        Point* newpoint = new Point(x_,y_,z_);*/
+        //Vector3 dummy = to_Vector3(old);
+       // dummy+translate_vector;
+      //  Point* newpoint = to_Point(dummy);
+        double x_ = old->x()/1000;
+        double y_ = old->y()/1000;
+        double z_ = old->z()/1000;
+        Point* newpoint = new Point(x_,y_,z_, nullptr);
         old_to_new_point.insert(std::make_pair(old,newpoint));
     }
     std::vector<Triangle*> alltriangle;
@@ -686,6 +705,14 @@ void Mesh::translateMesh(const Point *p) {
             t->setNewVertex(newpoint,i);
         }
     }
+}
+
+const Rtree3d& Mesh::getVertexTree() const {
+    return mVertexTree;
+}
+
+const Rtree3d& Mesh::getFaceTree() const {
+    return mFaceTree;
 }
 
 void Mesh::computeRtree() {
@@ -706,11 +733,58 @@ void Mesh::computeRtree() {
     }
 }
 
+size_t Mesh::computeclosest(Point* p) {
+
+    size_t near = SIZE_MAX;
+
+   /* std::vector<Triangle*> alltriangles;
+    this->getTriangles(alltriangles);
+    std::cout<< *vAllvertices.at(0)<<std::endl;
+    Point* p_obj = new Point(-106.5618, 132.492, 5.43268 );*/
+    std::cout<<"input : "<<*p << std::endl;
+    mVertexTree.queryNearest(p,1,&near);
+    std::cout<< *vAllvertices.at(near)<<std::endl;
+    Vector3 point = to_Vector3(p);
+    Vector3 search_dis(3,3,3);
+    Vector3 min_ = point-search_dis;
+    Vector3 max_ = point+search_dis;
+    std::cout<<"min_  "<<min_<< std::endl;
+    std::cout<<"max_  `"<<max_ << std::endl;
+    std::vector<size_t> candidates;
+    candidates.reserve(32);
+    Bbox_3 bobj(min_.x(),min_.y(),min_.z(),max_.x(),max_.y(),max_.z());
+    mFaceTree.queryBoxIntersects(bobj,std::back_inserter(candidates));
+    std::vector<Point*> nearpoints;
+    for(auto ele : candidates) {
+        std::cout<<"ele is "<<ele<<std::endl;
+        nearpoints.push_back(vAllvertices.at(ele));
+        std::cout<<*vAllvertices.at(ele) << std::endl;
+    }
+ //   writePoints("nearer.vtk", nearpoints);
+    return near;
+  //  std::cout<<"near "<<near<<std::endl;
+
+}
+
 Bbox_3 Mesh::faceBounds(const Triangle *t) {
     Bbox_3 B;
     for(int i=0; i<3; i++) {
         Point* p = t->getCorners(i);
         B.add_coordinates(p->x(),p->y(),p->z());
+    }
+    return B;
+}
+
+Bbox_3 Mesh::getBBOX() {
+
+    Bbox_3 B;
+    for(auto it = allTriangles.begin(); it != allTriangles.end(); it++) {
+        Triangle* t = (*it);
+        if(!t->isAlive) continue;
+        for(int i=0; i<3; i++) {
+            Point* p = t->getCorners(i);
+            B.add_coordinates(p->x(),p->y(),p->z());
+        }
     }
     return B;
 }
@@ -748,18 +822,6 @@ void Mesh::createQuadFromTriangle() {
     }
     std::cout<<"quad creation is done " << std::endl;
 }
-
-/*void Mesh::computeclosest() {
-
-    size_t near = SIZE_MAX;
-    std::vector<Triangle*> alltriangles;
-    this->getTriangles(alltriangles);
-    std::cout<< *vAllvertices.at(0)<<std::endl;
-    Point* p_obj = new Point(-106.5618, 132.492, 5.43268 );
-    mVertexTree.queryNearest(p_obj,1,&near);
-    std::cout<<"near "<<near<<std::endl;
-    std::cout<< *vAllvertices.at(near)<<std::endl;
-}*/
 
 void Mesh::standAlone(std::vector<Triangle*> &tv) {
     //std::cout << *allTriangles[0]->getCorners(0) << std::endl;
