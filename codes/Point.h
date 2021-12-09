@@ -20,6 +20,8 @@ public:
     bool operator > (const Point &rhs) const;
     bool operator == (const Point &rhs) const;
     bool operator != (const Point &rhs) const;
+    Point* operator+ (const Point &rhs) const;
+    Point* operator-(const Point& rhs) const;
     Point& operator = (const Point &rhs);
 
 

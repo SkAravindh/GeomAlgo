@@ -3,7 +3,7 @@
 void writePoints(const std::string& filename, std::vector<Point*> &bp) {
 
     std::ofstream vtk_file;
-    vtk_file.open(filename);
+    vtk_file.open(filename+".vtk");
     vtk_file << "# vtk DataFile Version 2.0" << std::endl;
     vtk_file << "Heat Clusters" << std::endl;
     vtk_file << "ASCII" << std::endl;

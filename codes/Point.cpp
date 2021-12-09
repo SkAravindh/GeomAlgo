@@ -57,5 +57,12 @@ bool Point::operator!=(const Point &rhs) const {
     return (  (this->x()!=rhs.x()) || (this->y()!=rhs.y()) || (this->z()!=rhs.z()) );
 }
 
+Point* Point::operator+ (const Point &rhs) const {
+    Point* p = new Point(rhs.x()+this->x(),rhs.y()+this->y(),rhs.z()+this->z(), nullptr);
+    return p;
+}
 
-
+Point* Point::operator-(const Point &rhs) const {
+    Point* p = new Point(this->x()-rhs.x(),this->y()-rhs.y(),this->z()-rhs.z(), nullptr);
+    return p;
+}

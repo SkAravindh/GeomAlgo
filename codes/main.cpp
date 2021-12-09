@@ -2,12 +2,12 @@
 #include "InOut.h"
 #include "Mesh.h"
 #include "Point.h"
-#include "compare.cpp"
 #include "Collision.h"
 #include "Bbox_3.h"
 #include "EdgeOrder.h"
 #include "Geom_Support.h"
 #include "Writedata.h"
+#include "PlaneClipping.cpp"
 //#include "verification/FluidDomain.cpp"
 //#include "verification/adaptdesire_version2_Send.cpp"
 /*#include "verification/adaptdesire_version2_1_Send.cpp"
@@ -35,8 +35,24 @@ int main() {
 
 
    std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/bunny_S_Up_R.stl";
-
-
+  //  std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/Nozzle_remesh_5mm.stl";
+ //   std::string filename = "/home/aravindhkumar.kalimuthu/Desktop/practice/ProjectSKA/cmake-build-debug/codes/clipped.stl";
+    std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
+   // pMesh->printContainersInfo();
+  //  std::cout << pMesh->getBBOX() << std::endl;
+    PlaneClipping obj(pMesh);
+  /*std::vector<Triangle*> alltri;
+  pMesh->getTriangles(alltri);
+  std::vector<EdgeOrder> edges;
+    getedgesByOrder(alltri,-1,edges);
+    std::set<Point*> bp;
+    for(auto ele: edges) {
+        bp.insert(ele.p0);
+        bp.insert(ele.p1);
+    }
+    std::vector<Point*> bpvec;
+    bpvec.assign(bp.begin(),bp.end());
+    writePoints("bp_points",bpvec);*/
    // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/testing_stls/Cube_Remesh.stl";
    // std::string filename = "/home/aravindhkumar.kalimuthu/Downloads/RotatedPlate_mm_25mm.stl";
 
@@ -68,8 +84,7 @@ int main() {
    // std::shared_ptr<Mesh> pMesh = ReadSTL("/home/aravindhkumar.kalimuthu/Desktop/practice/Codes/projectSKA/cmake-build-debug/codes/outFile.stl");
     //compare(pMesh_nas,pMesh);
     //d=aa;
-    std::shared_ptr<Mesh> pMesh = ReadSTL(filename);
-    pMesh->printContainersInfo();
+
 
   /*  std::vector<Point*> allpoints;
     pMesh->getVerticesAll(allpoints);
