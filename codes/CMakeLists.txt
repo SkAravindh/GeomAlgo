@@ -34,7 +34,6 @@ set (Cpp
     Edge.cpp
     Writedata.cpp
     LoopEdges.cpp
-    compare.cpp
     )
     
 set (Algorithm_header
@@ -64,6 +63,7 @@ set (samples
     old_files/adaptdesire_version2_Send.cpp
     old_files/adaptdesire_version2_1_Send.cpp
     old_files/fixnonmanifold.cpp
+    old_files/ PlaneClipping.cpp
    # old_files/FluidDomain.cpp
      )
 
