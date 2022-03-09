@@ -90,12 +90,13 @@ void SelectiveRefinement_2::doRefine() {
     std::vector<Triangle*> allTriangles;
     pMesh->getTriangles(allTriangles);
 
-   // std::vector<Triangle*> Ring;
-   // pMesh->getNeigTrianglesbyOrder(allTriangles[0],3,Ring);
+    std::vector<Triangle*> Ring;
+ //   pMesh->getNeigTrianglesbyOrder(allTriangles[0],3,Ring);
+    pMesh->getRingNeigbyOrder(allTriangles[0]->getCorners(0),1,Ring);
 
     std::vector<EdgeOrder> EIT;
 
-    getEdgesofTrianlges(allTriangles,EIT);
+    getEdgesofTrianlges(Ring,EIT);
 
 
     for(VE_itr it = EIT.begin(); it != EIT.end(); it++) {

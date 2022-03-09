@@ -4,6 +4,7 @@
 #include <tuple>
 #include <memory>
 #include "Vector_3.h"
+#include <string>
 
 class Mesh; //fwd
 typedef Vector_3<double> Vector3;

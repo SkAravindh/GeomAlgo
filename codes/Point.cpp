@@ -1,5 +1,6 @@
 #include "Point.h"
 #include "Mesh.h"
+
 Point::Point() {
 
 }

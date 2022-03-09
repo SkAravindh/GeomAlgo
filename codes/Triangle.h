@@ -5,7 +5,7 @@
 #include "Geom_Support.h"
 #include "Vector_3.h"
 #include "Edge.h"
-#include "Macros.h"
+
 
 
 typedef Vector_3<double> Vector3;
