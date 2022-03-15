@@ -1,6 +1,6 @@
 #include "../Tet/Mesh3D.h"
-#include "../Tet/Point3D.cpp"
 #include "../Tet/IOtet.h"
+
 
 Mesh3D::Mesh3D()
 {
@@ -60,7 +60,7 @@ Point_3* Mesh3D::createPoint_3(const Point_3 &p)
     }
 }
 
-TriElement::Triangle* Mesh3D::createNewTriangle(Point_3 *triPoints[3], size_t triIds[3])
+TriElement::Triangle* Mesh3D::createNewTriangle( Point_3 *triPoints[3], size_t triIds[3])
 {
     TriElement::Triangle* triObj    = new TriElement::Triangle(triPoints,this);
     size_t size_                    = vAllTriangle.size();
@@ -103,6 +103,109 @@ PrismElement::Prism* Mesh3D::createPrism(Point_3* prismPoints[6],  size_t prismI
     vAllPrism.push_back(prismObj);
     return prismObj;
 }
+
+void Mesh3D::registerTetrahedron(TetElement::Tetrahedron* tet)
+{
+    for(unsigned int i=0; i<4; i++)
+    {
+        Point_3* p = tet->getCorner(i);
+        mmPointtoTetrahedron.insert({p,tet});
+    }
+
+    unsigned int arr1[] = {1, 2, 0, 3, 3, 3};
+    unsigned int arr2[] = {2, 0, 1, 1, 2, 0};
+    for (unsigned int i = 0; i < 6; i++)
+    {
+        Point_3 *p1 = tet->getCorner(arr1[i]);
+        Point_3 *p2 = tet->getCorner(arr2[i]);
+        EdgePts obj(p1, p2);
+        unorderedmapETOE.insert({obj, tet});
+    }
+
+    unsigned int idx1[] = {1,2,0};
+    unsigned int idx2[] = {2,0,1};
+
+    Face3* obj = new Face3(tet->getCorner(0),tet->getCorner(1),tet->getCorner(2));
+    registerFace(obj);
+    for(int i=0; i<3; i++)
+    {
+        Face3* obj = new Face3(tet->getCorner(3),tet->getCorner(idx1[i]),tet->getCorner(idx2[i]));
+        registerFace(obj);
+    }
+
+
+}
+
+void Mesh3D::registerFace(Face3 * obj)
+{
+    auto iter = mFtoF.find(*obj);
+    if(iter == mFtoF.end())
+    {
+        mFtoF.insert({*obj,obj});
+        allFace.push_back(obj);
+    }
+    else
+    {
+        Face3* current = iter->second;
+        current->setoppface(obj);
+        obj->setoppface(current);
+        allFace.push_back(obj);
+    }
+}
+
+void Mesh3D::getborder()
+{
+    std::vector<Face3*> bf;
+    for(auto ele : allFace)
+    {
+        if(ele->getHface()== nullptr)
+        {
+          //  std::cout <<*ele<< std::endl;
+            bf.push_back(ele);
+        }
+    }
+    std::set<Point_3> bpts;
+    std::vector<Point_3> bptsvec;
+    std::cout<< "size " <<bf.size()<< std::endl;
+    for(auto ele : bf)
+    {
+        for(int i=0; i<3; i++)
+        {
+          auto point =  ele->getFaceCorners(i);
+          bpts.insert(*point);
+        }
+    }
+    bptsvec.assign(bpts.begin(),bpts.end());
+    std::cout << "size  is   "<<  bptsvec.size() << std::endl;
+   // writevtkPoints("bp",bptsvec);
+}
+
+std::vector<TetElement::Tetrahedron*> Mesh3D::getSharedTetrahedron(const EdgePts &ed)
+{
+    std::vector<TetElement::Tetrahedron*> neighs;
+    typedef std::unordered_multimap<EdgePts,TetElement::Tetrahedron*,HashIndex<Point_3*,2>>::iterator iter;
+    std::pair<iter,iter> tets = unorderedmapETOE.equal_range(ed);
+    std::cout << std::distance(tets.first,tets.second) << std::endl;
+    for(iter it = tets.first; it != tets.second; it++)
+    {
+        neighs.push_back(it->second);
+    }
+    return neighs;
+}
+
+/*void Mesh3D::getalltetrahedron( )
+{
+  TetElement::Tetrahedron* obj = vAllTetrahedron.at(0);
+    EdgePts ed = obj->getEO(0);
+   VTET vec;
+  std::cout << "edge is " << ed << std::endl;
+  vec = getSharedTetrahedron(ed);
+ // for(int i=0; i<vec.size(); i++) {
+   //   VTET individual;
+    //  individual.push_back(vec.at(i));
+      writeTetvtk("checking"+std::to_string(100), vAllVertices, vec);
+//  }
+}*/
 
 void Mesh3D::addPointsFromVtk(const std::vector<double> &vPoints)
 {
@@ -199,5 +302,6 @@ void Mesh3D::printContainersInfo()
     std::cout << "size of quad              : " <<vAllQuad.size() << std::endl;
     std::cout << "size of vAllTetrahedron   : " <<vAllTetrahedron.size() << std::endl;
     std::cout << "size of vAllPrism         : " <<vAllPrism.size() << std::endl;
+    std::cout << "size of allFace         : " <<allFace.size() << std::endl;
 
 }

@@ -1,6 +1,6 @@
 #include "../Tet/IOtet.h"
 #include "../Tet/Mesh3D.h"
-#include "../Tet/Point3D.cpp"
+
 
 //took from geeksforgeeks. modified with template
 template<typename T>
@@ -161,4 +161,35 @@ void writeTetvtk(const std::string &filename, const std::vector<Point_3*> &vAllV
     for(int i=0; i<vAllTetrahedron.size(); i++) {
         vtk_file << "10 " <<std::endl;
     }
+}
+
+void writevtkPoints(const std::string& filename, std::vector<Point_3 > &bp)
+{
+    std::ofstream vtk_file;
+    vtk_file.open(filename+".vtk");
+    vtk_file << "# vtk DataFile Version 2.0" << std::endl;
+    vtk_file << "Heat Clusters" << std::endl;
+    vtk_file << "ASCII" << std::endl;
+    vtk_file << "DATASET UNSTRUCTURED_GRID" << std::endl;
+    vtk_file << "POINTS " << bp.size() << " float" << std::endl;
+    for (unsigned int i = 0; i < bp.size(); ++i) {
+        vtk_file << bp[i].getCorners(0) << " " << bp[i].getCorners(1) << " "
+                 << bp[i].getCorners(2) << std::endl;
+    }
+    vtk_file << "CELLS " << bp.size() << " " << bp.size() * 2 << std::endl;
+    for (unsigned int i = 0; i < bp.size(); ++i) {
+        vtk_file << "1" << " " << i << std::endl;
+    }
+    vtk_file << "CELL_TYPES " << bp.size() << std::endl;
+    for (unsigned int i = 0; i < bp.size(); ++i) {
+        vtk_file << "1" << std::endl;
+    }
+    vtk_file << "POINT_DATA " << bp.size() << std::endl;
+    vtk_file << "SCALARS scalars float 1" << std::endl;
+    vtk_file << "LOOKUP_TABLE default" << std::endl;
+    for (unsigned int i = 0; i < bp.size(); ++i) {
+        vtk_file << i << std::endl;
+    }
+    vtk_file.close();
+
 }

@@ -2,10 +2,16 @@
 #define MESH3D_H
 #include "../Tet/Definition.h"
 #include "../Tet/Polygon3D.h"
+#include "../Tet/Edge3D.h"
+#include "../Tet/Point3D.h"
+#include "../Tet/Face3D.h"
+#include <map>
+#include <set>
+#include "unordered_map"
 
 
-
-class Mesh3D {
+class Mesh3D
+        {
 public:
     Mesh3D();
     explicit Mesh3D(const std::string &filename_);
@@ -18,12 +24,17 @@ public:
     void createPoint_3(const double x, const double y, const double z);
     void addPointsFromVtk(const std::vector<double> &vPoints);
     void addTetandQuadFromVtk(const std::vector<int> &vPoints);
-    void addTriangleFromVtk(const std::vector<int> & vIds );
+    void addTriangleFromVtk(const std::vector<int> & vIds);
     void addTetAndQuad( const std::vector<int> & vIds , const std::string &arg);
     void addPrismFromVtk(const std::vector<int> & vIds);
     void splitQuadTet(const std::vector<int> & vIds);
+    void registerTetrahedron(TetElement::Tetrahedron* tet);
+    std::vector<TetElement::Tetrahedron*> getSharedTetrahedron(const EdgePts &ed);
+    void getalltetrahedron(  );
     void printContainersInfo();
     void writeTet(const std::string &filename_);
+    void registerFace(Face3 * obj);
+    void getborder();
 
 private:
     const std::string filename;
@@ -36,6 +47,13 @@ private:
     std::vector<QuadElement::Quad*> vAllQuad;
     std::vector<TriElement::Triangle*> vAllTriangle;
     std::vector<PrismElement::Prism*> vAllPrism;
+
+    std::vector<Face3*> allFace;
+    //Tetrahedron Data Structure
+    std::multimap<Point_3*, TetElement::Tetrahedron* , ComparePoint3D<double,3>> mmPointtoTetrahedron;
+    std::unordered_multimap<EdgePts,TetElement::Tetrahedron*,HashIndex<Point_3*,2>> unorderedmapETOE;
+    std::map<Face3,Face3*> mFtoF;
+   // std::map<EdgePts,TetElement::Tetrahedron*> mmEdgetoTetrahedronl;
 };
 
 #endif

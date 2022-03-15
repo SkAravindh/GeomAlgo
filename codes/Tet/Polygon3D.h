@@ -1,7 +1,6 @@
 #ifndef POLYGON_H
 #define POLYGON_H
 
-
 namespace TriElement
 {
     class Triangle
@@ -9,7 +8,7 @@ namespace TriElement
     public:
         Triangle();
         explicit Triangle(Point_3* p1, Point_3* p2, Point_3* p3, Mesh3D* mesh);
-        explicit Triangle(Point_3* TetPoints[3], Mesh3D* mesh);
+        explicit Triangle( Point_3* TetPoints[3], Mesh3D* mesh);
         ~Triangle() noexcept = default;
         Point_3* getCorner(unsigned int id) const;
         size_t getCornerId( unsigned int id) const;
@@ -38,6 +37,8 @@ namespace TetElement
         Point_3* getCorner( unsigned int id) const;
         size_t getCornerId( unsigned int id) const;
         void addTetPointsID(size_t PointsId[4]);
+        EdgePts getEO(unsigned int i) const;
+        friend std::ostream& operator << (std::ostream &out, const TetElement::Tetrahedron & obj);
 
     public:
         size_t tetID        = -1;
@@ -48,6 +49,7 @@ namespace TetElement
         size_t coordinateIDS[4];
     };
 }
+
 
 
 namespace QuadElement

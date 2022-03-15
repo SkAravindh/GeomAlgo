@@ -38,6 +38,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream&out, const HalfEdge &ed ) {
         out <<"V1: " <<*(ed.V1)<<"; "<< " "<<"v2: " << *(ed.V2) << std::endl;
+        return out;
     }
 public:
     HalfEdge* twin = nullptr;

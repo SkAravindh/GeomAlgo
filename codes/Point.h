@@ -28,10 +28,9 @@ public:
 
 public:
     friend std::ostream & operator << (std::ostream &s, const Point &vertex) {
-        s << vertex.x() << " " << vertex.y() << " " << vertex.z() << " ";
+        s << vertex.x() << " " << vertex.y() << " " << vertex.z() << " " << std::endl;
         return s;
     }
-
 public:
     bool isAlive;
     unsigned int ID;
@@ -39,6 +38,7 @@ private:
     double coordinates[3];
     Mesh* powner;
 };
+
 
 struct ComparePoint {
     bool operator()(const Point* rhs, const Point* lhs) const {

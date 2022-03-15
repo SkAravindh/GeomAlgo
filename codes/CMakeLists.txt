@@ -74,13 +74,14 @@ set (Header_3D
         Tet/Polygon3D.h
         Tet/Point3D.h
         Tet/Definition.h
+        Tet/Edge3D.h
+        Tet/Face3D.h
         )
 
 set (Source_3D
         Tet/IOtet.cpp
         Tet/Mesh3D.cpp
         Tet/Polygon3D.cpp
-        Tet/Point3D.cpp
         )
 
 FIND_PACKAGE(Boost 1.65 REQUIRED)

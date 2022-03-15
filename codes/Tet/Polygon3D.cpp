@@ -1,5 +1,25 @@
-#include "../Tet/Point3D.cpp"
 #include "../Tet/Mesh3D.h"
+
+unsigned int tetIndexBy_one(unsigned int i) {
+
+    if( i < 0 || i > 5) {
+        std::cout<< "Index is out of range: " << i << std::endl;
+        throw " Index is out of range ";
+    }
+    unsigned int arr[] = {1,2,0,1,2,0};
+    return arr[i];
+}
+
+unsigned int tetIndexBy_two(unsigned int i) {
+
+    if( i < 0 || i > 5) {
+        std::cout<< "Index is out of range: " << i << std::endl;
+        throw " Index is out of range ";
+    }
+    unsigned int arr[] = {2,0,1,3,3,3};
+    return arr[i];
+}
+
 
 namespace TriElement
 {
@@ -8,7 +28,7 @@ namespace TriElement
         for (unsigned int i = 0; i < 3; i++)
         {
             coordinates[i]   = nullptr;
-            coordinateIDS[i] = DBL_MAX;
+            coordinateIDS[i] = -1;
         }
     }
 
@@ -19,7 +39,7 @@ namespace TriElement
         coordinates[2] = p3;
     }
 
-    Triangle::Triangle(Point_3* TetPoints[3], Mesh3D* mesh): mesh_3D(mesh)
+    Triangle::Triangle( Point_3* TetPoints[3], Mesh3D* mesh): mesh_3D(mesh)
     {
         for (int i = 0; i < 3; i++)
         {
@@ -44,6 +64,7 @@ namespace TriElement
             coordinateIDS[i] = PointsId[i];
         }
     }
+
 };
 
 namespace TetElement
@@ -53,7 +74,7 @@ namespace TetElement
         for (unsigned int i = 0; i < 4; i++)
         {
             coordinates[i]   = nullptr;
-            coordinateIDS[i] = DBL_MAX;
+            coordinateIDS[i] = -1;
         }
     }
 
@@ -71,6 +92,7 @@ namespace TetElement
         {
             coordinates[i] = TetPoints[i];
         }
+        mesh_3D->registerTetrahedron(this);
     }
 
     void Tetrahedron::addTetPointsID(size_t PointsId[4])
@@ -90,15 +112,27 @@ namespace TetElement
     {
         return coordinateIDS[id];
     }
-};
 
+    EdgePts Tetrahedron::getEO(unsigned int i) const
+    {
+        Point_3* p0 = this->getCorner(tetIndexBy_one(i));
+        Point_3* p1 = this->getCorner(tetIndexBy_two(i));
+        EdgePts Ed_obj(p0,p1);
+        return Ed_obj;
+    }
+};
+std::ostream& operator << (std::ostream &out, const TetElement::Tetrahedron & obj)
+{
+    out << *obj.getCorner(0) << " " << *obj.getCorner(1) << " " << *obj.getCorner(2) << " " << *obj.getCorner(3);
+    return out;
+}
 namespace QuadElement
 {
     Quad::Quad()
     {
         for (unsigned int i = 0; i < 4; i++) {
             coordinates[i]   = nullptr;
-            coordinateIDS[i] = DBL_MAX;
+            coordinateIDS[i] = -1;
         }
     }
 
@@ -144,7 +178,7 @@ namespace PrismElement
         for (unsigned int i = 0; i < 6; i++)
         {
             coordinates[i]      = nullptr;
-            coordinateIDS[i]    = DBL_MAX;
+            coordinateIDS[i]    = -1;
         }
     }
 
