@@ -62,7 +62,7 @@ void fun( )
 int main(int argc, char **argv) {
     TMeshptr tmesh = nullptr;
 
-    // const std::string filename ="/home/aravindhkumar.kalimuthu/Desktop/practice/ProjectSKA/cmake-build-debug/codes/shared.vtk";
+  //   const std::string filename ="/home/aravindhkumar.kalimuthu/Desktop/practice/ProjectSKA/cmake-build-debug/codes/shared.vtk";
     //    const std::string filename ="/home/aravindhkumar.kalimuthu/Desktop/practice/ProjectSKA/cmake-build-debug/codes/ch.vtk";
 //    Point_3 *a = new Point_3 (1.0,2.0,3.0);
 //    Point_3 *b = new  Point_3 (4.0,5.0,6.0);
@@ -90,8 +90,9 @@ int main(int argc, char **argv) {
     catch (const std::string &msg) {
         std::cout << msg << std::endl;
     }
+    tmesh->getborder();
 //
-     tmesh->getborder();
+
 }
 
  //tmesh->writeTet("tetalone");

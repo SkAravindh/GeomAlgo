@@ -9,7 +9,6 @@
 #include <set>
 #include "unordered_map"
 
-
 class Mesh3D
         {
 public:
@@ -29,11 +28,11 @@ public:
     void addPrismFromVtk(const std::vector<int> & vIds);
     void splitQuadTet(const std::vector<int> & vIds);
     void registerTetrahedron(TetElement::Tetrahedron* tet);
-    std::vector<TetElement::Tetrahedron*> getSharedTetrahedron(const EdgePts &ed);
-    void getalltetrahedron(  );
+   std::vector<TetElement::Tetrahedron*> getSharedTetrahedron(const EdgePts &ed);
+   void getalltetrahedron(  );
     void printContainersInfo();
     void writeTet(const std::string &filename_);
-    void registerFace(Face3 * obj);
+   void registerFace(Face3 * obj);
     void getborder();
 
 private:
@@ -51,8 +50,8 @@ private:
     std::vector<Face3*> allFace;
     //Tetrahedron Data Structure
     std::multimap<Point_3*, TetElement::Tetrahedron* , ComparePoint3D<double,3>> mmPointtoTetrahedron;
-    std::unordered_multimap<EdgePts,TetElement::Tetrahedron*,HashIndex<Point_3*,2>> unorderedmapETOE;
-    std::map<Face3,Face3*> mFtoF;
+   std::unordered_multimap<EdgePts,TetElement::Tetrahedron*,HashIndex<Point_3*,2>> unorderedmapETOE;
+   std::map<Face3,Face3*> mFtoF;
    // std::map<EdgePts,TetElement::Tetrahedron*> mmEdgetoTetrahedronl;
 };
 

@@ -302,6 +302,6 @@ void Mesh3D::printContainersInfo()
     std::cout << "size of quad              : " <<vAllQuad.size() << std::endl;
     std::cout << "size of vAllTetrahedron   : " <<vAllTetrahedron.size() << std::endl;
     std::cout << "size of vAllPrism         : " <<vAllPrism.size() << std::endl;
-    std::cout << "size of allFace         : " <<allFace.size() << std::endl;
+  //  std::cout << "size of allFace         : " <<allFace.size() << std::endl;
 
 }
