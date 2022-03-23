@@ -8,7 +8,9 @@ set (Header
         Mesh3D.h
         Definition.h
         TetIO.h
-        Edge3D.h)
+        Edge3D.h
+        Vector_3.h
+        Tools.h)
 
 set (Source
         Polygons.cpp

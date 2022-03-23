@@ -5,7 +5,16 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "Definition.h"
+#include <memory>
+#include "Polygons.h"
+#include "Vector_3.h"
+#include "Edge3D.h"
+#include <unordered_map>
+#include <utility>
+//class Mesh3D;
+//typedef std::shared_ptr<Mesh3D> TMesh;
+
+typedef Vector_3<double> Vector3;
 class IOVtk
 {
 public:
@@ -36,5 +45,9 @@ private:
 TMesh ReadVtk(const std::string &filename);
 template<typename T> std::vector<T> removeDupWord(std::string str, std::string vari);
 void writevtkPoints(const std::string& filename, std::vector<Point_3 > &bp);
+void writeSTL(const std::string& filename, std::vector<TriElement::Triangle*> &Tvec);
+
+
+
 
 #endif

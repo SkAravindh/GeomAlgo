@@ -17,23 +17,24 @@ public:
     Face3D(T x,T y, T z, T u,void* element);
     bool operator < (const Face3D<T,Tobj> & rhs) const;
     bool operator == (const Face3D<T,Tobj> &rhs) const;
-    T getFaceCorners(int i);
+    T getFaceCorners(int i) const;
     void arrangeids();
-    Face3D<T,Tobj>* getHalfFace();
+    Face3D<T,Tobj>* getHalfFace() const;
     void setHalfFace(Face3D<T,Tobj> * f);
     Tobj getPolygon();
+    const int & getSize() const;
     friend std::ostream& operator << (std::ostream& out , const Face3D<T,Tobj>& rhs)
     {
-        for(int i=0; i<rhs.coordinates.size(); i++)
+        for(int i=0; i<rhs.getSize(); i++)
         {
-            out << rhs.coordinates[i] << " ";
+            out << rhs.getFaceCorners(i) << " ";
         }
-        out <<" and respective Ids are : ";
+     /*   out <<" and respective Ids are : ";
         for(int i=0; i<rhs.coordinates.size(); i++)
         {
             out << rhs.ids[i] << " ";
         }
-        out << "\n";
+        out << "\n";*/
         return out;
     }
 
@@ -47,7 +48,6 @@ private:
 template<typename T,typename Tobj>
 Face3D<T,Tobj>::Face3D()
 {
-
 }
 
 template<typename T, typename Tobj>
@@ -64,7 +64,7 @@ Face3D<T,Tobj>::Face3D(T x,T y, T z, void* element )
     /*ids.push_back(x);
     ids.push_back(y);
     ids.push_back(z);*/
-    polygon=reinterpret_cast<Tobj>(element);
+  //  polygon=reinterpret_cast<Tobj>(element);
     arrangeids();
 }
 
@@ -89,13 +89,13 @@ Face3D<T,Tobj>::Face3D(T x,T y, T z, T u,void* element)
 }
 
 template<typename T,  typename Tobj>
-T Face3D<T,Tobj>::getFaceCorners(int i)
+T Face3D<T,Tobj>::getFaceCorners(int i) const
 {
     return coordinates[i];
 }
 
 template<typename T,  typename Tobj>
-Face3D<T,Tobj>* Face3D<T,Tobj>::getHalfFace()
+Face3D<T,Tobj>* Face3D<T,Tobj>::getHalfFace() const
 {
     return halfFace;
 }
@@ -111,7 +111,7 @@ void Face3D<T,Tobj>::setHalfFace(Face3D<T,Tobj> * f)
 {
     if(halfFace != nullptr)
     {
-        throw "not equal to null";
+        throw "not nullptr";
     }
    halfFace = f;
 }
@@ -131,6 +131,12 @@ void Face3D<T, Tobj>::arrangeids()
             }
         }
     }
+}
+
+template<typename T, typename Tobj>
+const int & Face3D<T, Tobj>::getSize() const
+{
+    return ids.size();
 }
 
 template<typename T, typename Tobj>
@@ -162,7 +168,14 @@ bool Face3D<T, Tobj>::operator < (const Face3D<T,Tobj> &rhs) const
 template<typename T, typename Tobj>
 bool Face3D<T,Tobj>::operator == (const Face3D<T,Tobj> &rhs) const
 {
-    return (ids[0]==rhs.ids[0] && ids[1]==rhs.ids[1] && ids[2]==rhs.ids[2]);
+    if(this->ids.size() == 3 && rhs.ids.size() == 3)
+    {
+        return (ids[0] == rhs.ids[0] && ids[1] == rhs.ids[1] && ids[2] == rhs.ids[2]);
+    }
+    if (this->ids.size() == 4 && rhs.ids.size() == 4)
+    {
+        return (ids[0] == rhs.ids[0] && ids[1] == rhs.ids[1] && ids[2] == rhs.ids[2] && ids[3] == rhs.ids[3]);
+    }
 }
 
 #endif

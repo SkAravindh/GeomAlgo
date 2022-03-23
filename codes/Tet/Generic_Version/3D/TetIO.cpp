@@ -1,5 +1,6 @@
 #include "TetIO.h"
 #include "Mesh3D.h"
+#include "Polygons.h"
 
 IOVtk::IOVtk()
 {}
@@ -125,6 +126,22 @@ std::vector<T> removeDupWord(std::string str, std::string vari)
         // print the read word
     }
     return ids;
+}
+
+Vector3 getNormal(const TriElement::Triangle* t)
+{
+    Point_3 *p0 = t->getCorner(0);
+    Point_3 *p1 = t->getCorner(1);
+    Point_3 *p2 = t->getCorner(2);
+
+    Vector3 vertex0 = Vector3(p0->getCorners(0), p0->getCorners(1), p0->getCorners(2));
+    Vector3 vertex1 = Vector3(p1->getCorners(0), p1->getCorners(1), p1->getCorners(2));
+    Vector3 vertex2 = Vector3(p2->getCorners(0), p2->getCorners(1), p2->getCorners(2));
+
+    Vector3 edge_1 = vertex1 - vertex0;
+    Vector3 edge_2 = vertex2 - vertex0;
+    Vector3 normal = cross_product(edge_1,edge_2);
+    return normal;
 }
 
 TMesh ReadVtk(const std::string &filename)
@@ -262,3 +279,25 @@ void writevtkPoints(const std::string& filename, std::vector<Point_3 > &bp)
     vtk_file.close();
 
 }
+
+void writeSTL(const std::string& filename, std::vector<TriElement::Triangle*> &patch)
+{
+
+    std::ofstream file;
+    file.open(filename+".stl",std::ios_base::app);
+    file <<"solid " << std::endl;
+    for(int i=0; i<patch.size(); i++)
+    {
+       Vector3 norm = getNormal(patch.at(i));
+        file <<" facet normal "<<norm.x()<<std::scientific<<" "<<norm.y()<<std::scientific<<" "<<norm.z()<<std::scientific<<std::endl;
+        //file <<" facet normal "<<patch.at(i)->getNormalVector().x()<<" "<<patch.at(i)->getNormalVector().y()<<" "<<patch.at(i)->getNormalVector().z()<<std::endl;
+        file <<"  outer loop "<< std::endl;
+        file <<"    vertex "<<patch[i]->getCorner(0)->getCorners(0)<<" "<<patch[i]->getCorner(0)->getCorners(1)<<" "<<patch[i]->getCorner(0)->getCorners(2)<<std::endl;
+        file <<"    vertex "<<patch[i]->getCorner(1)->getCorners(0)<<" "<<patch[i]->getCorner(1)->getCorners(1)<<" "<<patch[i]->getCorner(1)->getCorners(2)<<std::endl;
+        file <<"    vertex "<<patch[i]->getCorner(2)->getCorners(0)<<" "<<patch[i]->getCorner(2)->getCorners(1)<<" "<<patch[i]->getCorner(2)->getCorners(2)<<std::endl;
+        file <<"  endloop "<<std::endl;
+        file <<" endfacet "<<std::endl;
+    }
+    file <<"endsolid "<<std::endl;
+}
+
